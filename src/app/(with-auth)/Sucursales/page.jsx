@@ -75,8 +75,8 @@ function Home() {
 
     console.log(sucursales)
     useEffect(() => {
-        readUserAllData('Sucursales', setSucursales)
-    }, [])
+        sucursales === undefined && readUserAllData('Sucursales', setSucursales)
+    }, [sucursales])
 
     return (
 
@@ -84,7 +84,7 @@ function Home() {
                  <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
 
-            <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh]"  ref={refFirst}>
+            <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smooth"  ref={refFirst}>
                 {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Sucursales</h3>
                 <br />
@@ -92,7 +92,7 @@ function Home() {
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre' />
                 </div>
                 <br />
-                <table className="min-w-[1000px]  text-[14px] text-left text-gray-500 border-t-4 border-gray-400">
+                <table className="w-full min-w-[1000px]  text-[14px] text-left text-gray-500 border-t-4 border-gray-400">
                     <thead className="text-[14px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="min-w-[50px] px-3 py-3">
