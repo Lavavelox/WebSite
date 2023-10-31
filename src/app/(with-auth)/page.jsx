@@ -133,6 +133,9 @@ setPdfDB(data)
     function navigate() {
         router.back()
     }
+console.log(state)
+console.log(cart)
+    console.log(pdfData)
     useEffect(() => {
         if (user === undefined) onAuth(setUserProfile)
         if (user === null) router.push('/Login')
