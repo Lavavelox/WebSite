@@ -135,7 +135,7 @@ setPdfDB(data)
     }
 console.log(state)
 console.log(cart)
-    console.log(pdfData)
+    console.log(pdfDB)
     useEffect(() => {
         if (user === undefined) onAuth(setUserProfile)
         if (user === null) router.push('/Login')
