@@ -137,7 +137,7 @@ function Home() {
                                     {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                     {i['CI']}
                                 </td>
-                                <td className="px-3 py-4  text-gray-900 " onClick={(e) => redirect(i.uuid)}>
+                                <td className="min-w-[250px] px-3 py-4  text-gray-900 " onClick={(e) => redirect(i.uuid)}>
                                     {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                     {i['direccion']}
                                 </td>
