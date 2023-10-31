@@ -235,7 +235,7 @@ export default function BottomNavigation({ rol }) {
                 </Button>
             </div>
         case 'Admin':
-            return <div className={`grid h-full max-w-lg   grid-cols-3 mx-auto font-medium z-50`}>
+            return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
                  <Button click={() => redirectHandler(`/`)} name={'Cliente'}>
                     <Store />
                     <span className="text-[12px] text-white   ">Tienda</span>

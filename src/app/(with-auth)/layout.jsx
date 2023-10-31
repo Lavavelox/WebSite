@@ -185,11 +185,11 @@ function Home({ children }) {
                   </div>)}
               </div>}
 
-            <div className="lg:px-[50px] pt-[85px] pb-[65px] md:pt-[85px] md:pb-5 h-screen w-full overflow-y-auto">
+            <div className="lg:px-[50px] pt-[85px] pb-[10px] md:pt-[85px] md:pb-5 h-screen w-full overflow-y-auto">
               {children}
 
             </div>
-            {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50 border- lg:hidden">
+            {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
               <BottomNavigation rol={user.rol} />
             </div>}
 

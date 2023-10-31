@@ -5,7 +5,6 @@ import { useUser } from '@/context'
 import Button from '@/components/Button'
 import Subtitle from '@/components/Subtitle'
 import Card from '@/components/Card'
-import CardM from '@/components/CardM'
 // import QRreader from '@/components/QRreader'
 import Tag from '@/components/Tag'
 import Msg from '@/components/Msg'
@@ -147,8 +146,8 @@ function Home() {
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
 
-            <div className={`h-[80vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
-                {<div className={`relative bg-transparent lg:bg-transparent h-[80vh] overflow-y-scroll  px-5  flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
+            <div className={`h-full w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
+                {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[70px] flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
                     {filter.length == 0 &&
                         servicios !== null && servicios !== undefined &&
                         servicios.sort(sortArray).map((i, index) => {
