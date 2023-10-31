@@ -49,7 +49,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
     
     return (
 
-            <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
+            <tr className="bg-white text-[14px] border-b hover:bg-gray-50 " >
                 <td className="min-w-[200px] px-3 py-4  flex flex-col text-[16px]  text-gray-700">
                     {i['nombre 1']}
                     <span className="text-[16px]  text-gray-700  tracking-tight">{i.costo} Bs.</span>

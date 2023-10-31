@@ -194,7 +194,7 @@ function Home() {
 
                     <div className={`relative w-full overflow-auto ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? (location.href.includes('#Services') ? '' : 'hidden lg:block') : 'hidden'} `}>
                         {Object.values(cart).length > 0
-                            ? <table className="w-full mt-[15px] shadow-2xl border-[1px] border-gray-200  min-w-[700px] overflow-hidden text-[12px] text-left text-gray-500">
+                            ? <table className="w-full mt-[15px] shadow-2xl border-[1px] border-gray-200  min-w-[700px] overflow-hidden text-[14px] text-left text-gray-500">
                                 <thead className="w-full text-[16px] text-gray-900 uppercase border-b bg-gray-100">
                                     <tr>
                                         <th scope="col" className="w-[200px] px-2 py-1 font-bold">
@@ -219,7 +219,7 @@ function Home() {
                                         i={i}
                                         inmediato={JSON.parse(i['costos y entregas'])[`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
                                     />)}
-                                    <tr className="bg-white text-[12px] border-b">
+                                    <tr className="bg-white text-[14px] border-b">
                                         <td className="px-2 py-4 text-[16px] text-gray-900">
                                             TOTAL:
                                         </td>

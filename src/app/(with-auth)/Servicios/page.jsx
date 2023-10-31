@@ -113,8 +113,8 @@ function Home() {
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre' />
                 </div>
                 <br />
-                <table className={`w-[3000px]  min-w-[${sucursales && sucursales !== undefined ? sucursales.length * 200 + 1500 : 1500}px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400`}>
-                    <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className={`w-[3000px]  min-w-[${sucursales && sucursales !== undefined ? sucursales.length * 200 + 1500 : 1500}px] text-[14px] text-left text-gray-500 border-t-4 border-gray-400`}>
+                    <thead className="text-[14px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="min-w-[50px] px-3 py-3">
                                 #
@@ -162,7 +162,7 @@ function Home() {
                             return (i['nombre 1'].toLowerCase().includes(filter) ||
                                 i['nombre 2'].toLowerCase().includes(filter) ||
                                 i['nombre 3'].toLowerCase().includes(filter)) &&
-                                <tr className="bg-white text-[12px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                                <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                                     <td className="min-w-[50px] px-3 py-4 text-gray-900 align-middle">
                                        {index + 1}
                                     </td>

@@ -76,8 +76,8 @@ function Home() {
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre' />
                 </div>
                 <br />
-                <table className="min-w-full  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
-                    <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="min-w-full  text-[14px] text-left text-gray-500 border-t-4 border-gray-400">
+                    <thead className="text-[14px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-3 py-3">
                                 #
@@ -103,7 +103,7 @@ function Home() {
                     <tbody>
                         {sucursales && temporal !== undefined && sucursales.sort(sortArray).map((i, index) => {
 
-                            return i.ciudad.includes(ciudad) && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                            return i.ciudad.includes(ciudad) && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 ">
                                     <span className='h-full flex py-2'>{index + 1}</span>
                                 </td>

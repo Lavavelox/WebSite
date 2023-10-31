@@ -238,33 +238,33 @@ function Home() {
                                         {i['nombre receptor']
                                             ? <>
                                                 {i['nombre receptor']}
-                                                <span className='absolute text-[12px] top-[10px] right-3 text-green-500'>*Entregado</span>
+                                                <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span>
                                             </>
                                             : <>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre receptor' defaultValue={i['nombre receptor']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                                <span className='absolute text-[12px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
+                                                <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
                                             </>}
                                     </td>
                                     <td className="relative w-[200px] px-3 py-4  text-gray-900 ">
                                         {i['CI receptor']
                                             ? <>
                                                 {i['CI receptor']}
-                                                <span className='absolute text-[12px] top-[10px] right-3 text-green-500'>*Entregado</span>
+                                                <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span>
                                             </>
                                             : <>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='CI receptor' defaultValue={i['CI receptor']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                                <span className='absolute text-[12px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
+                                                <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
                                             </>}
                                     </td>
                                     <td className="relative w-[150px] px-3 py-4  text-gray-900 ">
                                         {i['whatsapp receptor']
                                             ? <>
                                                 {i['whatsapp receptor']}
-                                                <span className='absolute text-[12px] top-[10px] right-3 text-green-500'>*Entregado</span>
+                                                <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span>
                                             </>
                                             : <>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='whatsapp receptor' className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                                <span className='absolute text-[12px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
+                                                <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
                                             </>}
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
