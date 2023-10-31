@@ -129,8 +129,8 @@ function Home() {
                     </div>
                 </div>
                 <br />
-                <table className="w-[3200px] border-[1px] bg-white text-[14px] text-left text-gray-500 border-t-4 border-t-gray-400">
-                    <thead className="w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
+                <table className="min-w-[3200px] border-[1px] bg-white text-[14px] text-left text-gray-500 border-t-4 border-t-gray-400">
+                    <thead className="min-w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
                         <tr>
                             <th scope="col" className="px-3 py-3">
                                 #
@@ -200,38 +200,38 @@ function Home() {
                                     <td className="px-3 py-4  flex  text-gray-900 ">
                                         <span className='h-full flex py-2'>{index + 1}</span>
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 " >
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                         {i['code']}
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 " >
-                                        {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
+                                        {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                         {i['nombre']}
                                     </td>
                                     <td className="px-3 py-4  text-gray-900 " >
-                                        {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
+                                        {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                         {i['CI']}
                                     </td>
-                                    <td className="w-[300px] px-3 py-4  text-gray-900 " >
+                                    <td className="min-w-[300px] px-3 py-4  text-gray-900 " >
                                         {/* {i['direccion']} */}
                                         <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='direccion' defaultValue={i['direccion']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                     </td>
-                                    <td className="w-[300px] px-3 py-4  text-gray-900 ">
+                                    <td className="min-w-[300px] px-3 py-4  text-gray-900 ">
                                         {Object.values(i.servicios).map((el, index) => <li key={index}>
                                             {`${el['nombre 1']} ${'('}${el['cantidad']}${')'}`} <br />
                                             {el['observacion'] !== undefined && `${'['}${el['observacion']}${']'}`}
                                         </li>)}
                                     </td>
-                                    <td className="w-[150px] px-3 py-4  text-gray-900  ">
+                                    <td className="min-w-[150px] px-3 py-4  text-gray-900  ">
                                         <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='whatsapp' defaultValue={i['whatsapp']} className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                     </td>
 
-                                    <td className="w-[100px] px-3 py-4  text-gray-900">
+                                    <td className="min-w-[100px] px-3 py-4  text-gray-900">
                                         <textarea id="message" rows="1" onChange={(e) => onChangeHandlerCalc(e, i)} cols="1" name='ac' className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder={i.ac ? i.ac : 0}></textarea>
                                     </td>
                                     <td className="px-3 py-4  text-gray-900 ">
                                         {i['saldo'] - (state[i.uuid] && state[i.uuid].ac && state[i.uuid].ac !== undefined ? state[i.uuid].ac - i.ac : 0)}
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 " >
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                         {i['fecha']}
                                     </td>
                                     <td className="relative w-[200px] px-3 py-4  text-gray-900 ">
@@ -267,26 +267,26 @@ function Home() {
                                                 <span className='absolute text-[12px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
                                             </>}
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 " >
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                         {i['nombre receptor']
                                             ? i['observaciones entrega'] ? i['observaciones entrega'] : 'Sin observaciones'
                                             : <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='observaciones entrega' className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                         }
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 " >
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                         {i['fecha entrega']}
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 ">
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 ">
                                         {i.estado !== 'Entregado'
                                             ? <Select arr={estado} name='estado' uuid={i.uuid} defaultValue={i.estado ? i.estado : 'Pendiente'} click={onClickHandlerSelect} />
                                             : <div className={`p-3  text-center rounded-xl ${i.estado == 'Entregado' && 'bg-green-400'} `}>
                                                 {i.estado}
                                             </div>}
                                     </td>
-                                    <td className="w-[200px] px-3 py-4  text-gray-900 ">
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 ">
                                         {i['nombre receptor'] ? <InvoicePDF i={i} /> : <Button theme={"Disable"}>PDF</Button>}
                                     </td>
-                                    <td className="w-[200px] px-3 py-4">
+                                    <td className="min-w-[200px] px-3 py-4">
                                         {state[i.uuid] && (state[i.uuid]['nombre receptor'] || state[i.uuid]['CI receptor'] || state[i.uuid]['whatsapp receptor'])
                                             ? (state[i.uuid]['nombre receptor'] && state[i.uuid]['CI receptor'] && state[i.uuid]['whatsapp receptor']
                                                 ? <Button theme={"Primary"} click={() => save(i)}>Entregar</Button>
@@ -294,7 +294,7 @@ function Home() {
                                             : <Button theme={"Disable"}>Entregar</Button>
                                         }
                                     </td>
-                                    <td className="w-[200px] px-3 py-4">
+                                    <td className="min-w-[200px] px-3 py-4">
                                         {(state[i.uuid] && (state[i.uuid]['Nombre receptor'] === undefined || state[i.uuid]['Nombre receptor'].length === 0) && (state[i.uuid]['CI receptor'] === undefined || state[i.uuid]['CI receptor'].length === 0) && (state[i.uuid]['Whatsapp receptor'] === undefined || state[i.uuid]['Whatsapp receptor'].length === 0)
                                             ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
                                             : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>)

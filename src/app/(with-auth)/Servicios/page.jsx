@@ -105,7 +105,7 @@ function Home() {
         <div className='h-full'>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
-            <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
+            <div className="relative w-[2500px] h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smoot" ref={refFirst}>
                 {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Servicios</h3>
                 <br />
@@ -116,7 +116,7 @@ function Home() {
                 <table className={`w-full min-w-[${sucursales && sucursales !== undefined ? sucursales.length * 200 + 1500 : 1500}px] text-[12px] text-left text-gray-500 border-t-4 border-gray-400`}>
                     <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="min-w-[50px] px-3 py-3">
                                 #
                             </th>
                             <th scope="col" className="px-3 py-3">
@@ -133,16 +133,16 @@ function Home() {
                                 Descripcion basica
                             </th>
 
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="text-center px-3 py-3">
                                 Categoria
                             </th>
                             {sucursales && sucursales !== undefined && sucursales.map((i) => {
                                 return <>
-                                    <th scope="col" className="px-3 py-3">
+                                    <th scope="col" className="min-w-[100px] text-center px-3 py-3">
                                         Costo 24 hrs <br />
                                         {i.nombre}
                                     </th>
-                                    <th scope="col" className="px-3 py-3">
+                                    <th scope="col" className="min-w-[100px] text-center px-3 py-3">
                                         Adicional inmediato <br />
                                         {i.nombre}
                                     </th>
@@ -151,7 +151,7 @@ function Home() {
                             <th scope="col" className="px-3 py-3">
                                 Imagen
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="text-center px-3 py-3">
                                 Editar
                             </th>
                         </tr>
@@ -163,28 +163,26 @@ function Home() {
                                 i['nombre 2'].toLowerCase().includes(filter) ||
                                 i['nombre 3'].toLowerCase().includes(filter)) &&
                                 <tr className="bg-white text-[12px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                                    <td className="px-3 py-4  flex font-semibold text-gray-900 ">
-                                        <span className='h-full flex py-2'>{index + 1}</span>
+                                    <td className="min-w-[50px] px-3 py-4 text-gray-900 align-middle">
+                                       {index + 1}
                                     </td>
-                                    <td className="px-3 py-4 font-semibold text-gray-900 " >
-                                        <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 1' defaultValue={i['nombre 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
+                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 1' defaultValue={i['nombre 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                         {/* {i['nombre 1']} */}
                                     </td>
-                                    <td className="px-3 py-4 font-semibold text-gray-900 " >
-                                        <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 2' defaultValue={i['nombre 2']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
+                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 2' defaultValue={i['nombre 2']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                         {/* {i['nombre 2']} */}
                                     </td>
-                                    <td className="px-3 py-4 font-semibold text-gray-900 " >
-                                        <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 3' defaultValue={i['nombre 3']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
+                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 3' defaultValue={i['nombre 3']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                         {/* {i['nombre 3']} */}
                                     </td>
-                                    <td className="px-3 py-4 font-semibold text-gray-900 " >
-                                        <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='descripcion basica' defaultValue={i['descripcion basica']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                        {/* {i['descripcion basica']} */}
+                                    <td className="px-3 py-4  text-gray-900 " >
+                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='descripcion basica' defaultValue={i['descripcion basica']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                     </td>
-                                    <td className="px-3 py-4 font-semibold text-gray-900 " >
+                                    <td className="px-3 py-4  text-gray-900 " >
                                         <Select arr={categoria} name='categoria' click={onClickHandlerSelect} />
-                                        {/* {i['categoria']} */}
                                     </td>
 
                                     {/* {JSON.parse(i['costos y entregas'])[`costo inmediato ${item.uuid}`]}  */}
@@ -193,11 +191,11 @@ function Home() {
                                         return <>
 
                                             <td>
-                                                <textarea id="message" rows="6" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo 24 hrs ${item.uuid}`} defaultValue={JSON.parse(i['costos y entregas'])[`costo 24 hrs ${item.uuid}`]} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo 24 hrs ${item.uuid}`} defaultValue={JSON.parse(i['costos y entregas'])[`costo 24 hrs ${item.uuid}`]} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                             </td>
 
                                             <td>
-                                                <textarea id="message" rows="6" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo inmediato ${item.uuid}`} defaultValue={JSON.parse(i['costos y entregas'])[`costo inmediato ${item.uuid}`]} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo inmediato ${item.uuid}`} defaultValue={JSON.parse(i['costos y entregas'])[`costo inmediato ${item.uuid}`]} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                             </td>
                                         </>
                                     }
@@ -218,13 +216,13 @@ function Home() {
                                     })} */}
 
 
-                                    <td className="w-32 p-4">
+                                    <td className="min-w-32 p-4">
                                         <label htmlFor={`img${index}`}>
                                             <img src={urlPostImage[i.uuid] ? urlPostImage[i.uuid] : i.url} alt="Apple Watch" />
                                             <input id={`img${index}`} type="file" onChange={(e) => manageInputIMG(e, i.uuid)} className='hidden' />
                                         </label>
                                     </td>
-                                    <td className="px-3 py-4">
+                                    <td className="min-w-[200px] px-3 py-4">
                                         {state[i.uuid] || stateDynamic[i.uuid]
                                             ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
                                             : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>

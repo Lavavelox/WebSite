@@ -124,7 +124,7 @@ export default function Modal({ theme, styled, click, children, }) {
                     <div className="col-span-full">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Administrar portada principal</h2>
                         <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Foto de perfil de portada</label>
-                        <div className="w-full flex justify-center">
+                        <div className="min-w-full flex justify-center">
                             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 md:w-[250px] md:h-[200px]" style={{ backgroundImage: `url('${dataURL && dataURL.frontPage && dataURL.frontPage ? dataURL.frontPage : (userDB && userDB.frontPage && userDB.frontPage.url)}')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                                 <div className="text-center">
                                     <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -144,7 +144,7 @@ export default function Modal({ theme, styled, click, children, }) {
                     </div>
                     <div className="col-span-full">
                         <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Imagen de portada</label>
-                        <div className="w-full flex justify-center">
+                        <div className="min-w-full flex justify-center">
                             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 md:w-[250px] md:h-[200px]" style={{ backgroundImage: `url('${dataURL && dataURL.frontIMG && dataURL.frontIMG ? dataURL.frontIMG : (userDB && userDB.frontPage && userDB.frontPage.urlIMG)}')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                                 <div className="text-center">
                                     <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -208,7 +208,7 @@ export default function Modal({ theme, styled, click, children, }) {
                     <div className="col-span-full">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Administrar Servicios</h2>
                         <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Foto de servicio</label>
-                        <div className="w-full flex justify-center">
+                        <div className="min-w-full flex justify-center">
                             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 md:w-[250px] md:h-[200px]" style={{ backgroundImage: `url('${dataURL && dataURL.servicioIMG && dataURL.servicioIMG ? dataURL.servicioIMG : (item && item.url)}')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                                 <div className="text-center">
                                     <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -289,7 +289,7 @@ export default function Modal({ theme, styled, click, children, }) {
                     <div className="col-span-full">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Administrar artículos</h2>
                         <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Foto de servicio</label>
-                        <div className="w-full flex justify-center">
+                        <div className="min-w-full flex justify-center">
                             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 md:w-[250px] md:h-[200px]" style={{ backgroundImage: `url('${dataURL && dataURL.articleIMG && dataURL.articleIMG ? dataURL.articleIMG : (userDB && userDB.articleIMG.IMG2023.url)}')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                                 <div className="text-center">
                                     <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

@@ -8,7 +8,7 @@ import { useUser } from '@/context/'
 import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
 import { roles } from '@/constants'
 
@@ -19,12 +19,8 @@ function Home() {
 
     const router = useRouter()
     const [state, setState] = useState({})
-    const [postImage, setPostImage] = useState({})
-    const [urlPostImage, setUrlPostImage] = useState({})
-    const [disponibilidad, setDisponibilidad] = useState('')
-    const [categoria, setCategoria] = useState('')
-    const [ciudad, setCiudad] = useState('')
     const [filter, setFilter] = useState('')
+    const refFirst = useRef(null);
 
 
     function onChangeHandler(e) {
@@ -54,24 +50,41 @@ function Home() {
         setUserItem(i)
         setModal('Delete')
     }
+    const prev = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            refFirst.current.scrollLeft = scrollLeft - itemWidth;
+        });
+    };
+    const next = () => {
+        requestAnimationFrame(() => {
+            const scrollLeft = refFirst.current.scrollLeft;
+            console.log(scrollLeft)
+            const itemWidth = screen.width - 50
+            console.log(itemWidth)
+            refFirst.current.scrollLeft = scrollLeft + itemWidth;
+        });
+    };
     function sortArray(x, y) {
         if (x['nombre'].toLowerCase() < y['nombre'].toLowerCase()) { return -1 }
         if (x['nombre'].toLowerCase() > y['nombre'].toLowerCase()) { return 1 }
         return 0
     }
 
-    console.log(state)
     useEffect(() => {
-        readUserAllData('Usuarios', setClientes)
-        readUserAllData('Sucursales', setSucursales)
-
-    }, [])
+       clientes === undefined && readUserAllData('Usuarios', setClientes)
+       sucursales === undefined &&readUserAllData('Sucursales', setSucursales)
+    }, [clientes, sucursales])
 
     return (
 
         <div className='h-full'>
-   
-            <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh]">
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
+            <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
+
+            <div className="relative h-full w-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smooth" ref={refFirst}>
                 {modal === 'Delete' && <Modal click={deletConfirm} funcion={() => delet(i)}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Personal</h3>
                 <br />
@@ -79,10 +92,10 @@ function Home() {
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Filtrar por nombre' />
                 </div>
                 <br />
-                <table className="w-full  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
+                <table className="min-w-[1500px]  text-[12px] text-left text-gray-500 border-t-4 border-gray-400">
                     <thead className="text-[12px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="min-w-[50px] px-3 py-3">
                                 #
                             </th>
                             <th scope="col" className="px-3 py-3">
@@ -98,13 +111,13 @@ function Home() {
                             <th scope="col" className="px-3 py-3">
                                 Whatsapp
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="text-center px-3 py-3">
                                 Rol
                             </th>
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="text-center px-3 py-3">
                                 Sucursal
                             </th>  
-                            <th scope="col" className="px-3 py-3">
+                            <th scope="col" className="text-center px-3 py-3">
                                 Eliminar
                             </th>
                         </tr>
@@ -113,32 +126,32 @@ function Home() {
                         {clientes !== undefined && sucursales !== undefined && clientes.sort(sortArray).map((i, index) => {
 
                             return i.rol !== 'Cliente' && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[12px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                                <td className="px-3 py-4  flex font-semibold text-gray-900 ">
-                                    <span className='h-full flex py-2'>{index + 1}</span>
+                                <td className="min-w-[50px] h-full px-3 py-4 text-gray-900 align-middle">
+                                   {index + 1}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 " onClick={(e) => redirect(i.uuid)}>
-                                    {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
+                                <td className="min-w-[250px] px-3 py-4  text-gray-900 " onClick={(e) => redirect(i.uuid)}>
+                                    {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                     {i['nombre']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 " onClick={(e) => redirect(i.uuid)}>
-                                    {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
+                                <td className="min-w-[150px] px-3 py-4  text-gray-900 " onClick={(e) => redirect(i.uuid)}>
+                                    {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                     {i['CI']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 " onClick={(e) => redirect(i.uuid)}>
-                                    {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
+                                <td className="px-3 py-4  text-gray-900 " onClick={(e) => redirect(i.uuid)}>
+                                    {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                     {i['direccion']}
                                 </td>
-                                <td className="px-3 py-4 font-semibold text-gray-900 ">
-                                    {/* <textarea id="message" rows="6" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
+                                <td className="min-w-[150px] px-3 py-4  text-gray-900 ">
+                                    {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} name='costo' cols="4" defaultValue={i['costo']} className="block p-1.5 h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                     {i['whatsapp']}
                                 </td>
-                                <td className="w-[200px] px-3 py-4 font-semibold text-gray-900 " >
+                                <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                     <Select arr={roles} name='rol' uuid={i.uuid} defaultValue={i.rol} click={onClickHandlerSelect} />
                                 </td>
-                                <td className="w-[200px] px-3 py-4 font-semibold text-gray-900 " >
+                                <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                     <Select arr={sucursales.map((i) => i.nombre)} name='sucursal' uuid={i.uuid} defaultValue={i.sucursal ? i.sucursal : 'No asignado'} click={onClickHandlerSelect2} />
                                 </td>
-                                <td className="px-3 py-4">
+                                <td className="min-w-[200px] px-3 py-4">
                                     {state[i.uuid]
                                         ? <Button theme={"Primary"} click={() => save(i)}>Guardar</Button>
                                         : <Button theme={"Danger"} click={() => delet(i)}>Eliminar</Button>

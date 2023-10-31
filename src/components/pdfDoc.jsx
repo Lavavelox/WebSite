@@ -60,7 +60,7 @@ const PDF = () => {
         setisCliente(true)
     },[]);
     return (
-        <div className="w-full height-[30px]">
+        <div className="min-w-full height-[30px]">
             {isCliente && <PDFDownloadLink document={
                 <Document >
                     <Page size="A4" style={{padding: '50px'}}>

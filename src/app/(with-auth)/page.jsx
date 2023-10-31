@@ -146,8 +146,8 @@ function Home() {
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
 
-            <div className={`h-full w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
-                {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[70px] flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
+            <div className={`h-[85vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
+                {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[90px] lg:pb-0 flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
                     {filter.length == 0 &&
                         servicios !== null && servicios !== undefined &&
                         servicios.sort(sortArray).map((i, index) => {
@@ -239,7 +239,7 @@ function Home() {
                         {Object.values(cart).length > 0 ? <div className='fixed left-0 md:relative w-full p-5'>
                             <a href='#Client'><Button type="button" theme="Primary">Continuar</Button></a>
                         </div>
-                            : <Button type="button" theme="Primary" click={() => router.replace('/')}>atras</Button>}
+                            : <Button type="button" theme="Primary" styled="md:hidden" click={() => router.replace('/')}>atras</Button>}
                     </div>
 
                     {

@@ -144,9 +144,9 @@ function Comprar({ theme, styled, click, children }) {
     <div className='relative border-t-4 border-t-gray-400 bg-white overflow-x-auto items-center justify-between w-full max-w-screen bg-transparent md:w-auto lg:max-w-auto transition-all	z-0' >
       <h3 className='text-center  border-[1px] border-gray-200  bg-gray-100 text-[16px] px-5 py-2  font-bold' >MIS COMPRAS</h3>
 
-      <table className="w-full shadow-2xl lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
+      <table className="min-w-full shadow-2xl lg:min-w-[800px] border-[1px] border-gray-200 lg:w-full lg:min-w-auto text-[12px] text-left text-gray-500">
 
-        {Object.values(cart).length > 0 && <thead className="w-full text-[16px] text-gray-900 uppercase border-b bg-gray-100">
+        {Object.values(cart).length > 0 && <thead className="min-w-full text-[16px] text-gray-900 uppercase border-b bg-gray-100">
           <tr>
             <th scope="col-3" className="px-2 py-3 font-bold border-r">
               Producto

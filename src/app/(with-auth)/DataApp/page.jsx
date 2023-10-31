@@ -64,7 +64,7 @@ console.log(perfil)
                 {disable && <LoaderBlack></LoaderBlack>}
                 <h3 className='text-center text-[16px] pb-3 font-bold'>Datos Empresariales</h3>
                 <br />
-                <div className="w-full flex justify-center ">
+                <div className="min-w-full flex justify-center ">
                     <label htmlFor="fileUpload" className="mt-2 flex justify-center items-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 md:w-[250px] md:h-[200px]" style={{ backgroundImage: `url(${urlPostImage === null && perfil ? perfil['url'] : urlPostImage })`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
                         <div className="text-center">
                             <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

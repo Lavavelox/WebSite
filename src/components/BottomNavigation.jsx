@@ -146,7 +146,7 @@ export default function BottomNavigation({ rol }) {
         case 'Medico':
             return <div className={`grid h-full max-w-lg grid-cols-3 mx-auto font-medium  z-50`}>
                 <Button click={() => redirectHandler(`/Medico/Recetas`)} name={'Recetas'}>
-                    <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                     </svg>
                     <span className="text-[12px] text-white   ">Recetas</span>
@@ -156,7 +156,7 @@ export default function BottomNavigation({ rol }) {
                     <span className="text-[12px] text-white   ">Tienda</span>
                 </Button>
                 <Button click={redirectHandlerWindow}>
-                    <span className="w-11 h-11 mb-1 text-white rounded-full  p-1">
+                    <span className="min-w-11 h-11 mb-1 text-white rounded-full  p-1">
                         <Support />
                     </span>
                     <span className="text-[12px] text-white   ">Soporte</span>
@@ -176,13 +176,13 @@ export default function BottomNavigation({ rol }) {
                         <span className="text-[12px] text-white   ">Pedidos</span>
                     </Button>
                     <Button click={() => redirectHandler(`/Clinica/Verficar`)} name={'Pedidos'}>
-                        <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <svg aria-hidden="true" className="w-6 h-6  transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+                        <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <svg aria-hidden="true" className="min-w-6 h-6  transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                         </svg>
                         <span className="text-[12px] text-white   ">Verificar</span>
                     </Button>
                     <Button click={redirectHandlerWindow}>
-                        <span className="w-11 h-11 mb-1 text-white rounded-full  p-1">
+                        <span className="min-w-11 h-11 mb-1 text-white rounded-full  p-1">
                             <Support />
                         </span>
                         <span className="text-[12px] text-white   ">Soporte</span>
@@ -200,7 +200,7 @@ export default function BottomNavigation({ rol }) {
                         <span className="text-[12px] text-white   ">Tienda</span>
                     </Button>
                     <Button click={redirectHandlerWindow}>
-                        <span className="w-11 h-11 mb-1 text-white rounded-full  p-1">
+                        <span className="min-w-11 h-11 mb-1 text-white rounded-full  p-1">
                             <Support />
 
                         </span>
@@ -218,7 +218,7 @@ export default function BottomNavigation({ rol }) {
                     <span className="text-[12px] text-white   ">Productos</span>
                 </Button>
                 <Button click={() => redirectHandler(`/Distribuidor/Agregar`)} name={'Agregar'}>
-                    <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
                     </svg>
                     <span className="text-[12px] text-white   ">Agregar</span>
@@ -228,7 +228,7 @@ export default function BottomNavigation({ rol }) {
                     <span className="text-[12px] text-white   " >Pedidos</span>
                 </Button>
                 <Button click={redirectHandlerWindow}>
-                    <span className="w-11 h-11 mb-1 text-white rounded-full  p-1">
+                    <span className="min-w-11 h-11 mb-1 text-white rounded-full  p-1">
                         <Support />
                     </span>
                     <span className="text-[12px] text-white   ">Soporte</span>
@@ -242,7 +242,7 @@ export default function BottomNavigation({ rol }) {
                 </Button>
 
                 <Button click={() => redirectHandler(`Servicios/Agregar`)} name={'Agregar'}>
-                    <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
                     </svg>
                 </Button>
@@ -265,6 +265,6 @@ export default function BottomNavigation({ rol }) {
 
 
 
-// <svg className="w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+// <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 //                         <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
 //                     </svg>

@@ -50,7 +50,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
     return (
 
             <tr className="bg-white text-[12px] border-b hover:bg-gray-50 " >
-                <td className="w-[200px] px-3 py-4  flex flex-col text-[16px]  text-gray-700">
+                <td className="min-w-[200px] px-3 py-4  flex flex-col text-[16px]  text-gray-700">
                     {i['nombre 1']}
                     <span className="text-[16px]  text-gray-700  tracking-tight">{i.costo} Bs.</span>
                 </td>
@@ -66,7 +66,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                             </svg>}
                     </div>
                 </td>
-                <td className="w-[150px] text-center">
+                <td className="min-w-[150px] text-center">
                     <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                 {/* <Button theme='Primary' click={(e) => addObs(e, i)}>Observación</Button> */}
                 </td>
