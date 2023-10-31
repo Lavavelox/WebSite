@@ -40,6 +40,8 @@ function Home() {
     const [filterNav, setFilterNav] = useState(false)
     const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
     const [state, setState] = useState({})
+    const [pdfDB, setPdfDB] = useState(null)
+
     const [mode, setMode] = useState('Services')
     const [pdf, setPDF] = useState(false)
     const path = useReactPath();
@@ -125,7 +127,7 @@ function Home() {
                 }, 0)
         }
         await writeUserData('Tareas', data)
-
+setPdfDB(data)
         return
     }
     function navigate() {
@@ -307,7 +309,7 @@ function Home() {
                             {pdf === false && <a href='#QR'  className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
                             {pdf && <Button type="submit" theme="Danger">Finalizar</Button>}
-                            {pdf && <InvoicePDF />}
+                            {pdf && pdfDB && <InvoicePDF i={pdfDB}/>}
                         </form>
                     }
                 </div >

@@ -113,7 +113,7 @@ const PDF = ({ i }) => {
                     </Page>
                 </Document>
             }
-                fileName='Comprobante'>
+                fileName={i['code']}>
                 {({ blob, url, loading, error }) =>
                     <Button type="button" theme='PrimaryPrint'>PDF</Button>
                 }

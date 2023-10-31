@@ -3,6 +3,7 @@ import ReactPDF, {
     Page,
     Text,
     View,
+    Image,
     Document,
     StyleSheet,
     Font
@@ -35,9 +36,15 @@ const styles = StyleSheet.create({
     },
     table: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         width: '100%',
         border: '1px solid black',
+    },
+    row: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        fontSize: '10px',
     },
     celda: {
         textAlign: 'center',
@@ -52,37 +59,59 @@ const styles = StyleSheet.create({
 
 
 
-const PDF = () => {
+const PDF = ({ i }) => {
     const [isCliente, setisCliente] = useState(false);
 
+    const Br = () => {
+        return <View style={{ height: '16px' }}></View>
+    }
 
     useEffect(() => {
         setisCliente(true)
-    },[]);
+    }, []);
     return (
         <div className="min-w-full height-[30px]">
             {isCliente && <PDFDownloadLink document={
                 <Document >
-                    <Page size="A4" style={{padding: '50px'}}>
+                    <Page size="A4" style={{ padding: '50px' }}>
+                        <Image src="/logo.png" style={{ position: 'absolute', height: '50px', width: '50px' }} />
 
                         <Text style={styles.textBold}>COMPROBANTE IMPRESO</Text>
+                        {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
                         <Text style={styles.textBold}>ORDEN DE TRABAJO</Text>
-                        <Text style={styles.text}>Nº1</Text>
-                        <Text style={styles.text}>CELULAR: +591 61278192 - 79588684</Text>
-                        <Text style={styles.text}>SUCURSAL: </Text>
+                        <Text style={styles.text}>{i['code']}</Text>
+                        <Text style={styles.text}>61278192 - 79588684</Text>
                         <Text style={styles.text}>LA PAZ - BOLIVIA</Text>
-                        <Text style={styles.textRight}>FECHA Y HORA DE RECEPCIÓN:</Text>
-                        <Text style={styles.textRight}>FECHA DE ENTREGA</Text>
-                        <Text style={styles.textRight}>NOMBRE DEL CLIENTE:</Text>
-                        <Text style={styles.textRight}>NUMERO DE CELULAR:</Text>
-                        <Text style={styles.textRight}>DETALLE</Text>
-                        <View style={styles.table}>
+                        <Br />
+                        <Text style={styles.textRight}>FECHA Y HORA DE RECEPCIÓN: {i['fecha']}</Text>
+                        <Text style={styles.textRight}>NOMBRE DEL CLIENTE: {i['nombre']}</Text>
+                        <Text style={styles.textRight}>CELULAR DE RECEPTOR: {i['whatsapp']}</Text>
+                        <Text style={styles.textRight}>CI DE RECEPTOR: {i['CI']}</Text>
+                        <Br />
+                        <View style={styles.row}>
                             <Text style={styles.celda}>CANTIDAD</Text>
                             <Text style={styles.celda}>DETALLE</Text>
-                            <Text style={styles.celda}>DESCRIPCIÓN DE LAS PRENDAS</Text>
+                            <Text style={styles.celda}>OBSERVACIONES</Text>
                             <Text style={styles.celda}>PRECIO POR UNIDAD</Text>
                             <Text style={styles.celda}>SUB TOTAL</Text>
                         </View>
+
+                        {Object.values(i.servicios).map((el, index) => <li key={index}>
+                            <View style={styles.row}>
+                                <Text style={styles.celda}>{el['cantidad']}</Text>
+                                <Text style={styles.celda}>{el['nombre 1']}</Text>
+                                <Text style={styles.celda}>{el['observacion']}</Text>
+                                <Text style={styles.celda}>{el['costo']}</Text>
+                                <Text style={styles.celda}>{el['costo'] * el['cantidad']}</Text>
+                            </View>
+                        </li>)}
+                        <Br />
+
+
+
+
+
+
                         <Text style={styles.textBold}>NOTA IMPORTANTE</Text>
                         <Text style={styles.text}>La presente orden de trabajo es obligatoría para la entrega de su prenda.</Text>
                         <Text style={styles.text}>No se responsabilizara por objetos, dinero u otro dejado en las prendas, ni perdidas de botones,
@@ -99,10 +128,10 @@ const PDF = () => {
                     </Page>
                 </Document>
             }
-                fileName='Comprobante'>
+            fileName={i['code']}>
                 {({ blob, url, loading, error }) =>
-                        <Button type="button" theme='PrimaryPrint'>Imprimir Comprobante</Button>
-                    }
+                    <Button type="button" theme='PrimaryPrint'>Imprimir Comprobante</Button>
+                }
             </PDFDownloadLink>}
         </div>
     );
