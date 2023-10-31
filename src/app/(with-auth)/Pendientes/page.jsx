@@ -212,8 +212,12 @@ function Home() {
                                         {i['CI']}
                                     </td>
                                     <td className="min-w-[300px] px-3 py-4  text-gray-900 " >
-                                        {/* {i['direccion']} */}
-                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='direccion' defaultValue={i['direccion']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+
+                                        {i['nombre receptor']
+                                            ? i['direccion']
+                                            : <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='direccion' defaultValue={i['direccion']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+
+                                        }
                                     </td>
                                     <td className="min-w-[300px] px-3 py-4  text-gray-900 ">
                                         {Object.values(i.servicios).map((el, index) => <li key={index}>
@@ -222,11 +226,17 @@ function Home() {
                                         </li>)}
                                     </td>
                                     <td className="min-w-[150px] px-3 py-4  text-gray-900  ">
-                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='whatsapp' defaultValue={i['whatsapp']} className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                        {i['nombre receptor']
+                                            ? i['whatsapp']
+                                            : <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='whatsapp' defaultValue={i['whatsapp']} className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                        }
                                     </td>
 
                                     <td className="min-w-[100px] px-3 py-4  text-gray-900">
-                                        <textarea id="message" rows="1" onChange={(e) => onChangeHandlerCalc(e, i)} cols="1" name='ac' className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder={i.ac ? i.ac : 0}></textarea>
+                                        {i['nombre receptor']
+                                            ? i['ac']
+                                            : <textarea id="message" rows="1" onChange={(e) => onChangeHandlerCalc(e, i)} cols="1" name='ac' className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder={i.ac ? i.ac : 0}></textarea>
+                                        }
                                     </td>
                                     <td className="px-3 py-4  text-gray-900 ">
                                         {i['saldo'] - (state[i.uuid] && state[i.uuid].ac && state[i.uuid].ac !== undefined ? state[i.uuid].ac - i.ac : 0)}
