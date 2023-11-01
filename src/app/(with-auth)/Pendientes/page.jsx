@@ -211,12 +211,12 @@ function Home() {
                         {tareas !== null && tareas !== undefined && tareas.sort(sortArray).map((i, index) => {
 
                             return i.sucursal.toLowerCase().includes(tag.toLowerCase()) &&  i.estado.toLowerCase().includes(entrega.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) &&
-                                <tr className={` text-[16px] border-b dark:bg-gray-800 ${i.estado === 'Entregado' && 'bg-green-100'}  ${i.estado === 'Concluido' && 'bg-yellow-100'}  ${i.estado === 'Pendiente' && 'bg-gray-50'}`} key={index}>
+                                <tr className={` text-[16px] border-b dark:bg-gray-800 `} key={index}>
                                     <td className="px-3 py-4  flex  text-gray-900 ">
                                         <span className='h-full flex py-2'>{index + 1}</span>
                                     </td>
                                     <td className={`min-w-[200px] px-3 py-4  text-gray-900 `} >
-                                        {i['code']}
+                                       <span className={`p-3 rounded-xl ${i.estado === 'Entregado' && 'bg-green-400'}  ${i.estado === 'Concluido' && 'bg-yellow-300'}  ${i.estado === 'Pendiente' && 'bg-gray-50'}`}>{i['code']}</span> 
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                         {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}

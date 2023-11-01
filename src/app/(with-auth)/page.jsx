@@ -21,7 +21,7 @@ import Input from '@/components/Input'
 import MiniCard from '@/components/MiniCard'
 import { useReactPath } from '@/HOCs/useReactPath'
 import { useMask } from '@react-input/mask';
-import { getDayMonthYearHour } from '@/utils/getDate'
+import { getDayMonthYearHour, getMonthYear } from '@/utils/getDate'
 import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
@@ -113,6 +113,7 @@ function Home() {
 
             code,
             fecha: getDayMonthYearHour(),
+            mes: getMonthYear(),
             sucursal: userDB.sucursal,
             saldo: state.ac && state.ac !== undefined
                 ? Object.values(cart).reduce((acc, i, index) => {
