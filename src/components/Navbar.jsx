@@ -8,7 +8,7 @@ import Modal from '@/components/Modal'
 
 
 export default function BottomNavigation({ rol }) {
-    const { user, userDB, modal, setModal, setUserProfile, Perfil, setUserData, setUserProduct, setRecetaDB, setUserCart, setUserDistributorPDB, filter, setFilter, nav, setNav } = useUser()
+    const { user, userDB, modal, setModal, setUserProfile, perfil, setUserData, setUserProduct, setRecetaDB, setUserCart, setUserDistributorPDB, filter, setFilter, nav, setNav } = useUser()
 
     const router = useRouter()
 
@@ -21,7 +21,7 @@ export default function BottomNavigation({ rol }) {
     }
 
     const redirectHandlerWindow = () => {
-        window.open(`https://api.whatsapp.com/send?phone=${Perfil.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
+        window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
         setNav(false)
         // setWhatsapp(!whatsapp)
     }

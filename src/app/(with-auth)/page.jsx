@@ -27,7 +27,7 @@ const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
 });
 function Home() {
-    const { filterDis, setFilterDis,
+    const { filterDis, setFilterDis, Perfil,
         user, userDB, cart, setUserCart,
         modal, setUserData,
         setModal, servicios, setServicios,
@@ -49,8 +49,38 @@ function Home() {
     function onChangeHandler(e) {
         setState({ ...state, [e.target.name]: e.target.value })
     }
-    function HandlerCheckOut() {
-        router.push('/Asignar')
+    async function HandlerCheckOut(e) {
+        window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=hola%20Lavavelox%20¿Pueden%20ayudarme?%20`, '_blank')
+
+        // e.preventDefault()
+        // console.log('submit')
+        // setPDF(true)
+        // const res = await readLateData('Tareas', userDB.sucursal)
+        // const nextNum = res && res.data && res.data[0] && res.data[0].code !== undefined ? res.data[0].code.split('_')[1] * 1 + 1 : '1'
+        // const code = generateNO(nextNum)
+        // const data = {
+        //     ...state,
+        //     servicios: cart,
+        //     code,
+        //     fecha: getDayMonthYearHour(),
+        //     mes: getMonthYear(),
+        //     sucursal: userDB.sucursal,
+        //     saldo: state.ac && state.ac !== undefined
+        //         ? Object.values(cart).reduce((acc, i, index) => {
+        //             const sum = i['costo'] * i['cantidad']
+        //             const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+        //             return sum + sum2 + acc
+        //         }, 0) - state.ac
+        //         : Object.values(cart).reduce((acc, i, index) => {
+        //             const sum = i['costo'] * i['cantidad']
+        //             const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+        //             return sum + sum2 + acc
+        //         }, 0)
+        // }
+        // await writeUserData('Tareas', data)
+        // setPdfDB(data)
+        // return
+
     }
 
     function HandlerOnChange(e) {
@@ -128,14 +158,14 @@ function Home() {
                 }, 0)
         }
         await writeUserData('Tareas', data)
-setPdfDB(data)
+        setPdfDB(data)
         return
     }
     function navigate() {
         router.back()
     }
-console.log(state)
-console.log(cart)
+    console.log(state)
+    console.log(cart)
     console.log(pdfDB)
     useEffect(() => {
         if (user === undefined) onAuth(setUserProfile)
@@ -144,7 +174,7 @@ console.log(cart)
             readUserData('Usuarios', user.uuid, setUserData, null, true)
         }
         user !== undefined && user !== null && readUserAllData('Servicios', setServicios)
-    }, [user, userDB, path])
+    }, [user, userDB, path, servicios])
 
     return (
         <main className="">
@@ -310,10 +340,10 @@ console.log(cart)
                                             }, 0)}
                                 </span>
                             </div>
-                            {pdf === false && <a href='#QR'  className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
+                            {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
                             {pdf && <Button type="submit" theme="Danger">Finalizar</Button>}
-                            {pdf && pdfDB && <InvoicePDF i={pdfDB}/>}
+                            {pdf && pdfDB && <InvoicePDF i={pdfDB} />}
                         </form>
                     }
                 </div >

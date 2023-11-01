@@ -17,7 +17,7 @@ import Modal from '@/components/Modal'
 import { onAuth } from '@/supabase/utils'
 function Home({ children }) {
   const router = useRouter()
-  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setWhatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil } = useUser()
+  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil } = useUser()
   const pathname = usePathname()
 
 
@@ -120,7 +120,7 @@ function Home({ children }) {
           </Modal>}
           <div className={`fixed top-0 w-[220px] lg:w-[280px] shadow-xl  h-screen bg-white h-screen transition-all	z-40  ${nav ? 'left-0  ' : 'left-[-220px] lg:left-[-280px] '} z-50`} >
             <div className="py-0 overflow-y-auto ">
-              {user && user !== undefined && <Navbar rol={user.rol} />}
+              {user && user !== undefined && perfil !== undefined && <Navbar rol={user.rol} />}
             </div>
           </div>
 
@@ -190,7 +190,7 @@ function Home({ children }) {
               {children}
 
             </div>
-            {user && user !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
+            {user && user !== undefined  && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
               <BottomNavigation rol={user.rol} />
             </div>}
 

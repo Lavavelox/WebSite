@@ -19,7 +19,7 @@ function getDayMonthYear () {
 
 function getMonthYear () {
 
-    const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '10', '12']
+    const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
     const date = new Date();
     
     return `${date.getFullYear()}-${months[date.getMonth()]}`  

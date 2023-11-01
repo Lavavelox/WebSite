@@ -10,8 +10,8 @@ import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
 import { estado } from '@/constants'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
-import { getDayMonthYearHour } from '@/utils/getDate'
+import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData, readUserDataEq } from '@/supabase/utils'
+import { getDayMonthYearHour, getMonthYear } from '@/utils/getDate'
 import dynamic from "next/dynamic";
 
 const InvoicePDF = dynamic(() => import("@/components/pdf"), {
@@ -39,7 +39,7 @@ function Home() {
         setFilter(e.target.value)
     }
     function onChangeHandlerFilterMonth(e, i) {
-        console.log(e.target.value)
+        readUserDataEq('Tareas', 'sucursal', userDB['sucursal'], setTareas, 'mes', e.target.value)
     }
     function onChangeHandlerCalc(e, i) {
         setState({ ...state, [i.uuid]: { ...state[i.uuid], ac: e.target.value * 1 + i.ac * 1, saldo: i.saldo * 1 - e.target.value * 1 } })
@@ -98,13 +98,18 @@ function Home() {
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
-    console.log(state)
     useEffect(() => {
         // userDB  && tareas === null && tareas === undefined && readUserData('Tareas', userDB.sucursal, setPerfil, 'sucursal', )
+        // console.log(user)
 
-        userDB && userDB.rol !== undefined && userDB.rol === 'Admin' && tareas === undefined && readUserAllData('Tareas', setTareas)
-        userDB && userDB.rol !== undefined && userDB.rol === 'Personal' && tareas === undefined && readUserData('Tareas', userDB['sucursal'], setTareas, 'sucursal')
-        userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined && readUserData('Tareas', userDB.CI, setTareas, 'CI')
+        // console.log(userDB)
+        // userDB && userDB.rol !== undefined && console.log(userDB.rol)
+        // console.log(tareas)
+console.log(getMonthYear())
+
+        userDB && userDB.rol !== undefined && userDB.rol === 'Admin' && tareas === undefined && readUserData('Tareas', getMonthYear(), setTareas, 'mes')
+        userDB && userDB.rol !== undefined && userDB.rol === 'Personal' && tareas === undefined && readUserDataEq('Tareas', 'sucursal', userDB['sucursal'], setTareas, 'mes', getMonthYear())
+        userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined && readUserDataEq('Tareas', 'CI', userDB.CI, setTareas, 'mes', getMonthYear())
         sucursales === undefined && readUserAllData('Sucursales', setSucursales)
 
     }, [user, userDB, tareas, sucursales])

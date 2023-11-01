@@ -18,7 +18,7 @@ function Button({ click, children, name }) {
 
 
 export default function BottomNavigation({ rol }) {
-    const { user, userDB, setUserProfile, filter, setFilter, nav, setNav, setIntroClientVideo, introClientVideo, videoClientRef, setSoundClient, whatsapp, setWhatsapp, businessData } = useUser()
+    const { user, userDB, setUserProfile, filter, setFilter, nav, setNav, setIntroClientVideo, introClientVideo, videoClientRef, setSoundClient, whatsapp, setWhatsapp, businessData, perfil } = useUser()
 
     const router = useRouter()
 
