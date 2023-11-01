@@ -83,7 +83,7 @@ console.log(perfil)
                         </div>
                     </label>
                 </div>
-                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div className="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <Label htmlFor="">Whatsapp</Label>
                         <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={perfil && perfil['whatsapp']} require />

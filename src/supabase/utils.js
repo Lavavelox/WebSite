@@ -165,12 +165,15 @@ const readUserDataEq = async (rute, eq, uuid, updateContext, eq2, value) => {
 }
 
 const readUserAllData = async (rute, updateContext) => {
-
-    const result = await supabase
-        .from(rute)
-        .select()
-    return updateContext(result.data)
-
+    try {
+        const result = await supabase.from(rute).select()
+        console.log('eje')
+        updateContext(result.data)
+        console.log(result)
+        return
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const updateUserData = async (rute, object, uuid, eq) => {

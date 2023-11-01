@@ -51,36 +51,6 @@ function Home() {
     }
     async function HandlerCheckOut(e) {
         window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=hola%20Lavavelox%20¿Pueden%20ayudarme?%20`, '_blank')
-
-        // e.preventDefault()
-        // console.log('submit')
-        // setPDF(true)
-        // const res = await readLateData('Tareas', userDB.sucursal)
-        // const nextNum = res && res.data && res.data[0] && res.data[0].code !== undefined ? res.data[0].code.split('_')[1] * 1 + 1 : '1'
-        // const code = generateNO(nextNum)
-        // const data = {
-        //     ...state,
-        //     servicios: cart,
-        //     code,
-        //     fecha: getDayMonthYearHour(),
-        //     mes: getMonthYear(),
-        //     sucursal: userDB.sucursal,
-        //     saldo: state.ac && state.ac !== undefined
-        //         ? Object.values(cart).reduce((acc, i, index) => {
-        //             const sum = i['costo'] * i['cantidad']
-        //             const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-        //             return sum + sum2 + acc
-        //         }, 0) - state.ac
-        //         : Object.values(cart).reduce((acc, i, index) => {
-        //             const sum = i['costo'] * i['cantidad']
-        //             const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-        //             return sum + sum2 + acc
-        //         }, 0)
-        // }
-        // await writeUserData('Tareas', data)
-        // setPdfDB(data)
-        // return
-
     }
 
     function HandlerOnChange(e) {
@@ -164,17 +134,14 @@ function Home() {
     function navigate() {
         router.back()
     }
-    console.log(state)
-    console.log(cart)
-    console.log(pdfDB)
-    useEffect(() => {
-        if (user === undefined) onAuth(setUserProfile)
-        if (user === null) router.push('/Login')
-        if (user !== undefined && user !== null && userDB === undefined) {
-            readUserData('Usuarios', user.uuid, setUserData, null, true)
-        }
-        user !== undefined && user !== null && readUserAllData('Servicios', setServicios)
-    }, [user, userDB, path, servicios])
+
+    // useEffect(() => {
+    //     if (user === undefined) onAuth(setUserProfile)
+    //     if (user === null) router.push('/Login')
+    //     if (user !== undefined && user !== null && userDB === undefined) {
+    //         readUserData('Usuarios', user.uuid, setUserData, null, true)
+    //     }
+    // }, [user, userDB, path, servicios])
 
     return (
         <main className="">
@@ -212,18 +179,18 @@ function Home() {
 
                 <div className={`relative flex-col items-center w-full max-w-screen bg-red-500 h-[80vh] overflow-y-scroll bg-transparent  transition-all px-[15px]	z-0  lg:flex ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'flex' : 'hidden'} `} >
                     <div className='w-full gap-[10px]'>
-                        <ul class="flex border-b">
-                            <li class={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
-                                <a href='#Services' class={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? 'border-l border-t border-r rounded-t' : ''}`} >Servicios</a>
+                        <ul className="flex border-b">
+                            <li className={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
+                                <a href='#Services' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? 'border-l border-t border-r rounded-t' : ''}`} >Servicios</a>
                             </li>
-                            <li class={`mr-1 ${location.href.includes('#Client') ? '-mb-px' : ''}`}>
-                                <a href='#Client' class={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Client') ? 'border-l border-t border-r  rounded-t' : ''}`} >Cliente</a>
+                            <li className={`mr-1 ${location.href.includes('#Client') ? '-mb-px' : ''}`}>
+                                <a href='#Client' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Client') ? 'border-l border-t border-r  rounded-t' : ''}`} >Cliente</a>
                             </li>
-                            <li class={`mr-1 ${location.href.includes('#QR') ? '-mb-px' : ''}`}>
-                                <a href='#QR' class={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>
+                            <li className={`mr-1 ${location.href.includes('#QR') ? '-mb-px' : ''}`}>
+                                <a href='#QR' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>
                             </li>
-                            <li class={`mr-1 ${location.href.includes('#Saldo') ? '-mb-px' : ''}`}>
-                                <a href='#Saldo' class={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Saldo') ? 'border-l border-t border-r  rounded-t' : ''}`} >Saldo</a>
+                            <li className={`mr-1 ${location.href.includes('#Saldo') ? '-mb-px' : ''}`}>
+                                <a href='#Saldo' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Saldo') ? 'border-l border-t border-r  rounded-t' : ''}`} >Saldo</a>
                             </li>
                         </ul>
                     </div>

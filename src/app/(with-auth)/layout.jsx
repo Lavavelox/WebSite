@@ -69,16 +69,21 @@ function Home({ children }) {
     // setWhatsapp(!whatsapp)
   }
 
-// console.log(perfil && JSON.parse(perfil.categoria))
   useEffect(() => {
+    console.log(user)
+    console.log(userDB)
+    console.log(servicios)
     if (user === undefined) onAuth(setUserProfile)
     if (user === null) router.push('/Login')
-    if (user !== undefined && user !== null && userDB === undefined) {
-      readUserData('Usuarios', user.uuid, setUserData, null, true)
+    // if (user !== undefined && user !== null && userDB === undefined) {
+    //   readUserData('Usuarios', user.uuid, setUserData, null, true)
+    // }
+    if (user !== undefined && user !== null && servicios === undefined) {
+      console.log('useEffect')
+      readUserAllData('Servicios', setServicios)
     }
-    user !== undefined && user !== null && readUserAllData('Servicios', setServicios)
-    perfil === undefined  && readUserData('Perfil', 'qr_image', setPerfil, null, true)
-  }, [user, userDB, perfil])
+    perfil === undefined && readUserData('Perfil', 'qr_image', setPerfil, null, true)
+  }, [user, userDB, perfil, servicios])
 
   return (
 
@@ -130,16 +135,16 @@ function Home({ children }) {
 
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-white lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }} >
             <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm shadow flex items-center justify-between bg-[#00E2FF]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
-              
+
               {pathname === '/' && !location.href.includes('#') ?
                 <div className='flex lg:block'>
-                <div className='flex '>
-                  <button type="button" className="inline-flex items-center bg-white p-[2px] text-[14px] text-white rounded-lg  lg:block" onClick={openNav}>
-                    <svg className="w-9 h-9 text-white" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
-                  </button>
-                  <h1 className='text-[18px] hidden lg:flex lg:justify-between ml-5 lg:w-[240px] lg:items-center text-white font-medium'> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
+                  <div className='flex '>
+                    <button type="button" className="inline-flex items-center bg-white p-[2px] text-[14px] text-white rounded-lg  lg:block" onClick={openNav}>
+                      <svg className="w-9 h-9 text-white" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
+                    </button>
+                    <h1 className='text-[18px] hidden lg:flex lg:justify-between ml-5 lg:w-[240px] lg:items-center text-white font-medium'> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
+                  </div>
                 </div>
-              </div>
                 :
                 <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg  dark:hover:bg-gray-700 dark:focus:ring-gray-600" onClick={() => back(!nav)}>
                   <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -162,8 +167,8 @@ function Home({ children }) {
                   <span className="sr-only">Search icon</span>
                 </div>
                 <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar servicio..." />
-              </div>}                 
-                  
+              </div>}
+
               {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/' && <Cart />}
             </nav>
 
@@ -190,7 +195,7 @@ function Home({ children }) {
               {children}
 
             </div>
-            {user && user !== undefined  && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
+            {user && user !== undefined && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
               <BottomNavigation rol={user.rol} />
             </div>}
 
