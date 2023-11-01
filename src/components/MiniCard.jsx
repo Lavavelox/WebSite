@@ -50,8 +50,8 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
     return (
 
             <tr className="bg-white text-[14px] border-b hover:bg-gray-50 " >
-                <td className="min-w-[200px] px-3 py-4  flex flex-col text-[16px]  text-gray-700">
-                    {i['nombre 1']}
+                <td className="min-w-[200px] px-3 py-4 text-[16px]  text-gray-700 align-middle">
+                    {i['nombre 1']} <br />
                     <span className="text-[16px]  text-gray-700  tracking-tight">{i.costo} Bs.</span>
                 </td>
                 <td className="text-center ">
@@ -73,7 +73,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                 <td className="px-3 py-4  text-gray-900">
                     <div className="lg:flex lg:w-full lg:justify-center">
                         {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0
-                            ? <div className='flex w-[80px] items-center justify-center flex-col flex-col-reverse lg:flex-row lg:w-full lg:max-w-[130px] justify-between'>
+                            ? <div className='flex w-[80px] items-center flex-col-reverse md:flex-row md:w-full md:max-w-[130px] justify-between'>
                                 <Button theme='MiniSecondary' click={(e) => addLessCart(e, i)}>-</Button>
                                 <span className='px-4'>
                                     {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0 && <span className='block text-[16px] text-center '>{cart[i.uuid].cantidad}</span>}
