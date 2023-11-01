@@ -78,7 +78,7 @@ function Home({ children }) {
     // if (user !== undefined && user !== null && userDB === undefined) {
     //   readUserData('Usuarios', user.uuid, setUserData, null, true)
     // }
-    if (user !== undefined && user !== null && servicios === undefined) {
+    if (servicios === undefined) {
       console.log('useEffect')
       readUserAllData('Servicios', setServicios)
     }
