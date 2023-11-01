@@ -13,13 +13,13 @@ import Modal from '@/components/Modal'
 import Button from '@/components/Button'
 import { useRouter } from 'next/navigation';
 import { generateUUID } from '@/utils/UIDgenerator'
-import { categoria, tiempo } from '@/constants'
+import { categoria, recepcion } from '@/constants'
 
 
 function Home() {
     const router = useRouter()
 
-    const { user, userDB, setUserData, setUserSuccess, success, setModal, modal, sucursales, setSucursales } = useUser()
+    const { user, userDB, setUserData, setUserSuccess, success, setModal, modal, sucursales, setSucursales, perfil  } = useUser()
     const [state, setState] = useState({ categoria: 'Chompas'})
     const [costos, setCostos] = useState({ })
 
@@ -121,13 +121,18 @@ function Home() {
                         <Label htmlFor="">Nombre 3</Label>
                         <Input type="text" name="nombre 3" reference={inputRef3} onChange={onChangeHandler} />
                     </div>
+                    
                     <div>
                         <Label htmlFor="">Descripción básica</Label>
                         <Input type="text" name="descripcion basica" reference={inputRef4} onChange={onChangeHandler} require />
                     </div>
                     <div>
+                        <Label htmlFor="">Recepción por </Label>
+                        <Select arr={JSON.parse(perfil['recepcion por'])} name='recepcion por' click={onClickHandlerSelect} />
+                    </div>
+                    <div>
                         <Label htmlFor="">Categoria</Label>
-                        <Select arr={categoria} name='categoria' click={onClickHandlerSelect} />
+                        <Select arr={JSON.parse(perfil.categoria)} name='categoria' click={onClickHandlerSelect} />
                     </div>
                     <h4 className='text-center col-span-2 text-[16px] pt-10'>AGREGA LOS COSTOS POR SUCURSAL</h4>
                     {

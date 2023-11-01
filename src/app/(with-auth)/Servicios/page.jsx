@@ -11,10 +11,10 @@ import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
 import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
 // import { uploadStorage } from '@/supabase/storage'
-import { categoria, tiempo } from '@/constants'
+import { categoria, recepcion } from '@/constants'
 
 function Home() {
-    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, item, setUserData, setUserSuccess, servicios, setServicios, sucursales, setSucursales } = useUser()
+    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, item, setUserData, setUserSuccess, servicios, setServicios, sucursales, setSucursales, perfil } = useUser()
 
     const router = useRouter()
     const [state, setState] = useState({})
@@ -35,9 +35,6 @@ function Home() {
     function onChangeHandlerDynamic(e, i) {
         setStateDynamic({ ...stateDynamic, [i.uuid]: { ...stateDynamic[i.uuid], [e.target.name]: e.target.value } }     )
     }
-
-
-
     const onClickHandlerSelect = (name, value, uuid) => {
         setState({ ...state, [uuid]: { ...state[uuid], uuid, [name]: value } })
     }
@@ -136,6 +133,9 @@ function Home() {
                             <th scope="col" className="text-center px-3 py-3">
                                 Categoria
                             </th>
+                            <th scope="col" className="text-center px-3 py-3">
+                                Recepción por
+                            </th>
                             {sucursales && sucursales !== undefined && sucursales.map((i) => {
                                 return <>
                                     <th scope="col" className="min-w-[100px] text-center px-3 py-3">
@@ -182,7 +182,10 @@ function Home() {
                                         <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='descripcion basica' defaultValue={i['descripcion basica']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                        <Select arr={categoria} name='categoria' click={onClickHandlerSelect} />
+                                        <Select arr={JSON.parse(perfil.categoria)} name='categoria' uuid={i.uuid} defaultValue={i.categoria} click={onClickHandlerSelect} />
+                                    </td>
+                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
+                                        <Select arr={JSON.parse(perfil['recepcion por'])} name='recepcion por' uuid={i.uuid} defaultValue={i['recepcion por']} click={onClickHandlerSelect} />
                                     </td>
 
                                     {/* {JSON.parse(i['costos y entregas'])[`costo inmediato ${item.uuid}`]}  */}

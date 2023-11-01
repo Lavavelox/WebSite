@@ -69,6 +69,7 @@ function Home({ children }) {
     // setWhatsapp(!whatsapp)
   }
 
+// console.log(perfil && JSON.parse(perfil.categoria))
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile)
     if (user === null) router.push('/Login')
@@ -76,8 +77,8 @@ function Home({ children }) {
       readUserData('Usuarios', user.uuid, setUserData, null, true)
     }
     user !== undefined && user !== null && readUserAllData('Servicios', setServicios)
-    readUserData('Perfil', 'qr_image', setPerfil, null, true)
-  }, [user, userDB])
+    perfil === undefined  && readUserData('Perfil', 'qr_image', setPerfil, null, true)
+  }, [user, userDB, perfil])
 
   return (
 

@@ -27,7 +27,7 @@ function Home() {
     const [postImage, setPostImage] = useState({})
     const [urlPostImage, setUrlPostImage] = useState({})
     const [disponibilidad, setDisponibilidad] = useState('')
-    const [categoria, setCategoria] = useState('')
+    const [entrega, setEntrega] = useState('')
     const [tag, setTag] = useState('')
     const [filter, setFilter] = useState('')
     const refFirst = useRef(null);
@@ -37,6 +37,9 @@ function Home() {
     }
     function onChangeHandlerFilter(e, i) {
         setFilter(e.target.value)
+    }
+    function onChangeHandlerFilterMonth(e, i) {
+        console.log(e.target.value)
     }
     function onChangeHandlerCalc(e, i) {
         setState({ ...state, [i.uuid]: { ...state[i.uuid], ac: e.target.value * 1 + i.ac * 1, saldo: i.saldo * 1 - e.target.value * 1 } })
@@ -104,7 +107,7 @@ function Home() {
         userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined && readUserData('Tareas', userDB.CI, setTareas, 'CI')
         sucursales === undefined && readUserAllData('Sucursales', setSucursales)
 
-    }, [userDB, tareas, sucursales])
+    }, [user, userDB, tareas, sucursales])
 
     return (
 
@@ -119,7 +122,9 @@ function Home() {
                 <div className='flex justify-center w-full'>
                     <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandlerFilter} placeholder='Filtrar por nombre o code' />
                 </div>
-
+                <div className='flex justify-center w-full'>
+                    <input type="month" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandlerFilterMonth} placeholder='Filtrar por nombre o code' />
+                </div>
                 <div className='min-w-[1500px] flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Sucursal</h3>
                     <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: `repeat(${sucursales && sucursales !== undefined ? sucursales.length : 2}, 150px)` }}>
@@ -128,9 +133,19 @@ function Home() {
                         }
                     </div>
                 </div>
+                
+                <div className='min-w-[1500px] flex justify-start items-center my-5 '>
+                    <h3 className="flex pr-12 text-[14px]" htmlFor="">Estado</h3>
+                    <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: `repeat(3, 150px)` }}>
+                        <Tag theme={entrega == 'Pendiente' ? 'Primary' : 'Secondary'} click={() => setEntrega(entrega == 'Pendiente' ? '' : 'Pendiente')}>Pendiente</Tag>
+                        <Tag theme={entrega == 'Concluido' ? 'Primary' : 'Secondary'} click={() => setEntrega(entrega == 'Concluido' ? '' : 'Concluido')}>Concluido</Tag>
+                        <Tag theme={entrega == 'Entregado' ? 'Primary' : 'Secondary'} click={() => setEntrega(entrega == 'Entregado' ? '' : 'Entregado')}>Entregado</Tag>
+
+                    </div>
+                </div>
                 <br />
-                <table className="min-w-[3200px] border-[1px] bg-white text-[14px] text-left text-gray-500 border-t-4 border-t-gray-400">
-                    <thead className="min-w-full text-[14px] text-gray-900 uppercase border-b bg-gray-100">
+                <table className="min-w-[3500px] border-[1px] bg-white text-[14px] text-left text-gray-500 border-t-4 border-t-gray-400">
+                    <thead className="min-w-full text-[14px] text-gray-900 uppercase border-b bg-gray-200">
                         <tr>
                             <th scope="col" className="px-3 py-3">
                                 #
@@ -195,12 +210,12 @@ function Home() {
                     <tbody>
                         {tareas !== null && tareas !== undefined && tareas.sort(sortArray).map((i, index) => {
 
-                            return i.sucursal.toLowerCase().includes(tag.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) &&
-                                <tr className="bg-white text-[16px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                            return i.sucursal.toLowerCase().includes(tag.toLowerCase()) &&  i.estado.toLowerCase().includes(entrega.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) &&
+                                <tr className={` text-[16px] border-b dark:bg-gray-800 ${i.estado === 'Entregado' && 'bg-green-100'}  ${i.estado === 'Concluido' && 'bg-yellow-100'}  ${i.estado === 'Pendiente' && 'bg-gray-50'}`} key={index}>
                                     <td className="px-3 py-4  flex  text-gray-900 ">
                                         <span className='h-full flex py-2'>{index + 1}</span>
                                     </td>
-                                    <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
+                                    <td className={`min-w-[200px] px-3 py-4  text-gray-900 `} >
                                         {i['code']}
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >

@@ -4,6 +4,10 @@ const categoria = [
     'Busos',
     'Sabanas',
 ]
+const recepcion = [
+    'Kilo',
+    'Prenda',
+]
 const roles = [
     'Admin',
     'Personal',
@@ -12,6 +16,5 @@ const roles = [
 const estado = [
     'Pendiente', 
     'Concluido',
-    'Entregado',
 ]
-export {categoria, roles, estado}
+export {categoria, roles, estado, recepcion}

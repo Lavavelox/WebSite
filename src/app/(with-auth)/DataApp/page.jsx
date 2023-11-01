@@ -33,17 +33,19 @@ function Home() {
 
     async function save(e) {
         e.preventDefault()
-        
+        console.log('guardando')
         setDisable(true)
 
 
 
         const data = {
             whatsapp: e.target[1].value,
+            categoria: e.target[2].value.replaceAll(' ', '').split(','),
+            ['recepcion por']: e.target[3].value.replaceAll(' ', '').split(','),
         }        
-        console.log(data.whatsapp !== perfil.whatsapp)
+console.log(data)      
 
-        const res = data.whatsapp !== perfil.whatsapp && await updateUserData('Perfil', data, 'qr_image', null)
+        const res =  await updateUserData('Perfil', data, 'qr_image', null)
         console.log(res)
         postImage && await uploadStorage('Perfil', postImage, 'qr_image', updateUserData, true)
         setDisable(false)
@@ -86,11 +88,19 @@ console.log(perfil)
                         <Label htmlFor="">Whatsapp</Label>
                         <Input type="text" name="whatsapp" onChange={onChangeHandler} reference={inputRefWhatsApp} defValue={perfil && perfil['whatsapp']} require />
                     </div>
+                    <div>
+                        <Label htmlFor="">Categoria</Label>
+                        <Input type="text" name="categoria" onChange={onChangeHandler}  defValue={perfil && perfil['categoria'].replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ')} require />
+                    </div>
+                    <div>
+                        <Label htmlFor="">Recepcion por</Label>
+                        <Input type="text" name="recepcion por" onChange={onChangeHandler}  defValue={perfil && perfil['recepcion por'].replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ')} require />
+                    </div>
                 </div>
                 <br />
                 <br />
                 <div className='flex w-full justify-around'>
-                    <Button theme='Primary'>Guardar</Button>
+                    <Button type="submit" theme='Primary'>Guardar</Button>
                 </div>
             </form>
         </div>
