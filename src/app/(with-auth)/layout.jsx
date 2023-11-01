@@ -70,19 +70,10 @@ function Home({ children }) {
   }
 
   useEffect(() => {
-    console.log(user)
-    console.log(userDB)
-    console.log(servicios)
     if (user === undefined) onAuth(setUserProfile)
     if (user === null) router.push('/Login')
-    // if (user !== undefined && user !== null && userDB === undefined) {
-    //   readUserData('Usuarios', user.uuid, setUserData, null, true)
-    // }
-    if (servicios === undefined) {
-      console.log('useEffect')
-      readUserAllData('Servicios', setServicios)
-    }
-    perfil === undefined && readUserData('Perfil', 'qr_image', setPerfil, null, true)
+    if (servicios === undefined) readUserAllData('Servicios', setServicios)
+    if (perfil === undefined) readUserData('Perfil', 'qr_image', setPerfil, null, true)
   }, [user, userDB, perfil, servicios])
 
   return (
