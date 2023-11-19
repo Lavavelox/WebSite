@@ -1,14 +1,12 @@
 'use client'
-import { readUserAllData, updateUserData, readUserData, getSpecificData, writeUserData, readLateData } from '@/supabase/utils'
+import { readUserData, writeUserData, readLateData } from '@/firebase/database'
 import { useUser } from '@/context'
-
 import Button from '@/components/Button'
 import Subtitle from '@/components/Subtitle'
 import Card from '@/components/Card'
 // import QRreader from '@/components/QRreader'
 import Tag from '@/components/Tag'
 import Msg from '@/components/Msg'
-
 import Modal from '@/components/Modal'
 // import QRscanner from '@/components/QRscanner'
 import { useRouter } from 'next/navigation';
@@ -26,7 +24,7 @@ import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
 });
-function Home() {
+function Home() { 
     const { filterDis, setFilterDis, Perfil,
         user, userDB, cart, setUserCart,
         modal, setUserData,
@@ -44,6 +42,8 @@ function Home() {
 
     const [mode, setMode] = useState('Services')
     const [pdf, setPDF] = useState(false)
+    const [lateElement, setLateElement] = useState(undefined)
+
     const path = useReactPath();
 
     function onChangeHandler(e) {
@@ -57,17 +57,11 @@ function Home() {
         QRreaderUtils(e, setFilterQR, setFilter, readUserData, setRecetaDBP)
     }
 
-
     function storeConfirm() {
         setTienda(modal)
         setUserCart({})
         setModal('')
     }
-
-
-
-
-
 
     function sortArray(x, y) {
         if (x['nombre 1'].toLowerCase() < y['nombre 1'].toLowerCase()) { return -1 }
@@ -93,25 +87,20 @@ function Home() {
 
     function generateNO(num) {
         const zero = `${num < 10 ? '00' : ''}${num > 9 && num < 100 ? '0' : ''}${num === 100 ? '100' : ''}${num === 101 ? '001' : ''}`
-
         return num != 101 && num != 100 ? userDB.sucursal + '_' + zero + num : userDB.sucursal + '_' + zero
     }
-
-
-
-
-    const handlerSubmit = async (e) => {
+    const handlerSubmit =  (e) => {
         e.preventDefault()
-        console.log('submit')
         setPDF(true)
-        const res = await readLateData('Tareas', userDB.sucursal)
-        const nextNum = res && res.data && res.data[0] && res.data[0].code !== undefined ? res.data[0].code.split('_')[1] * 1 + 1 : '1'
-        const code = generateNO(nextNum)
+        // const res = getlate('tareas', )
+        // const nextNum = res && res.data && res.data[0] && res.data[0].code !== undefined ? res.data[0].code.split('_')[1] * 1 + 1 : '1'
+        // const code = generateNO(nextNum)
+        const code = 1
         const data = {
             ...state,
             servicios: cart,
-
             code,
+            date: new Date().getTime(),
             fecha: getDayMonthYearHour(),
             mes: getMonthYear(),
             sucursal: userDB.sucursal,
@@ -127,7 +116,12 @@ function Home() {
                     return sum + sum2 + acc
                 }, 0)
         }
-        await writeUserData('Tareas', data)
+
+        const callback = () => {
+            readUserData(`tareas/${i.uuid}`, setServicios)
+            setModal('')
+        }
+        writeUserData(`tareas/${i.uuid}`, data, callback)
         setPdfDB(data)
         return
     }
@@ -148,12 +142,11 @@ function Home() {
             {(modal == 'Recetar' || modal == 'Comprar') && <Modal funcion={storeConfirm}>Estas seguro de cambiar a {modal}. <br /> {Object.keys(cart).length > 0 && 'Tus datos se borraran'}</Modal>}
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
-
             <div className={`h-[85vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
                 {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[90px] lg:pb-0 flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
                     {filter.length == 0 &&
                         servicios !== null && servicios !== undefined &&
-                        servicios.sort(sortArray).map((i, index) => {
+                        Object.values(servicios).sort(sortArray).map((i, index) => {
                             return i.categoria.includes(categoria) &&
                                 <Card
                                     i={i}
@@ -163,7 +156,7 @@ function Home() {
                         })
                     }
                     {filter.length > 0 && filterQR.length === 0 && servicios !== null && servicios !== undefined &&
-                        servicios.sort(sortArray).map((i, index) => {
+                        Object.values(servicios).sort(sortArray).map((i, index) => {
                             return (i['nombre 1'].toLowerCase().includes(filter.toLowerCase()) ||
                                 (i['nombre 2'] && i['nombre 2'].toLowerCase().includes(filter.toLowerCase())) ||
                                 (i['nombre 3'] && i['nombre 3'].toLowerCase().includes(filter.toLowerCase()))) &&
@@ -176,7 +169,6 @@ function Home() {
                         })
                     }
                 </div>}
-
                 <div className={`relative flex-col items-center w-full max-w-screen bg-red-500 h-[80vh] overflow-y-scroll bg-transparent  transition-all px-[15px]	z-0  lg:flex ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'flex' : 'hidden'} `} >
                     <div className='w-full gap-[10px]'>
                         <ul className="flex border-b">
@@ -194,7 +186,6 @@ function Home() {
                             </li>
                         </ul>
                     </div>
-
                     <div className={`relative w-full overflow-auto ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? (location.href.includes('#Services') ? '' : 'hidden lg:block') : 'hidden'} `}>
                         {Object.values(cart).length > 0
                             ? <table className="w-full mt-[15px] shadow-2xl border-[1px] border-gray-200  min-w-[700px] overflow-hidden text-[14px] text-left text-gray-500">
@@ -247,7 +238,7 @@ function Home() {
 
                     {
                         location.href.includes('#Client') &&
-                        <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white shadow rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
+                        <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
 
                             <div>

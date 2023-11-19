@@ -9,8 +9,8 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState } from 'react'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
-// import { uploadStorage } from '@/supabase/storage'
+import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
+removeData
 
 function Home() {
     const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales } = useUser()
@@ -29,16 +29,19 @@ function Home() {
         setFilter(e.target.value.toLowerCase())
     }
     // async function save(i) {
-    //     awai  t updateUserData('Producto', state[i.uuid], i.uuid)
-    //     postImage[i.uuid] && await uploadStorage('Producto', postImage[i.uuid], i.uuid, updateUserData, true)
+    //     awai  t writeUserData('Producto', state[i.uuid], i.uuid)
+    //     postImage[i.uuid] && await uploadStorage('Producto', postImage[i.uuid], i.uuid, writeUserData, true)
     //     const obj = { ...state }
     //     delete obj[i.uuid]
     //     setState(obj)
     //     readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
     // }
-    async function deletConfirm() {
-        await deleteUserData('Producto', userUuid)
-        readUserData('Producto', userUuid, setUserDistributorPDB, 'distribuidor')
+    function deletConfirm() {
+        const callback = () => {
+            readUserData(`producto`, setUserDistributorPDB)
+            setModal('')
+        }
+        removeData(`producto/${i.uuid}`, callback)
     }
     function delet(i) {
         setUserItem(i)
@@ -61,7 +64,7 @@ function Home() {
 
     console.log(sucursales)
     useEffect(() => {
-        readUserAllData('Sucursales', setSucursales)
+        readUserData('Sucursales', setSucursales)
     }, [])
 
     return (
@@ -101,7 +104,7 @@ function Home() {
                         </tr>
                     </thead>
                     <tbody>
-                        {sucursales && temporal !== undefined && sucursales.sort(sortArray).map((i, index) => {
+                        {sucursales && temporal !== undefined && Object.values(sucursales).sort(sortArray).map((i, index) => {
 
                             return i.ciudad.includes(ciudad) && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                                 <td className="px-3 py-4  flex font-semibold text-gray-900 ">

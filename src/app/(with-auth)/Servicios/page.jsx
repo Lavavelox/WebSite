@@ -9,8 +9,8 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
-// import { uploadStorage } from '@/supabase/storage'
+import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
+removeData
 import { categoria, recepcion } from '@/constants'
 
 function Home() {
@@ -44,22 +44,33 @@ function Home() {
         setUrlPostImage({ ...urlPostImage, [uuid]: URL.createObjectURL(file) })
         setState({ ...state, [uuid]: { ...state[uuid], uuid } })
     }
-    async function save(i) {
-        await updateUserData('Servicios', {...state[i.uuid], ['costos y entregas']: {...JSON.parse(i['costos y entregas']), ...stateDynamic[i.uuid]}}, i.uuid)
-        postImage[i.uuid] && await uploadStorage('Servicios', postImage[i.uuid], i.uuid, updateUserData, true)
-        const obj = { ...state }
-        delete obj[i.uuid]
-        setState(obj)
-        readUserAllData('Servicios', setServicios)
+    function save(i) {
+        const data = {
+            ...state[i.uuid], 
+            ['costos y entregas']: {...JSON.parse(i['costos y entregas']), 
+            ...stateDynamic[i.uuid]}
+        }
+        const callback = () => {
+            const obj = { ...state }
+            delete obj[i.uuid]
+            setState(obj)
+            readUserData('servicios', setServicios)
+        }
+
+        writeUserData('servicios', data, callback)
+        postImage[i.uuid] && uploadStorage('servicios', postImage[i.uuid], data, callback)
+        
     }
     function delet(i) {
         setUserItem(i)
         setModal('Delete')
     }
-    async function deletConfirm() {
-        await deleteUserData('Servicios', item.uuid)
-        readUserAllData('Servicios', setServicios)
-        setModal('')
+    function deletConfirm() {
+        const callback = () => {
+            readUserData(`servicios`, setServicios)
+            setModal('')
+        }
+        removeData(`servicios/${i.uuid}`, callback)
     }
     function buttonHandler(i, action) {
         setUserItem(i)
@@ -94,8 +105,8 @@ function Home() {
     };
     console.log(state)
     useEffect(() => {
-        readUserAllData('Servicios', setServicios)
-        readUserAllData('Sucursales', setSucursales)
+        readUserData('servicios', setServicios)
+        readUserData('Sucursales', setSucursales)
     }, [])
 
     return (
@@ -157,7 +168,7 @@ function Home() {
                         </tr>
                     </thead>
                     <tbody>
-                        {servicios && servicios.sort(sortArray).map((i, index) => {
+                        {servicios && Object.values(servicios).sort(sortArray).map((i, index) => {
 
                             return (i['nombre 1'].toLowerCase().includes(filter) ||
                                 i['nombre 2'].toLowerCase().includes(filter) ||

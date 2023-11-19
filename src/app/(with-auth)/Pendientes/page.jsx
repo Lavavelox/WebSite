@@ -10,17 +10,17 @@ import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
 import { estado } from '@/constants'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData, readUserDataEq } from '@/supabase/utils'
+import { onAuth, writeUserData, readUserData, removeData, readUserDataEq } from '@/firebase/database'
 import { getDayMonthYearHour, getMonthYear } from '@/utils/getDate'
 import dynamic from "next/dynamic";
 
 const InvoicePDF = dynamic(() => import("@/components/pdf"), {
     ssr: false,
 });
-// import { uploadStorage } from '@/supabase/storage'
+removeData
 
 function Home() {
-    const { user, setUserUuid, userDB, msg, setMsg, modal, item, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, pendientes, setPendientes, setTareas, tareas } = useUser()
+    const { user, setUserProfile, setUserUuid, userDB, msg, setMsg, modal, item, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, pendientes, setPendientes, setTareas, tareas } = useUser()
 
     const router = useRouter()
     const [state, setState] = useState({})
@@ -39,7 +39,7 @@ function Home() {
         setFilter(e.target.value)
     }
     function onChangeHandlerFilterMonth(e, i) {
-        readUserDataEq('Tareas', 'sucursal', userDB['sucursal'], setTareas, 'mes', e.target.value)
+        readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', e.target.value)
     }
     function onChangeHandlerCalc(e, i) {
         setState({ ...state, [i.uuid]: { ...state[i.uuid], ac: e.target.value * 1 + i.ac * 1, saldo: i.saldo * 1 - e.target.value * 1 } })
@@ -51,26 +51,28 @@ function Home() {
     async function save(i) {
         if (state[i.uuid]['nombre receptor'] || state[i.uuid]['CI receptor'] || state[i.uuid]['whatsapp receptor']) {
             if (state[i.uuid]['nombre receptor'] && state[i.uuid]['CI receptor'] && state[i.uuid]['whatsapp receptor']) {
-                await updateUserData('Tareas', { ...state[i.uuid], estado: 'Entregado', ['fecha entrega']: getDayMonthYearHour() }, i.uuid)
+                await writeUserData(`tareas`, { ...state[i.uuid], estado: 'Entregado', ['fecha entrega']: getDayMonthYearHour() }, i.uuid)
                 const obj = { ...state }
                 delete obj[i.uuid]
                 setState(obj)
-                readUserAllData('/Tareas', setTareas)
+                readUserData(`tareas/${i.uuid}`, setTareas)
             } else {
                 setUserSuccess('Complete')
             }
             return
         }
-        await updateUserData('Tareas', state[i.uuid], i.uuid)
+        await writeUserData(`tareas/${i.uuid}`, state[i.uuid], i.uuid)
         const obj = { ...state }
         delete obj[i.uuid]
         setState(obj)
-        readUserAllData('/Tareas', setTareas)
+        readUserData(`tareas`, setTareas)
     }
-    async function deletConfirm() {
-        await deleteUserData('Tareas', item.uuid)
-        readUserAllData('/Tareas', setTareas)
-        setModal('')
+    function deletConfirm() {
+        const callback = () => {
+            readUserData(`tareas`, setTareas)
+            setModal('')
+        }
+        removeData(`tareas/${i.uuid}`, callback)
     }
     function delet(i) {
         setUserItem(i)
@@ -99,20 +101,17 @@ function Home() {
         });
     };
     useEffect(() => {
-        // userDB  && tareas === null && tareas === undefined && readUserData('Tareas', userDB.sucursal, setPerfil, 'sucursal', )
-        // console.log(user)
-
-        // console.log(userDB)
-        // userDB && userDB.rol !== undefined && console.log(userDB.rol)
-        // console.log(tareas)
-console.log(getMonthYear())
-
-        userDB && userDB.rol !== undefined && userDB.rol === 'Admin' && tareas === undefined && readUserData('Tareas', getMonthYear(), setTareas, 'mes')
-        userDB && userDB.rol !== undefined && userDB.rol === 'Personal' && tareas === undefined && readUserDataEq('Tareas', 'sucursal', userDB['sucursal'], setTareas, 'mes', getMonthYear())
-        userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined && readUserDataEq('Tareas', 'CI', userDB.CI, setTareas, 'mes', getMonthYear())
-        sucursales === undefined && readUserAllData('Sucursales', setSucursales)
-
-    }, [user, userDB, tareas, sucursales])
+        console.log(user)
+        console.log(sucursales)
+        // if (user && user.rol !== undefined && user.rol === 'Admin' && tareas === undefined) readUserData(`tareas`, getMonthYear(), setTareas, 'mes')
+        // if (user && user.rol !== undefined && user.rol === 'Personal' && tareas === undefined) readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', getMonthYear())
+        // if (user && user.rol !== undefined && user.rol === 'Cliente' && tareas === undefined) readUserDataEq(`tareas`, 'CI', user.CI, setTareas, 'mes', getMonthYear())
+        // if (sucursales === undefined) {
+        //     onAuth(setUserProfile)
+        //     console.log('ejecutando')
+        //    return ()=> readUserData('Sucursales', setSucursales)
+        // }
+    }, [user, tareas, sucursales])
 
     return (
 
@@ -213,7 +212,7 @@ console.log(getMonthYear())
                         </tr>
                     </thead>
                     <tbody>
-                        {tareas !== null && tareas !== undefined && tareas.sort(sortArray).map((i, index) => {
+                        {tareas !== null && tareas !== undefined && Object.values(tareas).sort(sortArray).map((i, index) => {
 
                             return i.sucursal.toLowerCase().includes(tag.toLowerCase()) &&  i.estado.toLowerCase().includes(entrega.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) &&
                                 <tr className={` text-[16px] border-b dark:bg-gray-800 `} key={index}>

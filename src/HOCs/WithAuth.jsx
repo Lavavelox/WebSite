@@ -1,10 +1,10 @@
 'use client'
 import { useUser } from '@/context'
-import { readUserAllData, updateUserData, readUserData } from '@/supabase/utils'
+import { readUserData, writeUserData } from '@/firebase/database'
 import LoaderWithLogo from '@/components/LoaderWithLogo'
 
 import { useState, useEffect } from 'react'
-import { signOut } from '@/supabase/utils'
+import { signOut } from '@/firebase/utils'
 import { useRouter } from 'next/navigation';
 import Cart from '@/components/Cart'
 
@@ -19,7 +19,7 @@ export function WithAuth(Component) {
             if (user === null) router.push('/Login')
             if(user !== undefined && user !== null && userDB === undefined) {
               readUserData('Usuarios', user.uuid, setUserData, null, true)} 
-            user !== undefined && user !== null && readUserAllData('Servicios', setServicios)
+            user !== undefined && user !== null && readUserData('Servicios', setServicios)
           }, [user, userDB])
         
         

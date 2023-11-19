@@ -1,7 +1,7 @@
 'use client'
 
-import { writeUserData, readUserData, updateUserData } from '@/supabase/utils'
-import { uploadStorage } from '@/supabase/storage'
+import { writeUserData, readUserData, writeUserData } from '@/firebase/database'
+import { uploadStorage } from '@/firebase/storage'
 import { useState, useEffect } from 'react'
 import { useUser } from '@/context'
 import Input from '@/components/Input'
@@ -15,17 +15,13 @@ import { useRouter } from 'next/navigation';
 
 
 function Home() {
-    const router = useRouter()
-
     const { user, userDB, setUserData, success, setUserSuccess, perfil, setPerfil } = useUser()
+    const router = useRouter()
     const [state, setState] = useState({})
-
     const [postImage, setPostImage] = useState(null)
     const [urlPostImage, setUrlPostImage] = useState(null)
     const [disable, setDisable] = useState(false)
-
     const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
-
 
     function onChangeHandler(e) {
         setState({ ...state, [e.target.name]: e.target.value })
@@ -33,31 +29,21 @@ function Home() {
 
     async function save(e) {
         e.preventDefault()
-        console.log('guardando')
-        setDisable(true)
-
-
+        setModal('Guardando')
 
         const data = {
             whatsapp: e.target[1].value,
             categoria: e.target[2].value.replaceAll(' ', '').split(','),
             ['recepcion por']: e.target[3].value.replaceAll(' ', '').split(','),
         }        
-console.log(data)      
-
-        const res =  await updateUserData('Perfil', data, 'qr_image', null)
-        console.log(res)
-        postImage && await uploadStorage('Perfil', postImage, 'qr_image', updateUserData, true)
-        setDisable(false)
+        uploadStorage(`Perfil/`, postImage, data, callback)
     }
-
 
     function manageInputIMG(e) {
         const file = e.target.files[0]
         setPostImage(file)
         setUrlPostImage(URL.createObjectURL(file))
     }
-console.log(perfil)
     return (
         user && <div className='w-full flex justify-center p-5'>
 

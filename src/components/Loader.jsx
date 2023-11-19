@@ -1,7 +1,7 @@
 // import style from '../styles/Loader.module.css' 
 import { useEffect } from 'react'
 import { useUser } from '@/context/'
-import { onAuth } from '@/supabase/utils'
+import { onAuth } from '@/firebase/database'
 
 export default function Loader() {
 

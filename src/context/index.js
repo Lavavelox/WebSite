@@ -80,18 +80,18 @@ export function UserProvider({ children }) {
 		setItem(data)
 	}
 	const setUserSuccess = (data, time) => {
-		if (success === null) {
-			setSuccess(data)
-			const timer = setTimeout(() => {
+		console.log(data)
+		success === null ? setSuccess(data) : ''
+
+		if (data !== null) {
+			let timer = setTimeout(() => {
 				console.log(success)
-				setUserSuccess(null),
-					clearTimeout(timer)
+				setUserSuccess(null)
 			}, time ? time : 6000)
-
-			return clearTimeout(timer)
 		}
-
-
+		return () => {
+			clearTimeout(timer)
+		};
 	}
 	const setIntroVideo = (data) => {
 		setUserIntroVideo(data)

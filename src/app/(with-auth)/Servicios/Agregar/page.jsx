@@ -1,6 +1,6 @@
 'use client'
-import { writeUserData, readUserData, updateUserData, readUserAllData } from '@/supabase/utils'
-import { uploadStorage } from '@/supabase/storage'
+import {  writeUserData, readUserData, readUserData } from '@/firebase/database'
+import { uploadStorage } from '@/firebase/storage'
 import { useState, useRef, useEffect } from 'react'
 import { useUser } from '@/context'
 import Input from '@/components/Input'
@@ -51,7 +51,7 @@ function Home() {
     function onChangeHandlerDynimic(e) {
         setCostos({ ...costos, [e.target.name]: e.target.value })
     }
-    function handlerReset() {
+    function callback() {
 
         inputRef1.current.value = ''
         inputRef2.current.value = ''
@@ -63,24 +63,21 @@ function Home() {
         setUrlPostImage(null)
         setUserSuccess('')
         setDisable(false)
+        setModal('')
 
     }
+
     async function save(e) {
         e.preventDefault()
-        setDisable(true)
+        setModal('Guardando')
         const uuid = generateUUID()
-        console.log('submit')
-        const res = await writeUserData('Servicios', { ...state, uuid, ['costos y entregas']: costos })
-        console.log(res)
-        res.error === null && await uploadStorage('Servicios', postImage, uuid, updateUserData)
-        return handlerReset()
+        uploadStorage(`Sucursales/${uuid}`, postImage, { ...state, uuid, ['costos y entregas']: costos }, callback)
     }
 
-    // console.log(sucursales)
     console.log(state)
 
     useEffect(() => {
-      sucursales === undefined && readUserAllData('Sucursales', setSucursales)
+      sucursales === undefined && readUserData('Sucursales', setSucursales)
     }, [sucursales])
 
 

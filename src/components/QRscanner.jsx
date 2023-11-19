@@ -2,7 +2,7 @@
 
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useUser } from '@/context/Context.js'
-import { readUserData } from '@/supabase/utils'
+import { readUserData } from '@/firebase/database'
 
 const Component = () => {
   const { setRecetaDBP, setWebScann, setFilter, setFilterQR} = useUser()

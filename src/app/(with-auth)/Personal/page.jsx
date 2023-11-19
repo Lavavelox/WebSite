@@ -9,10 +9,10 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
+import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
 import { roles } from '@/constants'
 
-// import { uploadStorage } from '@/supabase/storage'
+removeData
 
 function Home() {
     const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, setClientes, clientes } = useUser()
@@ -35,20 +35,25 @@ function Home() {
         console.log(res)
         setState({ ...state, [uuid]: { ...state[uuid], [name]: value, ['sucursal uuid']: res.uuid } })
     }  
-    async function save(i) {
-        await updateUserData('Usuarios', state[i.uuid], i.uuid)
-        const obj = { ...state }
-        delete obj[i.uuid]
-        setState(obj)
-        readUserAllData('/Usuarios', setClientes)
-    }
-    async function deletConfirm() {
-        await deleteUserData('Usuarios', userUuid)
-        readUserAllData('/Usuarios', setClientes)
+    function save(i) {
+        const callback = () => {
+            const obj = { ...state }
+            delete obj[i.uuid]
+            setState(obj)
+            readUserData('/usuarios', setClientes)
+        }
+        writeUserData(`usuarios/${i.uuid}`, state[i.uuid], callback)
     }
     function delet(i) {
         setUserItem(i)
         setModal('Delete')
+    }
+    function deletConfirm() {
+        const callback = () => {
+            readUserData(`usuarios`, setClientes)
+            setModal('')
+        }
+        removeData(`usuarios/${i.uuid}`, callback)
     }
     const prev = () => {
         requestAnimationFrame(() => {
@@ -74,8 +79,8 @@ function Home() {
     }
 
     useEffect(() => {
-       clientes === undefined && readUserAllData('Usuarios', setClientes)
-       sucursales === undefined &&readUserAllData('Sucursales', setSucursales)
+       clientes === undefined && readUserData('Usuarios', setClientes)
+       sucursales === undefined &&readUserData('Sucursales', setSucursales)
     }, [clientes, sucursales])
 
     return (
@@ -123,7 +128,7 @@ function Home() {
                         </tr>
                     </thead>
                     <tbody>
-                        {clientes !== undefined && sucursales !== undefined && clientes.sort(sortArray).map((i, index) => {
+                        {clientes !== undefined && sucursales !== undefined && Object.values(clientes).sort(sortArray).map((i, index) => {
 
                             return i.rol !== 'Cliente' && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                                 <td className="min-w-[50px] h-full px-3 py-4 text-gray-900 align-middle">

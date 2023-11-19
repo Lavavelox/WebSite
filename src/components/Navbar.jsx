@@ -1,44 +1,36 @@
 'use client';
-import { useRouter } from 'next/navigation';
 
 import { useUser } from '@/context'
+import { useRouter } from 'next/navigation';
 import Link from 'next/link'
-import { signOut } from '@/supabase/utils'
-import Modal from '@/components/Modal'
+import { signOut } from '@/firebase/utils'
 
 
 export default function BottomNavigation({ rol }) {
     const { user, userDB, modal, setModal, setUserProfile, perfil, setUserData, setUserProduct, setRecetaDB, setUserCart, setUserDistributorPDB, filter, setFilter, nav, setNav } = useUser()
-
     const router = useRouter()
 
     const redirectHandler = (ref) => {
         router.push(ref)
     }
-
     const signOutHandler = () => {
         setModal('SignOut')
     }
-
     const redirectHandlerWindow = () => {
         window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20¿Pueden%20ayudarme?%20`, '_blank')
         setNav(false)
-        // setWhatsapp(!whatsapp)
     }
-const handlerNav = () => {
-    
-    setNav(false)
-}
-
+    const handlerNav = () => {
+        setNav(false)
+    }
     const Header = () => {
         return <li className="inline-block flex flex-col justify-center items-center p-[10px] py-[30px] bg-[#00E2FF]  border-b border-gray-[1px]  w-full">
-                <img src="/logo.png" className='h-[50px]' alt="" />
-            <br/>
-            <h3 className='text-black font-bold text-center' style={{WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px',}}>Bienvenido </h3>
-            <h3 className='text-black font-bold text-center' style={{WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px',}}>{user.nombre}</h3>
+            <img src="/logo.png" className='h-[50px]' alt="" />
+            <br />
+            <h3 className='text-black font-bold text-center' style={{ WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px', }}>Bienvenido </h3>
+            <h3 className='text-black font-bold text-center' style={{ WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px', }}>{user.nombre}</h3>
         </li>
     }
-
     const Profile = () => {
         return <li className="px-5">
             <Link href={`/Personal`} onClick={handlerNav} className="flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
@@ -49,18 +41,16 @@ const handlerNav = () => {
             </Link>
         </li>
     }
-
     const Store = () => {
         return <li className="px-5">
             <Link href="/" onClick={handlerNav} className="flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.2 12.6382C1.692 13.0047 2.352 13.1817 3 13.1817C3.66 13.1817 4.308 13.0047 4.8 12.6382C5.544 12.0569 6 11.1596 6 10.1106C6 11.1596 6.444 12.0569 7.2 12.6382C7.692 13.0047 8.352 13.1817 9 13.1817C9.66 13.1817 10.308 13.0047 10.8 12.6382C11.544 12.0569 12 11.1596 12 10.1106C12 11.1596 12.444 12.0569 13.2 12.6382C13.692 13.0047 14.352 13.1817 15.012 13.1817C15.66 13.1817 16.308 13.0047 16.8 12.6382C17.544 12.0569 18 11.1596 18 10.1106C18 11.1596 18.444 12.0569 19.2 12.6382C19.692 13.0047 20.352 13.1817 21 13.1817C21.66 13.1817 22.308 13.0047 22.8 12.6382C23.556 12.0569 24 11.1596 24 10.1106V8.84676L20.4 0H4.8L0 8.84676V10.1106C0 11.1596 0.444 12.0569 1.2 12.6382ZM3.6 24H9.6V17.6809H14.4V24H20.4V15.1532C19.956 15.09 19.536 14.8752 19.2 14.6098C18.444 14.0411 18 13.6872 18 12.6382C18 13.6872 17.544 14.0411 16.8 14.6098C16.308 14.9889 15.66 15.1532 15.012 15.1659C14.352 15.1659 13.692 14.9889 13.2 14.6098C12.444 14.0411 12 13.6872 12 12.6382C12 13.6872 11.544 14.0411 10.8 14.6098C10.308 14.9889 9.66 15.1532 9 15.1659C8.352 15.1659 7.692 14.9889 7.2 14.6098C6.444 14.0411 6 13.6872 6 12.6256C6 13.6872 5.544 14.0411 4.8 14.6098C4.452 14.8752 4.044 15.09 3.6 15.1659V24Z" fill="black" />
                 </svg>
                 <span className="flex-1 ml-3 white space-nowrap text-black   hover:font-medium">Inicio</span>
             </Link>
         </li>
     }
-
     const Order = () => {
         return <li className="px-5">
             <Link href={`/Pendientes`} onClick={handlerNav} className="flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
@@ -78,13 +68,12 @@ const handlerNav = () => {
             </Link>
         </li>
     }
-
     const Sucursales = () => {
         return <li className="px-5">
             <Link href={`/Sucursales`} onClick={handlerNav} className="flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22.5 6V0H12V6H0V24H9V19.5H15V24H24V6H22.5ZM6 16.5H3V13.5H6V16.5ZM6 12H3V9H6V12ZM10.5 16.5H7.5V13.5H10.5V16.5ZM10.5 12H7.5V9H10.5V12ZM15 4.5V3H16.5V1.5H18V3H19.5V4.5H18V6H16.5V4.5H15ZM16.5 16.5H13.5V13.5H16.5V16.5ZM16.5 12H13.5V9H16.5V12ZM21 16.5H18V13.5H21V16.5ZM21 12H18V9H21V12Z" fill="black" />
-                        </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.5 6V0H12V6H0V24H9V19.5H15V24H24V6H22.5ZM6 16.5H3V13.5H6V16.5ZM6 12H3V9H6V12ZM10.5 16.5H7.5V13.5H10.5V16.5ZM10.5 12H7.5V9H10.5V12ZM15 4.5V3H16.5V1.5H18V3H19.5V4.5H18V6H16.5V4.5H15ZM16.5 16.5H13.5V13.5H16.5V16.5ZM16.5 12H13.5V9H16.5V12ZM21 16.5H18V13.5H21V16.5ZM21 12H18V9H21V12Z" fill="black" />
+                </svg>
                 <span className="flex-1 ml-3 white space-nowrap text-black   hover:font-medium">Sucursales</span>
             </Link>
         </li>
@@ -123,7 +112,6 @@ const handlerNav = () => {
             </Link>
         </li>
     }
-
     // const Pedidos = ({ endpoint }) => {
     //     return <li className="px-5">
     //         <Link href={`/Servicios`} onClick={handlerNav} className="flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
@@ -142,17 +130,15 @@ const handlerNav = () => {
     //     </li>
     // }
     const Clientes = ({ endpoint }) => {
-        return  <li className="px-5   ">
-        <Link href="/Clientes" onClick={handlerNav} className="flex items-center p-2 rounded-lg   bg-white  hover:bg-[#00000030]  ">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16.8 20.8V24H0V20.8C0 20.8 0 14.4001 8.4 14.4001C16.8 14.4001 16.8 20.8 16.8 20.8ZM12.6 5.60005C12.6 4.49249 12.3536 3.40979 11.8921 2.48888C11.4307 1.56796 10.7747 0.850206 10.0073 0.426353C9.23982 0.00251582 8.39534 -0.10838 7.58062 0.107683C6.7659 0.323761 6.01753 0.857118 5.43016 1.64028C4.84277 2.42344 4.44276 3.42126 4.2807 4.50756C4.11864 5.59384 4.20182 6.7198 4.5197 7.74306C4.8376 8.76633 5.37592 9.6409 6.0666 10.2563C6.7573 10.8716 7.56932 11.2001 8.4 11.2001C9.51391 11.2001 10.5822 10.61 11.3699 9.55983C12.1576 8.50963 12.6 7.08525 12.6 5.60005ZM16.728 14.4001C17.4656 15.1612 18.0694 16.1287 18.4964 17.2344C18.9235 18.34 19.1636 19.5571 19.2 20.8V24H24V20.8C24 20.8 24 14.9921 16.728 14.4001ZM15.6 8.4007e-05C14.774 -0.00604395 13.9662 0.323218 13.284 0.944078C14.0129 2.30205 14.4049 3.93012 14.4049 5.60005C14.4049 7.26999 14.0129 8.89805 13.284 10.2561C13.9662 10.8769 14.774 11.2062 15.6 11.2001C16.714 11.2001 17.7822 10.61 18.5699 9.55983C19.3576 8.50963 19.8 7.08525 19.8 5.60005C19.8 4.11484 19.3576 2.69048 18.5699 1.64028C17.7822 0.59008 16.714 8.4007e-05 15.6 8.4007e-05Z" fill="black " />
-            </svg>
-            <span className="flex-1 ml-3 white space-nowrap text-black   hover:font-medium">Clientes</span>
-        </Link>
-    </li>
+        return <li className="px-5   ">
+            <Link href="/Clientes" onClick={handlerNav} className="flex items-center p-2 rounded-lg   bg-white  hover:bg-[#00000030]  ">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.8 20.8V24H0V20.8C0 20.8 0 14.4001 8.4 14.4001C16.8 14.4001 16.8 20.8 16.8 20.8ZM12.6 5.60005C12.6 4.49249 12.3536 3.40979 11.8921 2.48888C11.4307 1.56796 10.7747 0.850206 10.0073 0.426353C9.23982 0.00251582 8.39534 -0.10838 7.58062 0.107683C6.7659 0.323761 6.01753 0.857118 5.43016 1.64028C4.84277 2.42344 4.44276 3.42126 4.2807 4.50756C4.11864 5.59384 4.20182 6.7198 4.5197 7.74306C4.8376 8.76633 5.37592 9.6409 6.0666 10.2563C6.7573 10.8716 7.56932 11.2001 8.4 11.2001C9.51391 11.2001 10.5822 10.61 11.3699 9.55983C12.1576 8.50963 12.6 7.08525 12.6 5.60005ZM16.728 14.4001C17.4656 15.1612 18.0694 16.1287 18.4964 17.2344C18.9235 18.34 19.1636 19.5571 19.2 20.8V24H24V20.8C24 20.8 24 14.9921 16.728 14.4001ZM15.6 8.4007e-05C14.774 -0.00604395 13.9662 0.323218 13.284 0.944078C14.0129 2.30205 14.4049 3.93012 14.4049 5.60005C14.4049 7.26999 14.0129 8.89805 13.284 10.2561C13.9662 10.8769 14.774 11.2062 15.6 11.2001C16.714 11.2001 17.7822 10.61 18.5699 9.55983C19.3576 8.50963 19.8 7.08525 19.8 5.60005C19.8 4.11484 19.3576 2.69048 18.5699 1.64028C17.7822 0.59008 16.714 8.4007e-05 15.6 8.4007e-05Z" fill="black " />
+                </svg>
+                <span className="flex-1 ml-3 white space-nowrap text-black   hover:font-medium">Clientes</span>
+            </Link>
+        </li>
     }
-   
-
     const Policy = () => {
         return <li className="px-5">
             <Link href={`/Politicas`} onClick={handlerNav} className="flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
@@ -164,10 +150,6 @@ const handlerNav = () => {
             </Link>
         </li>
     }
-
-
-
-
     const Support = () => {
         return <li className="px-5">
             <button onClick={redirectHandlerWindow} className="w-full flex items-center p-2 rounded-lg    bg-white  hover:bg-[#00000030]  ">
@@ -180,8 +162,6 @@ const handlerNav = () => {
             </button>
         </li>
     }
-
-
     const SignOut = () => {
 
         return <li className="px-5" onClick={signOutHandler}>
@@ -203,20 +183,17 @@ const handlerNav = () => {
         </li>
     }
 
-
-
-
     switch (rol) {
         case 'Admin':
             return <ul className="space-y-3 text-[16px]  text-gray-600 font-medium">
-               <Header />
+                <Header />
                 <Store />
                 <Profile />
                 <Products />
-                <Clientes/>
+                <Clientes />
                 <Order />
-                <Sucursales/>
-                <DataApp/>
+                <Sucursales />
+                <DataApp />
                 <Support />
                 <Policy />
                 <SignOut />

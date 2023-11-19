@@ -1,26 +1,22 @@
 'use client'
 import { useUser } from '@/context'
-import { readUserAllData, updateUserData, readUserData } from '@/supabase/utils'
+import {  writeUserData, readUserData } from '@/firebase/database'
 import LoaderWithLogo from '@/components/LoaderWithLogo'
 
-import { useState, useEffect } from 'react'
-import { signOut } from '@/supabase/utils'
+import { useEffect } from 'react'
+import { onAuth, signOut } from '@/firebase/utils'
 import { useRouter } from 'next/navigation';
 import Cart from '@/components/Cart'
-import { WithAuth } from '@/HOCs/WithAuth'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import BottomNavigation from '@/components/BottomNavigation'
 import Navbar from '@/components/Navbar'
 import Modal from '@/components/Modal'
 
-import { onAuth } from '@/supabase/utils'
 function Home({ children }) {
-  const router = useRouter()
   const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil } = useUser()
+  const router = useRouter()
   const pathname = usePathname()
-
-
 
   const handlerFilter = (e) => {
     const data = e.target.value
@@ -60,21 +56,18 @@ function Home({ children }) {
     setSearch(false)
   }
 
-
-
-
   const soporte = () => {
     businessData && window.open(`https://api.whatsapp.com/send?phone=+59169941749&text=hola%20necesito%20un%20implante%20de%20osteosintesis%20y%20mi%20cuenta%20esta%20bloqueada%20¿Pueden%20ayudarme?%20`, '_blank')
     setNav(false)
     // setWhatsapp(!whatsapp)
   }
-
+  console.log(user)
   useEffect(() => {
-    if (user === undefined) onAuth(setUserProfile)
+    if (user === undefined) onAuth(setUserProfile, setUserData)
     if (user === null) router.push('/Login')
-    if (servicios === undefined) readUserAllData('Servicios', setServicios)
-    if (perfil === undefined) readUserData('Perfil', 'qr_image', setPerfil, null, true)
-  }, [user, userDB, perfil, servicios])
+    if (servicios === undefined) readUserData('servicios', setServicios)
+    if (perfil === undefined) readUserData('Perfil', setPerfil)
+  }, [user, servicios])
 
   return (
 
@@ -83,38 +76,23 @@ function Home({ children }) {
       {user && user.rol !== undefined && perfil !== undefined
 
         ? <div className="h-screen bg-gray-white">
-
-
-          {(user && user.bloqueado === true) || (userDB && userDB.bloqueado === true) ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar">
+          {user && user.bloqueado === true ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar">
             Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
             <br />
             {/* <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
               Contactar
             </button> */}
           </Modal> : ''}
-          {modal === 'RequireAutorization' && <Modal funcion={soporte} alert={true} close={true}>
-            Su cuenta debe ser verificada, <br />por favor comuniquese con soporte.
-            <br /><br />
-            <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
-              Contactar
-            </button>
-          </Modal>}
           {modal == 'SignOut' && <Modal funcion={signOutConfirm}>
             Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
           </Modal>}
           {modal == 'Exit' && <Modal funcion={signOutConfirm}>
             Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
           </Modal>}
-          {modal == 'Verifica' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
-            Completa tu perfil para hacer tu primera compra.
-          </Modal>}
-          {modal == 'VerificaD' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
-            Completa tu perfil y enviala a verficación para promocionar tus productos en PRECIO JUSTO.
-          </Modal>}
           {modal == 'VerificaM' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
             Completa tu perfil para hacer tu primera receta.
           </Modal>}
-          <div className={`fixed top-0 w-[220px] lg:w-[280px] shadow-xl  h-screen bg-white h-screen transition-all	z-40  ${nav ? 'left-0  ' : 'left-[-220px] lg:left-[-280px] '} z-50`} >
+          <div className={`fixed top-0 w-[220px] lg:w-[280px] shadow-xl  h-screen bg-white transition-all	z-40  ${nav ? 'left-0  ' : 'left-[-220px] lg:left-[-280px] '} z-50`} >
             <div className="py-0 overflow-y-auto ">
               {user && user !== undefined && perfil !== undefined && <Navbar rol={user.rol} />}
             </div>
@@ -125,8 +103,7 @@ function Home({ children }) {
           {search && <div className='fixed top-0 left-0 w-screen h-screen bg-[#ffffff00] z-40' onClick={() => setSearch(false)}></div>}
 
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-white lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }} >
-            <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm shadow flex items-center justify-between bg-[#00E2FF]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
-
+            <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm  flex items-center justify-between bg-[#00E2FF]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
               {pathname === '/' && !location.href.includes('#') ?
                 <div className='flex lg:block'>
                   <div className='flex '>
@@ -142,8 +119,6 @@ function Home({ children }) {
                     <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>}
-
-
               {pathname === '/' && !location.href.includes('#') && <div className="relative  md:block lg:min-w-[500px]">
                 <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
                   <svg className="w-8 h-8  bg-transparent " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
@@ -151,7 +126,6 @@ function Home({ children }) {
                 </div>
                 <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar servicio..." />
               </div>}
-
               {location.href.includes('#') && <div className="relative hidden md:block lg:min-w-[500px]">
                 <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
                   <svg className="w-8 h-8  bg-transparent " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
@@ -159,7 +133,6 @@ function Home({ children }) {
                 </div>
                 <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar servicio..." />
               </div>}
-
               {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/' && <Cart />}
             </nav>
 
@@ -181,12 +154,11 @@ function Home({ children }) {
                     <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
                   </div>)}
               </div>}
-
             <div className="lg:px-[50px] pt-[85px] pb-[10px] md:pt-[85px] md:pb-5 h-screen w-full overflow-y-auto">
               {children}
-
             </div>
-            {user && user !== undefined && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
+
+            {userDB && userDB !== undefined && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
               <BottomNavigation rol={user.rol} />
             </div>}
 

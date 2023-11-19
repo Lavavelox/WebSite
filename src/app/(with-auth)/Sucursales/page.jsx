@@ -11,8 +11,8 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import { writeUserData, readUserData, updateUserData, deleteUserData, readUserAllData } from '@/supabase/utils'
-// import { uploadStorage } from '@/supabase/storage'
+import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
+removeData
 
 function Home() {
     const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, item } = useUser()
@@ -28,17 +28,22 @@ function Home() {
         setState({ ...state, [i.uuid]: { ...state[i.uuid], uuid: i.uuid, [e.target.name]: e.target.value } })
     }
     async function save(i) {
-        await updateUserData('Sucursales', {...state[i.uuid]}, i.uuid)
-        const obj = { ...state }
-        delete obj[i.uuid]
-        setState(obj)
-        readUserAllData('Sucursales', setServicios)
+        const callback = () => {
+            const obj = { ...state }
+            delete obj[i.uuid]
+            setState(obj)
+            readUserData(`sucursales/${i.uuid}`, setServicios)
+        }
+
+        await writeUserData(`sucursales/${i.uuid}`, {...state[i.uuid]}, callback)
     }
-    async function deletConfirm() {
-        console.log(item.uuid)
-        await deleteUserData('Sucursales', item.uuid)
-        readUserAllData('Sucursales', setSucursales)
-        setModal('')
+    
+    function deletConfirm() {
+        const callback = () => {
+            readUserData(`sucursales/${i.uuid}`, setServicios)
+            setModal('')
+        }
+        removeData(`sucursales/${i.uuid}`, callback)
     }
     function delet(i) {
         setUserItem(i)
@@ -75,7 +80,7 @@ function Home() {
 
     console.log(sucursales)
     useEffect(() => {
-        sucursales === undefined && readUserAllData('Sucursales', setSucursales)
+        sucursales === undefined && readUserData('Sucursales', setSucursales)
     }, [sucursales])
 
     return (
@@ -115,7 +120,7 @@ function Home() {
                         </tr>
                     </thead>
                     <tbody>
-                        {sucursales && sucursales !== undefined && sucursales.sort(sortArray).map((i, index) => {
+                        {sucursales && sucursales !== undefined && Object.values(sucursales).sort(sortArray).map((i, index) => {
 
                             return  i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                                 <td className="min-w-[50px] px-3 py-4  text-gray-900 align-middle">
