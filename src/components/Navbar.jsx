@@ -28,7 +28,7 @@ export default function BottomNavigation({ rol }) {
             <img src="/logo.png" className='h-[50px]' alt="" />
             <br />
             <h3 className='text-black font-bold text-center' style={{ WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px', }}>Bienvenido </h3>
-            <h3 className='text-black font-bold text-center' style={{ WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px', }}>{user.nombre}</h3>
+            <h3 className='text-black font-bold text-center' style={{ WebkitTextStrokeColor: 'white', WebkitTextStrokeWidth: '.2px', }}>{userDB.nombre}</h3>
         </li>
     }
     const Profile = () => {

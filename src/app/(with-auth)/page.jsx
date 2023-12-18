@@ -133,7 +133,7 @@ function Home() {
     //     if (user === undefined) onAuth(setUserProfile)
     //     if (user === null) router.push('/Login')
     //     if (user !== undefined && user !== null && userDB === undefined) {
-    //         readUserData('Usuarios', user.uuid, setUserData, null, true)
+    //         readUserData('Usuarios', userDB.uuid, setUserData, null, true)
     //     }
     // }, [user, userDB, path, servicios])
 
@@ -150,8 +150,8 @@ function Home() {
                             return i.categoria.includes(categoria) &&
                                 <Card
                                     i={i}
-                                    costo={JSON.parse(i['costos y entregas'])[`costo 24 hrs ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
-                                    inmediato={JSON.parse(i['costos y entregas'])[`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
+                                    costo={i['costos y entregas'][`costo 24 hrs ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
+                                    inmediato={i['costos y entregas'][`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
                                     key={index} />
                         })
                     }
@@ -163,8 +163,8 @@ function Home() {
                                 i.categoria.includes(categoria) &&
                                 <Card
                                     i={i}
-                                    costo={JSON.parse(i['costos y entregas'])[`costo 24 hrs ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
-                                    inmediato={JSON.parse(i['costos y entregas'])[`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
+                                    costo={i['costos y entregas'][`costo 24 hrs ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
+                                    inmediato={i['costos y entregas'][`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
                                     key={index} />
                         })
                     }
@@ -211,7 +211,7 @@ function Home() {
                                 <tbody>
                                     {Object.values(cart).map((i, index) => <MiniCard
                                         i={i}
-                                        inmediato={JSON.parse(i['costos y entregas'])[`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
+                                        inmediato={i['costos y entregas'][`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
                                     />)}
                                     <tr className="bg-white text-[14px] border-b">
                                         <td className="px-2 py-4 text-[16px] text-gray-900">
@@ -310,7 +310,7 @@ function Home() {
 
             {Object.entries(cart).length !== 0 && <div className="fixed lg:hidden fixed w-screen px-5 bottom-[70px]  z-20">
                 {(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/')
-                    ? (user.rol === 'Cliente'
+                    ? (userDB.rol === 'Cliente'
                         ? <Button theme="SuccessBuy" click={HandlerCheckOut}>Calcular Pago</Button>
                         : <a href="#Services"><Button theme="SuccessBuy">Asignar Servicio</Button></a>)
                     : ''
@@ -320,7 +320,7 @@ function Home() {
     )
 }
 
-export default WithAuth(Home)
+export default Home
 {/* {
                         mode === 'Client' &&
                         <div className='grid grid-cols-2 gap-[5px] md:col-span-2'>

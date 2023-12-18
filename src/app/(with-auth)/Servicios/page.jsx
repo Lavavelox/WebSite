@@ -9,8 +9,7 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
-removeData
+import {  writeUserData, readUserData, removeData } from '@/firebase/database'
 import { categoria, recepcion } from '@/constants'
 
 function Home() {
@@ -106,7 +105,7 @@ function Home() {
     console.log(state)
     useEffect(() => {
         readUserData('servicios', setServicios)
-        readUserData('Sucursales', setSucursales)
+        readUserData('sucursales', setSucursales)
     }, [])
 
     return (
@@ -147,7 +146,7 @@ function Home() {
                             <th scope="col" className="text-center px-3 py-3">
                                 Recepción por
                             </th>
-                            {sucursales && sucursales !== undefined && sucursales.map((i) => {
+                            {sucursales && sucursales !== undefined && Object.values(sucursales).map((i) => {
                                 return <>
                                     <th scope="col" className="min-w-[100px] text-center px-3 py-3">
                                         Costo 24 hrs <br />
@@ -193,29 +192,29 @@ function Home() {
                                         <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='descripcion basica' defaultValue={i['descripcion basica']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                        <Select arr={JSON.parse(perfil.categoria)} name='categoria' uuid={i.uuid} defaultValue={i.categoria} click={onClickHandlerSelect} />
+                                        <Select arr={perfil.categoria} name='categoria' uuid={i.uuid} defaultValue={i.categoria} click={onClickHandlerSelect} />
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                        <Select arr={JSON.parse(perfil['recepcion por'])} name='recepcion por' uuid={i.uuid} defaultValue={i['recepcion por']} click={onClickHandlerSelect} />
+                                        <Select arr={perfil['recepcion por']} name='recepcion por' uuid={i.uuid} defaultValue={i['recepcion por']} click={onClickHandlerSelect} />
                                     </td>
 
                                     {/* {JSON.parse(i['costos y entregas'])[`costo inmediato ${item.uuid}`]}  */}
-                                    {sucursales && sucursales !== undefined && sucursales.map((item) => {
+                                    {sucursales && sucursales !== undefined && Object.values(sucursales).map((item) => {
 
                                         return <>
 
                                             <td>
-                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo 24 hrs ${item.uuid}`} defaultValue={JSON.parse(i['costos y entregas'])[`costo 24 hrs ${item.uuid}`]} className="block p-1.5  w-full text-center h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo 24 hrs ${item.uuid}`} defaultValue={i['costos y entregas'][`costo 24 hrs ${item.uuid}`]} className="block p-1.5  w-full text-center h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                             </td>
 
                                             <td>
-                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo inmediato ${item.uuid}`} defaultValue={JSON.parse(i['costos y entregas'])[`costo inmediato ${item.uuid}`]} className="block p-1.5  w-full h-full text-center text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo inmediato ${item.uuid}`} defaultValue={i['costos y entregas'][`costo inmediato ${item.uuid}`]} className="block p-1.5  w-full h-full text-center text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                             </td>
                                         </>
                                     }
                                     )}
 
-                                    {/* {sucursales && sucursales !== undefined && sucursales.map((item) => {
+                                    {/* {sucursales && sucursales !== undefined && Object.values(sucursales).map((item) => {
                                         return <>
                                             <td scope="col" className="px-3 py-3">
                                                 Costo 24 hrs <br />
@@ -259,7 +258,7 @@ function Home() {
 }
 
 
-export default WithAuth(Home)
+export default Home
 
 
 

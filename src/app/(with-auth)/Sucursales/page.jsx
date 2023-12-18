@@ -11,11 +11,10 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
-removeData
+import {  writeUserData, readUserData, removeData,  } from '@/firebase/database'
 
 function Home() {
-    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, item } = useUser()
+    const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, setServicios, item } = useUser()
 
     const router = useRouter()
     const [state, setState] = useState({})
@@ -39,11 +38,14 @@ function Home() {
     }
     
     function deletConfirm() {
-        const callback = () => {
-            readUserData(`sucursales/${i.uuid}`, setServicios)
+        const callback2 = () => {
             setModal('')
+            console.log('ejec')
         }
-        removeData(`sucursales/${i.uuid}`, callback)
+        const callback = () => {
+            readUserData(`sucursales/`, setServicios, callback2)
+        }
+        removeData(`sucursales/${item.uuid}`, setUserSuccess, callback)
     }
     function delet(i) {
         setUserItem(i)
@@ -80,7 +82,7 @@ function Home() {
 
     console.log(sucursales)
     useEffect(() => {
-        sucursales === undefined && readUserData('Sucursales', setSucursales)
+        sucursales === undefined && readUserData('sucursales', setSucursales)
     }, [sucursales])
 
     return (
@@ -90,7 +92,7 @@ function Home() {
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
 
             <div className="relative h-full overflow-x-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smooth"  ref={refFirst}>
-                {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
+                {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar a la siguiente sucursal {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Sucursales</h3>
                 <br />
                 <div className='flex justify-center w-full'>
@@ -161,7 +163,7 @@ function Home() {
 }
 
 
-export default WithAuth(Home)
+export default Home
 
 
 

@@ -155,7 +155,7 @@ function Home() {
                                     <Select arr={roles} name='rol' uuid={i.uuid} defaultValue={i.rol} click={onClickHandlerSelect} />
                                 </td>
                                 <td className="min-w-[200px] px-3 py-4 text-gray-900 " >
-                                    <Select arr={sucursales.map((i) => i.nombre)} name='sucursal' uuid={i.uuid}  defaultValue={i.sucursal ? i.sucursal : 'No asignado'} click={onClickHandlerSelect2} />
+                                    <Select arr={Object.values(sucursales).map((i) => i.nombre)} name='sucursal' uuid={i.uuid}  defaultValue={i.sucursal ? i.sucursal : 'No asignado'} click={onClickHandlerSelect2} />
                                 </td>
                                 <td className="px-3 py-4">
                                     {state[i.uuid]

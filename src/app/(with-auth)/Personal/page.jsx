@@ -9,10 +9,8 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
+import {  writeUserData, readUserData, removeData } from '@/firebase/database'
 import { roles } from '@/constants'
-
-removeData
 
 function Home() {
     const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, setClientes, clientes } = useUser()
@@ -154,7 +152,7 @@ function Home() {
                                     <Select arr={roles} name='rol' uuid={i.uuid} defaultValue={i.rol} click={onClickHandlerSelect} />
                                 </td>
                                 <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                    <Select arr={sucursales.map((i) => i.nombre)} name='sucursal' uuid={i.uuid} defaultValue={i.sucursal ? i.sucursal : 'No asignado'} click={onClickHandlerSelect2} />
+                                    <Select arr={Object.values(sucursales).map((i) => i.nombre)} name='sucursal' uuid={i.uuid} defaultValue={i.sucursal ? i.sucursal : 'No asignado'} click={onClickHandlerSelect2} />
                                 </td>
                                 <td className="min-w-[200px] px-3 py-4">
                                     {state[i.uuid]

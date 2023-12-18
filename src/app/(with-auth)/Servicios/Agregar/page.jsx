@@ -1,5 +1,5 @@
 'use client'
-import {  writeUserData, readUserData, readUserData } from '@/firebase/database'
+import {  writeUserData, readUserData } from '@/firebase/database'
 import { uploadStorage } from '@/firebase/storage'
 import { useState, useRef, useEffect } from 'react'
 import { useUser } from '@/context'
@@ -71,13 +71,13 @@ function Home() {
         e.preventDefault()
         setModal('Guardando')
         const uuid = generateUUID()
-        uploadStorage(`Sucursales/${uuid}`, postImage, { ...state, uuid, ['costos y entregas']: costos }, callback)
+        uploadStorage(`servicios/${uuid}`, postImage, { ...state, uuid, ['costos y entregas']: costos }, callback)
     }
 
-    console.log(state)
+    console.log(sucursales)
 
     useEffect(() => {
-      sucursales === undefined && readUserData('Sucursales', setSucursales)
+      sucursales === undefined && readUserData('sucursales', setSucursales)
     }, [sucursales])
 
 
@@ -125,15 +125,15 @@ function Home() {
                     </div>
                     <div>
                         <Label htmlFor="">Recepción por </Label>
-                        <Select arr={JSON.parse(perfil['recepcion por'])} name='recepcion por' click={onClickHandlerSelect} />
+                        <Select arr={perfil['recepcion por']} name='recepcion por' click={onClickHandlerSelect} />
                     </div>
                     <div>
                         <Label htmlFor="">Categoria</Label>
-                        <Select arr={JSON.parse(perfil.categoria)} name='categoria' click={onClickHandlerSelect} />
+                        <Select arr={perfil.categoria} name='categoria' click={onClickHandlerSelect} />
                     </div>
                     <h4 className='text-center col-span-2 text-[16px] pt-10'>AGREGA LOS COSTOS POR SUCURSAL</h4>
                     {
-                        sucursales && sucursales !== undefined && sucursales.map((i, index) => {
+                        sucursales && sucursales !== undefined && Object.values(sucursales).map((i, index) => {
                             return <div>
                                 <h5 className='text-center col-span-2 text-[16px] p-5'>{i.nombre}</h5>
                                 <div>

@@ -20,7 +20,7 @@ export default function Home() {
             setUserSuccess('Complete')
             return setTimeout(() => { setIsDisable(false) }, 6000)
         }
-        if (email.length > 10 && password.length < 7) {
+        if (email.length < 10 && password.length < 7) {
             setUserSuccess('PasswordMin')
             return setTimeout(() => { setIsDisable(false) }, 6000)
         }

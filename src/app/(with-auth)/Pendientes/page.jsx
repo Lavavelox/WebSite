@@ -103,9 +103,9 @@ function Home() {
     useEffect(() => {
         console.log(user)
         console.log(sucursales)
-        // if (user && user.rol !== undefined && user.rol === 'Admin' && tareas === undefined) readUserData(`tareas`, getMonthYear(), setTareas, 'mes')
-        // if (user && user.rol !== undefined && user.rol === 'Personal' && tareas === undefined) readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', getMonthYear())
-        // if (user && user.rol !== undefined && user.rol === 'Cliente' && tareas === undefined) readUserDataEq(`tareas`, 'CI', user.CI, setTareas, 'mes', getMonthYear())
+        // if (userDB && userDB.rol !== undefined && userDB.rol === 'Admin' && tareas === undefined) readUserData(`tareas`, getMonthYear(), setTareas, 'mes')
+        // if (userDB && userDB.rol !== undefined && userDB.rol === 'Personal' && tareas === undefined) readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', getMonthYear())
+        // if (userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined) readUserDataEq(`tareas`, 'CI', userDB.CI, setTareas, 'mes', getMonthYear())
         // if (sucursales === undefined) {
         //     onAuth(setUserProfile)
         //     console.log('ejecutando')
@@ -133,7 +133,7 @@ function Home() {
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Sucursal</h3>
                     <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: `repeat(${sucursales && sucursales !== undefined ? sucursales.length : 2}, 150px)` }}>
                         {
-                            sucursales && sucursales !== undefined && sucursales.map(i => <Tag theme={tag == i.nombre ? 'Primary' : 'Secondary'} click={() => setTag(tag == i.nombre ? '' : i.nombre)}>{i.nombre}</Tag>)
+                            sucursales && sucursales !== undefined && Object.values(sucursales).map(i => <Tag theme={tag == i.nombre ? 'Primary' : 'Secondary'} click={() => setTag(tag == i.nombre ? '' : i.nombre)}>{i.nombre}</Tag>)
                         }
                     </div>
                 </div>

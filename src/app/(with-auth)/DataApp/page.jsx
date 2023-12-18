@@ -1,6 +1,6 @@
 'use client'
 
-import { writeUserData, readUserData, writeUserData } from '@/firebase/database'
+import { writeUserData, readUserData } from '@/firebase/database'
 import { uploadStorage } from '@/firebase/storage'
 import { useState, useEffect } from 'react'
 import { useUser } from '@/context'
@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 
 
 function Home() {
-    const { user, userDB, setUserData, success, setUserSuccess, perfil, setPerfil } = useUser()
+    const { user, userDB, setUserData, success, setUserSuccess, perfil, setPerfil, modal, setModal, } = useUser()
     const router = useRouter()
     const [state, setState] = useState({})
     const [postImage, setPostImage] = useState(null)
@@ -30,15 +30,18 @@ function Home() {
     async function save(e) {
         e.preventDefault()
         setModal('Guardando')
-
         const data = {
             whatsapp: e.target[1].value,
             categoria: e.target[2].value.replaceAll(' ', '').split(','),
             ['recepcion por']: e.target[3].value.replaceAll(' ', '').split(','),
-        }        
-        uploadStorage(`Perfil/`, postImage, data, callback)
+        }       
+        const callback = () => {
+            setModal('')
+        }
+        (postImage === null || postImage === undefined) && writeUserData(`perfil/`, data, callback)
+        postImage && uploadStorage(`perfil/`, postImage, data, callback)
     }
-
+    console.log(postImage)
     function manageInputIMG(e) {
         const file = e.target.files[0]
         setPostImage(file)
@@ -48,7 +51,7 @@ function Home() {
         user && <div className='w-full flex justify-center p-5'>
 
             <form className='p-5 py-10 bg-white w-full max-w-[800px] shadow-2xl' onSubmit={save} >
-                {success === "Cargando" && <LoaderBlack></LoaderBlack>}
+                {modal === "Guardando" && <LoaderBlack>{modal}</LoaderBlack>}
                 {disable && <LoaderBlack></LoaderBlack>}
                 <h3 className='text-center text-[16px] pb-3 font-bold'>Datos Empresariales</h3>
                 <br />
@@ -76,11 +79,11 @@ function Home() {
                     </div>
                     <div>
                         <Label htmlFor="">Categoria</Label>
-                        <Input type="text" name="categoria" onChange={onChangeHandler}  defValue={perfil && perfil['categoria'].replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ')} require />
+                        <Input type="text" name="categoria" onChange={onChangeHandler}  defValue={perfil && perfil['categoria'] !== undefined && perfil['categoria'].length > 0 ? perfil['categoria'].toString().replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ') : ''} require />
                     </div>
                     <div>
                         <Label htmlFor="">Recepcion por</Label>
-                        <Input type="text" name="recepcion por" onChange={onChangeHandler}  defValue={perfil && perfil['recepcion por'].replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ')} require />
+                        <Input type="text" name="recepcion por" onChange={onChangeHandler}  defValue={perfil && perfil['recepcion por'] !== undefined && perfil['recepcion por'].length > 0 ? perfil['recepcion por'].toString().replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ') : ''} require />
                     </div>
                 </div>
                 <br />

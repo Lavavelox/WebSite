@@ -18,7 +18,7 @@ export function WithAuth(Component) {
             if (user === undefined) onAuth(setUserProfile)
             if (user === null) router.push('/Login')
             if(user !== undefined && user !== null && userDB === undefined) {
-              readUserData('Usuarios', user.uuid, setUserData, null, true)} 
+              readUserData('Usuarios', userDB.uuid, setUserData, null, true)} 
             user !== undefined && user !== null && readUserData('Servicios', setServicios)
           }, [user, userDB])
         

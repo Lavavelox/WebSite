@@ -34,7 +34,7 @@ function Home() {
     //     const obj = { ...state }
     //     delete obj[i.uuid]
     //     setState(obj)
-    //     readUserData('Producto', user.uuid, setUserDistributorPDB, 'distribuidor')
+    //     readUserData('Producto', userDB.uuid, setUserDistributorPDB, 'distribuidor')
     // }
     function deletConfirm() {
         const callback = () => {

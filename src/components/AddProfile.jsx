@@ -23,12 +23,12 @@ function Component({ children, userDB, user }) {
                 <div>hello world</div>
                 {children}
                 <br />
-                <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Edita tu Perfil</Button>
+                <Button theme="Success" click={() => redirectHandler(`/${userDB.rol}`)}>Edita tu Perfil</Button>
             </div>
             : <div className="flex flex-col items-center justify-center p-5 h-[80vh]">
                 <img src="/logo-circle.png" className='h-[100px] w-100px' alt="" />
                 <br />
-                <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Completa tu Perfil</Button>
+                <Button theme="Success" click={() => redirectHandler(`/${userDB.rol}`)}>Completa tu Perfil</Button>
             </div>
     )
 }
@@ -80,12 +80,12 @@ export default Component
             //     <div>hello world</div>
             //     {children}
             //     <br />
-            //     <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Edita tu Perfil</Button>
+            //     <Button theme="Success" click={() => redirectHandler(`/${userDB.rol}`)}>Edita tu Perfil</Button>
             // </div>
             // : <div className="flex flex-col items-center justify-center bg-blue-800 p-5 h-[80vh]">
             //     <img src="/logo-circle.png" alt="" />
             //     <br />
-            //     <Button theme="Success" click={() => redirectHandler(`/${user.rol}`)}>Completa tu Perfil</Button>
+            //     <Button theme="Success" click={() => redirectHandler(`/${userDB.rol}`)}>Completa tu Perfil</Button>
             // </div>
 //     )
 // }

@@ -1,5 +1,5 @@
 'use client'
-import { writeUserData, readUserData, writeUserData } from '@/firebase/database'
+import { writeUserData, readUserData } from '@/firebase/database'
 import { useState, useRef } from 'react'
 import { useUser } from '@/context/'
 import Input from '@/components/Input'
@@ -37,24 +37,22 @@ function Home() {
     function handlerReset() {
         inputRef1.current.value = ''
         inputRef2.current.value = ''
-        setModal('')
     }
     async function save(e) {
         e.preventDefault()
         setModal('Guardando')
         const uuid = generateUUID()
         const callback = () => {
+            handlerReset()
             setModal('')
         }
-        writeUserData(`Sucursales/${uuid}`, { ...state, uuid }, callback)
-        return handlerReset()
+        writeUserData(`sucursales/${uuid}`, { ...state, uuid }, callback)
     }
     console.log(state)
 
     return (
         <div className='min-h-full p-5 pb-[30px] lg:pb-5'>
-            {modal === 'Guardando' && <LoaderBlack msg='Guardando' />}
-
+          {modal === "Guardando" && <LoaderBlack>{modal}</LoaderBlack>}
             <form className='p-10 min-w-screen  lg:min-w-auto bg-white shadow-2xl min-h-[80vh]' onSubmit={save}>
                 <h3 className='text-center text-[16px] pb-3'>Agregar Sucursal</h3>
                 {success == 'Se ha guardado correctamente' && <Success>Guardado correctamente</Success>}
@@ -86,4 +84,4 @@ function Home() {
 }
 
 
-export default WithAuth(Home)
+export default Home

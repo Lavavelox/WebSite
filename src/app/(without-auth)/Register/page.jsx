@@ -13,6 +13,8 @@ export default function Home() {
     const [isDisable, setIsDisable] = useState(false)
     const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
 
+    console.log(user)
+
     const signInHandler = (e) => {
         e.preventDefault()
         const data = {
@@ -20,12 +22,14 @@ export default function Home() {
             CI: e.target[1].value,
             direccion: e.target[2].value,
             whatsapp: e.target[3].value,
-            uuid: user.id
+            rol: 'Cliente',
+            bloqueado: false,
+            uuid: userDB.uid
         }
         const callback = () => {
             setUserProfile(data)
         }
-        writeUserData(`/usuarios/${user.uid}`, data, callback)
+        writeUserData(`/usuarios/${userDB.uid}`, data, callback)
     }
     const handleSignOut = () => {
         setUserProfile(null)

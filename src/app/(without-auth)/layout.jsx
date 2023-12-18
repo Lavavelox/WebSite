@@ -7,10 +7,10 @@ import Msg from '@/components/Msg'
 export default function layout({ children }) {
   const { user, userDB, setUserProfile, setUserData, success } = useUser()
   const router = useRouter()
-
+  
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile, setUserData)
-    if (user && user !== undefined && userDB === null) router.push('/Register')
+    if (userDB && userDB !== undefined && userDB === null) router.push('/Register')
     if (userDB && userDB !== undefined) router.replace('/')
   }, [user, userDB])
   return (

@@ -42,18 +42,20 @@ function getSpecificDataEq(route, children, eq, setUserData, callback) {
 
 }
 
-function getLate( setUserData, callback) {
-    get(query(ref(db, i), limitToLast(1), orderByChild('date'), endAt(new Date().getTime()),))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          let snap = snapshot.val()
-          setUserData(snap)
-          callback && callback()
-        }
-      });       
+function getLate(setUserData, callback) {
+  get(query(ref(db, i), limitToLast(1), orderByChild('date'), endAt(new Date().getTime()),))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let snap = snapshot.val()
+        setUserData(snap)
+        callback && callback()
+      }
+    });
 }
 
 function writeUserData(rute, object, callback) {
+  console.log(rute)
+  console.log(object)
   update(ref(db, rute), object)
     .then(() => {
       callback !== null ? callback() : ''
@@ -65,7 +67,7 @@ function readUserData(route, setUserData, callback) {
     if (snapshot.exists()) {
       setUserData(snapshot.val());
       callback && callback !== undefined ? callback() : ''
-    }else{
+    } else {
       callback && callback !== undefined ? callback() : ''
     }
   });
@@ -73,12 +75,13 @@ function readUserData(route, setUserData, callback) {
 async function removeData(rute, setUserSuccess, callback) {
   await remove(ref(db, rute))
     .then(() => {
-      setUserSuccess !== null ? setUserSuccess('save') : ''
       callback !== null ? callback() : ''
     })
-    .catch(() =>
-      setUserSuccess('repeat'));
+    .catch((err) => {
+      console.log(err)
+      setUserSuccess('repeat')
+    });
 }
 
 
-export { readUserData, removeData, getSpecificData, getSpecificDataEq, getLate }
+export { readUserData, removeData, getSpecificData, getSpecificDataEq, getLate, writeUserData }

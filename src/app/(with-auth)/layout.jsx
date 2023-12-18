@@ -1,6 +1,6 @@
 'use client'
 import { useUser } from '@/context'
-import {  writeUserData, readUserData } from '@/firebase/database'
+import { writeUserData, readUserData } from '@/firebase/database'
 import LoaderWithLogo from '@/components/LoaderWithLogo'
 
 import { useEffect } from 'react'
@@ -61,22 +61,22 @@ function Home({ children }) {
     setNav(false)
     // setWhatsapp(!whatsapp)
   }
-  console.log(user)
+  console.log(userDB)
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile, setUserData)
     if (user === null) router.push('/Login')
     if (servicios === undefined) readUserData('servicios', setServicios)
-    if (perfil === undefined) readUserData('Perfil', setPerfil)
-  }, [user, servicios])
+    if (perfil === undefined) readUserData('perfil', setPerfil)
+  }, [user, servicios, perfil])
 
   return (
 
     <div >
 
-      {user && user.rol !== undefined && perfil !== undefined
+      {user && perfil !== undefined
 
         ? <div className="h-screen bg-gray-white">
-          {user && user.bloqueado === true ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar">
+          {userDB && userDB.bloqueado === true ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar">
             Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
             <br />
             {/* <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
@@ -89,12 +89,12 @@ function Home({ children }) {
           {modal == 'Exit' && <Modal funcion={signOutConfirm}>
             Estas seguro de salir...? <br /> {Object.keys(cart).length > 0 && 'Tus compras no han sido efectuadas'}
           </Modal>}
-          {modal == 'VerificaM' && <Modal funcion={() => { router.push(`/${user.rol}`); setModal('') }}>
+          {modal == 'VerificaM' && <Modal funcion={() => { router.push(`/${userDB.rol}`); setModal('') }}>
             Completa tu perfil para hacer tu primera receta.
           </Modal>}
           <div className={`fixed top-0 w-[220px] lg:w-[280px] shadow-xl  h-screen bg-white transition-all	z-40  ${nav ? 'left-0  ' : 'left-[-220px] lg:left-[-280px] '} z-50`} >
             <div className="py-0 overflow-y-auto ">
-              {user && user !== undefined && perfil !== undefined && <Navbar rol={user.rol} />}
+              {userDB && userDB !== undefined && perfil !== undefined && <Navbar rol={userDB.rol} />}
             </div>
           </div>
 
@@ -133,10 +133,11 @@ function Home({ children }) {
                 </div>
                 <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar servicio..." />
               </div>}
-              {user && user !== undefined && user.rol !== 'Distribuidor' && pathname === '/' && <Cart />}
+              {userDB && userDB !== undefined && userDB.rol !== 'Distribuidor' && pathname === '/' && <Cart />}
             </nav>
 
-            {search
+            {
+              search
               && filter.length > 0
               && precioJustoPDB !== null
               && precioJustoPDB !== undefined && <div className='w-[100vw] max-w-[800px] fixed top-[70px] left-0 right-0 mx-auto border-[2px] border-white max-h-[40vh] overflow-y-auto z-50 bg-white'>
@@ -153,13 +154,14 @@ function Home({ children }) {
                     <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                     <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
                   </div>)}
-              </div>}
+              </div>
+            }
             <div className="lg:px-[50px] pt-[85px] pb-[10px] md:pt-[85px] md:pb-5 h-screen w-full overflow-y-auto">
               {children}
             </div>
 
             {userDB && userDB !== undefined && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
-              <BottomNavigation rol={user.rol} />
+              <BottomNavigation rol={userDB.rol} />
             </div>}
 
           </main>
