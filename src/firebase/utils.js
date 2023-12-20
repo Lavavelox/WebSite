@@ -18,10 +18,10 @@ function onAuth(setUserProfile, setUserData) {
 
 // ---------------------------Login, Sign Up and Sign In------------------------------------
 
-async function signUpWithEmail(email, password, setUserProfile, setUserSuccess) {
+async function signUpWithEmail(email, password, setUserProfile, setUserSuccess, callback) {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
-
+    callback && callback !== undefined ? callback() : ''
     const user = res.user;
     setUserProfile(user)
   } catch (error) {

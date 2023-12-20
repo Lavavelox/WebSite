@@ -5,14 +5,17 @@ import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
+import LoaderBlack from '@/components/LoaderBlack'
 
 export default function Home() {
-    const { user, introVideo, setSound, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, } = useUser()
+    const { user, introVideo, setSound, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setModal, modal,  } = useUser()
     const [isDisable, setIsDisable] = useState(false)
 
     const signUpHandler = (e) => {
         e.preventDefault()
-
+        function callback() {
+            setModal('')
+        }
         let email = e.target[0].value
         let password = e.target[1].value
 
@@ -24,10 +27,11 @@ export default function Home() {
             setUserSuccess('PasswordMin')
             return setTimeout(() => { setIsDisable(false) }, 6000)
         }
-        signUpWithEmail(email, password, setUserProfile, setUserSuccess)
+        signUpWithEmail(email, password, setUserProfile, setUserSuccess, callback)
     }
     return (
         <div className='w-full  flex flex-col justify-center items-center p-5 '>
+            {modal === "Guardando" && <LoaderBlack>{modal}</LoaderBlack>}
             <form className={`w-full max-w-[450px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 `} onSubmit={!isDisable ? signUpHandler : (e) => e.preventDefault()} >
                 <h5 className="text-[18px] text-center text-gray-800">Registrate</h5>
                 <div>
