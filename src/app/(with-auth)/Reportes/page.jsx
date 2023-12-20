@@ -9,7 +9,7 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState } from 'react'
-import {  writeUserData, readUserData, removeData, readUserData } from '@/firebase/database'
+import {  writeUserData, readUserData, removeData } from '@/firebase/database'
 removeData
 
 function Home() {
