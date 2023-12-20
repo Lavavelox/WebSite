@@ -203,6 +203,7 @@ export default function BottomNavigation({ rol }) {
                 <Header />
                 <Store />
                 <Order />
+                <Sucursales />
                 <Support />
                 <Policy />
                 <SignOut />

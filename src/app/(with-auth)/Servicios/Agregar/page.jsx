@@ -20,7 +20,7 @@ function Home() {
     const router = useRouter()
 
     const { user, userDB, setUserData, setUserSuccess, success, setModal, modal, sucursales, setSucursales, perfil } = useUser()
-    const [state, setState] = useState({ categoria: 'Chompas' })
+    const [state, setState] = useState({})
     const [costos, setCostos] = useState({})
 
     const [postImage, setPostImage] = useState(null)
@@ -70,10 +70,10 @@ function Home() {
         e.preventDefault()
         setModal('Guardando')
         const uuid = generateUUID()
-        uploadStorage(`servicios/${uuid}`, postImage, { ...state, uuid, ['costos y entregas']: costos }, callback)
+        uploadStorage(`servicios/${uuid}`, postImage, { categoria: perfil.categoria[0], ['recepcion por']: perfil['recepcion por'][0] , ...state, uuid, ['costos y entregas']: costos }, callback)
     }
 
-    console.log(sucursales)
+    console.log(costos)
 
     useEffect(() => {
         sucursales === undefined && readUserData('sucursales', setSucursales)

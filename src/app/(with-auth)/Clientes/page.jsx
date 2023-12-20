@@ -40,7 +40,7 @@ function Home() {
         setState({ ...state, [uuid]: { ...state[uuid], [name]: value, ['sucursal uuid']: res.uuid } })
     }  
     async function save(i) {
-        await writeUserData('Usuarios', state[i.uuid], i.uuid)
+        await writeUserData(`usuarios/${i.uuid}`, state[i.uuid], null)
         const obj = { ...state }
         delete obj[i.uuid]
         setState(obj)
@@ -77,7 +77,7 @@ function Home() {
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
-    console.log(sucursales)
+    console.log(clientes)
     useEffect(() => {
         readUserData('usuarios', setClientes)
         readUserData('sucursales', setSucursales)
