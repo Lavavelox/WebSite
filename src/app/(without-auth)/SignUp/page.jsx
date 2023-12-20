@@ -6,10 +6,12 @@ import Link from 'next/link'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 import LoaderBlack from '@/components/LoaderBlack'
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
     const { user, introVideo, setSound, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setModal, modal,  } = useUser()
     const [isDisable, setIsDisable] = useState(false)
+    const router = useRouter()
 
     const signUpHandler = (e) => {
         e.preventDefault()
