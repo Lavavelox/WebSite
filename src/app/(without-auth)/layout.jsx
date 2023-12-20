@@ -10,7 +10,7 @@ export default function layout({ children }) {
   
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile, setUserData)
-    if (userDB && userDB !== undefined && userDB === null) router.push('/Register')
+    if (user && user !== undefined && userDB === null) router.push('/Register')
     if (userDB && userDB !== undefined) router.replace('/')
   }, [user, userDB])
   return (
