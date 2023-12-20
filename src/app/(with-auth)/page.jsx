@@ -253,7 +253,7 @@ function Home() {
                     {
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
-                            <div>
+                            <div className="md:grid md:grid-cols-2 md:gap-[5px] md:col-span-2">
                                 <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI" required />
                                 <Button type="button" theme="Primary" click={autocompletar}>Autocompletar</Button>
                             </div>
