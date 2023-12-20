@@ -26,7 +26,7 @@ export default function Home() {
             whatsapp: e.target[3].value,
             rol: 'Cliente',
             bloqueado: false,
-            uuid: userDB.uid
+            uuid: user.uid
         }
         const callback = () => {
             setUserProfile(data)
