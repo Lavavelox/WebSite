@@ -32,7 +32,7 @@ export default function Home() {
             setUserProfile(data)
             router.replace('/')
         }
-        writeUserData(`/usuarios/${userDB.uid}`, data, callback)
+        writeUserData(`/usuarios/${user.uid}`, data, callback)
     }
     const handleSignOut = () => {
         setUserProfile(null)
