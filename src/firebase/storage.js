@@ -28,7 +28,7 @@ async function uploadStorage(ruteDB, file, db, callback) {
                     url,
                 }
                 console.log(obj)
-                return writeUserData(ruteDB, { ...db, ...obj, }, null, callback)
+                return writeUserData(ruteDB, { ...db, ...obj, }, callback)
             })
             .catch((error) => {
             });

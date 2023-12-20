@@ -29,10 +29,12 @@ function Home() {
         setState({ ...state, [uuid]: { ...state[uuid], [name]: value } })
     }  
     const onClickHandlerSelect2 = (name, value, uuid) => {
-        const res = sucursales.find((i)=> i.nombre === value)
-        console.log(res)
+        const res = Object.values(sucursales).find((i)=> i.nombre === value)
+        console.log(res.uuid)
         setState({ ...state, [uuid]: { ...state[uuid], [name]: value, ['sucursal uuid']: res.uuid } })
     }  
+    console.log(state)
+    // console.log(sucursales)
     function save(i) {
         const callback = () => {
             const obj = { ...state }
@@ -77,9 +79,9 @@ function Home() {
     }
 
     useEffect(() => {
-       clientes === undefined && readUserData('Usuarios', setClientes)
-       sucursales === undefined &&readUserData('Sucursales', setSucursales)
-    }, [clientes, sucursales])
+        readUserData('usuarios', setClientes)
+        readUserData('sucursales', setSucursales)
+    }, [])
 
     return (
 
@@ -177,7 +179,7 @@ function Home() {
 }
 
 
-export default WithAuth(Home)
+export default Home
 
 
 

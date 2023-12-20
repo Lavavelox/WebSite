@@ -12,7 +12,6 @@ import { useEffect, useState, useRef } from 'react'
 import { writeUserData, removeData, readUserData } from '@/firebase/database'
 import { roles } from '@/constants'
 
-removeData
 
 function Home() {
     const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, setUserData, setUserSuccess, sucursales, setSucursales, setClientes, clientes } = useUser()
@@ -78,11 +77,10 @@ function Home() {
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
-    console.log(state)
+    console.log(sucursales)
     useEffect(() => {
-        readUserData('Usuarios', setClientes)
-        readUserData('Sucursales', setSucursales)
-
+        readUserData('usuarios', setClientes)
+        readUserData('sucursales', setSucursales)
     }, [])
 
     return (
@@ -180,7 +178,7 @@ function Home() {
 }
 
 
-export default WithAuth(Home)
+export default Home
 
 
 

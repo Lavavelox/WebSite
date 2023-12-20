@@ -43,7 +43,7 @@ function Home() {
     const [mode, setMode] = useState('Services')
     const [pdf, setPDF] = useState(false)
     const [lateElement, setLateElement] = useState(undefined)
-
+    const [nextNum, setNextNum] = useState(undefined)
     const path = useReactPath();
 
     function onChangeHandler(e) {
@@ -95,6 +95,8 @@ function Home() {
         // const res = getlate('tareas', )
         // const nextNum = res && res.data && res.data[0] && res.data[0].code !== undefined ? res.data[0].code.split('_')[1] * 1 + 1 : '1'
         // const code = generateNO(nextNum)
+
+        readUserData(`sucursales/${userDB['sucursal uuid']}/code`, setNextNum)
         const code = 1
         const data = {
             ...state,

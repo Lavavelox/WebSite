@@ -1,5 +1,5 @@
 'use client'
-import {  writeUserData, readUserData } from '@/firebase/database'
+import { writeUserData, readUserData } from '@/firebase/database'
 import { uploadStorage } from '@/firebase/storage'
 import { useState, useRef, useEffect } from 'react'
 import { useUser } from '@/context'
@@ -19,9 +19,9 @@ import { categoria, recepcion } from '@/constants'
 function Home() {
     const router = useRouter()
 
-    const { user, userDB, setUserData, setUserSuccess, success, setModal, modal, sucursales, setSucursales, perfil  } = useUser()
-    const [state, setState] = useState({ categoria: 'Chompas'})
-    const [costos, setCostos] = useState({ })
+    const { user, userDB, setUserData, setUserSuccess, success, setModal, modal, sucursales, setSucursales, perfil } = useUser()
+    const [state, setState] = useState({ categoria: 'Chompas' })
+    const [costos, setCostos] = useState({})
 
     const [postImage, setPostImage] = useState(null)
     const [urlPostImage, setUrlPostImage] = useState(null)
@@ -33,7 +33,7 @@ function Home() {
     const inputRef4 = useRef(null)
     const inputRef5 = useRef(null)
 
-    
+
 
     const onClickHandlerSelect = (name, value) => {
         setState({ ...state, [name]: value })
@@ -64,7 +64,6 @@ function Home() {
         setUserSuccess('')
         setDisable(false)
         setModal('')
-
     }
 
     async function save(e) {
@@ -77,12 +76,13 @@ function Home() {
     console.log(sucursales)
 
     useEffect(() => {
-      sucursales === undefined && readUserData('sucursales', setSucursales)
+        sucursales === undefined && readUserData('sucursales', setSucursales)
     }, [sucursales])
 
 
     return (
         <div className='min-h-full p-5 pb-[30px] lg:pb-5'>
+            {modal === "Guardando" && <LoaderBlack>{modal}</LoaderBlack>}
 
             <form className='p-10 min-w-screen  lg:min-w-auto bg-white shadow-2xl min-h-[80vh]' onSubmit={save}>
                 <h3 className='text-center text-[16px] pb-3'>AGREGAR SERVICIO</h3>
@@ -118,7 +118,7 @@ function Home() {
                         <Label htmlFor="">Nombre 3</Label>
                         <Input type="text" name="nombre 3" reference={inputRef3} onChange={onChangeHandler} />
                     </div>
-                    
+
                     <div>
                         <Label htmlFor="">Descripción básica</Label>
                         <Input type="text" name="descripcion basica" reference={inputRef4} onChange={onChangeHandler} require />

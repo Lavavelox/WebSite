@@ -20,6 +20,8 @@ export default function Select({arr, name, click, defaultValue, uuid}) {
 
     function handlerUserState (name, i) {
         setState(i)
+        console.log(i)
+        console.log(uuid)
         click(name, i, uuid)
     }
 

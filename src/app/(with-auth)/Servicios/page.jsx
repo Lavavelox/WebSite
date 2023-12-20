@@ -9,8 +9,10 @@ import Tag from '@/components/Tag'
 import { useRouter } from 'next/navigation';
 import { WithAuth } from '@/HOCs/WithAuth'
 import { useEffect, useState, useRef } from 'react'
-import {  writeUserData, readUserData, removeData } from '@/firebase/database'
+import { writeUserData, readUserData, removeData } from '@/firebase/database'
+import { uploadStorage } from '@/firebase/storage'
 import { categoria, recepcion } from '@/constants'
+import LoaderBlack from '@/components/LoaderBlack'
 
 function Home() {
     const { user, setUserUuid, userDB, msg, setMsg, modal, setModal, temporal, setTemporal, distributorPDB, setUserDistributorPDB, setUserItem, item, setUserData, setUserSuccess, servicios, setServicios, sucursales, setSucursales, perfil } = useUser()
@@ -32,7 +34,7 @@ function Home() {
         setState({ ...state, [i.uuid]: { ...state[i.uuid], uuid: i.uuid, [e.target.name]: e.target.value } })
     }
     function onChangeHandlerDynamic(e, i) {
-        setStateDynamic({ ...stateDynamic, [i.uuid]: { ...stateDynamic[i.uuid], [e.target.name]: e.target.value } }     )
+        setStateDynamic({ ...stateDynamic, [i.uuid]: { ...stateDynamic[i.uuid], [e.target.name]: e.target.value } })
     }
     const onClickHandlerSelect = (name, value, uuid) => {
         setState({ ...state, [uuid]: { ...state[uuid], uuid, [name]: value } })
@@ -44,21 +46,29 @@ function Home() {
         setState({ ...state, [uuid]: { ...state[uuid], uuid } })
     }
     function save(i) {
+        setModal('Guardando')
         const data = {
-            ...state[i.uuid], 
-            ['costos y entregas']: {...JSON.parse(i['costos y entregas']), 
-            ...stateDynamic[i.uuid]}
+            ...state[i.uuid],
+            ['costos y entregas']: {
+                ...i['costos y entregas'],
+                ...stateDynamic[i.uuid]
+            }
         }
         const callback = () => {
             const obj = { ...state }
             delete obj[i.uuid]
             setState(obj)
-            readUserData('servicios', setServicios)
+            const obj2 = { ...stateDynamic }
+            delete obj2[i.uuid]
+            setStateDynamic(obj2)
+            readUserData(`servicios/`, setServicios)
+            setModal('')
         }
 
-        writeUserData('servicios', data, callback)
-        postImage[i.uuid] && uploadStorage('servicios', postImage[i.uuid], data, callback)
-        
+        writeUserData(`servicios/${i.uuid}`, data, callback)
+        // uploadStorage(`servicios/${uuid}`, postImage, { ...state, uuid, ['costos y entregas']: costos }, callback)
+
+        postImage[i.uuid] && uploadStorage(`servicios/${i.uuid}`, postImage[i.uuid], data, callback)
     }
     function delet(i) {
         setUserItem(i)
@@ -110,10 +120,11 @@ function Home() {
 
     return (
         <div className='h-full'>
+            {modal === "Guardando" && <LoaderBlack>{modal}</LoaderBlack>}
+            {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
             <div className="relative h-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smooth" ref={refFirst}>
-                {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Servicios</h3>
                 <br />
                 <div className='flex justify-center w-full'>
@@ -174,7 +185,7 @@ function Home() {
                                 i['nombre 3'].toLowerCase().includes(filter)) &&
                                 <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                                     <td className="min-w-[50px] px-3 py-4 text-gray-900 align-middle">
-                                       {index + 1}
+                                        {index + 1}
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
                                         <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre 1' defaultValue={i['nombre 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
@@ -246,14 +257,12 @@ function Home() {
                         }
                     </tbody>
                 </table>
-
                 <div className='lg:flex hidden lg:fixed top-[100px] right-[65px] '>
                     <div className='flex justify-center items-center h-[50px] text-white text-[14px] font-bold bg-[#00E2FF] border border-gray-200 rounded-[10px] px-10 cursor-pointer mr-2' onClick={redirect}>Agregar Servicio</div>
                     <div className='flex justify-center items-center bg-[#00E2FF] h-[50px] w-[50px]  rounded-full text-white cursor-pointer' onClick={redirect}> <span className='text-white text-[30px]'>+</span> </div>
                 </div>
             </div>
         </div>
-
     )
 }
 
