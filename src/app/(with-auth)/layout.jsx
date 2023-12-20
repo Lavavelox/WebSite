@@ -14,7 +14,7 @@ import Navbar from '@/components/Navbar'
 import Modal from '@/components/Modal'
 
 function Home({ children }) {
-  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil } = useUser()
+  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, recetaDBP, setRecetaDBP, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil, clientes, setClientes } = useUser()
   const router = useRouter()
   const pathname = usePathname()
 
@@ -65,9 +65,10 @@ function Home({ children }) {
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile, setUserData)
     if (user === null) router.push('/Login')
+    if (clientes === undefined) readUserData('usuarios', setClientes)
     if (servicios === undefined) readUserData('servicios', setServicios)
     if (perfil === undefined) readUserData('perfil', setPerfil)
-  }, [user, servicios, perfil])
+  }, [user, clientes, servicios, perfil])
 
   return (
 

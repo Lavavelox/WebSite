@@ -24,14 +24,14 @@ import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
 });
-function Home() { 
+function Home() {
     const { filterDis, setFilterDis, Perfil,
         user, userDB, cart, setUserCart,
         modal, setUserData,
         setModal, servicios, setServicios,
         setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
         qrBCP, setQrBCP,
-        ultimoPedido, setUltimoPedido, success, perfil } = useUser()
+        ultimoPedido, setUltimoPedido, success, perfil, clientes } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
     const [categoria, setCategoria] = useState('')
     const router = useRouter()
@@ -89,7 +89,7 @@ function Home() {
         const zero = `${num < 10 ? '00' : ''}${num > 9 && num < 100 ? '0' : ''}${num === 100 ? '100' : ''}${num === 101 ? '001' : ''}`
         return num != 101 && num != 100 ? userDB.sucursal + '_' + zero + num : userDB.sucursal + '_' + zero
     }
-    const handlerSubmit =  (e) => {
+    const handlerSubmit = (e) => {
         e.preventDefault()
         setPDF(true)
         // const res = getlate('tareas', )
@@ -130,7 +130,19 @@ function Home() {
     function navigate() {
         router.back()
     }
+    function autocompletar() {
 
+        const res = Object.values(clientes).find((i)=> i.CI === state.autocomplete)
+        console.log(res)
+        
+        const data = {
+            nombre: res.nombre,
+            CI: res.CI,
+            direccion: res.direccion,
+            whatsapp: res.whatsapp
+        }
+        setState({ ...state, ...data })
+    }
     // useEffect(() => {
     //     if (user === undefined) onAuth(setUserProfile)
     //     if (user === null) router.push('/Login')
@@ -242,8 +254,8 @@ function Home() {
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <div>
-                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.nombre && state.nombre !== undefined && state.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI" required />
-                                <Button type="button" theme="Primary">Autocompletar</Button>
+                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI" required />
+                                <Button type="button" theme="Primary" click={autocompletar}>Autocompletar</Button>
                             </div>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
 
