@@ -21,9 +21,9 @@ function onAuth(setUserProfile, setUserData) {
 async function signUpWithEmail(email, password, setUserProfile, setUserSuccess, callback) {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
-    callback && callback !== undefined ? callback() : ''
     const user = res.user;
     setUserProfile(user)
+    callback && callback !== undefined ? callback() : ''
   } catch (error) {
     console.log(error)
     const errorCode = error.code;
