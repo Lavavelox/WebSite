@@ -1,6 +1,7 @@
 'use client'
 import { useUser } from '@/context'
 import { signOut, signInWithEmailAndPassword, passwordRedirect, writeUserData } from '@/firebase/database'
+import { useRouter } from 'next/navigation';
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
@@ -12,6 +13,7 @@ export default function Home() {
     const { user, introVideo, setSound, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, } = useUser()
     const [isDisable, setIsDisable] = useState(false)
     const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
+    const router = useRouter()
 
     console.log(user)
 
@@ -28,6 +30,7 @@ export default function Home() {
         }
         const callback = () => {
             setUserProfile(data)
+            router.replace('/')
         }
         writeUserData(`/usuarios/${userDB.uid}`, data, callback)
     }
