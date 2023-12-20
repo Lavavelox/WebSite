@@ -241,6 +241,10 @@ function Home() {
                     {
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
+                            <div>
+                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.nombre && state.nombre !== undefined && state.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI" required />
+                                <Button type="button" theme="Primary">Autocompletar</Button>
+                            </div>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
 
                             <div>
@@ -265,7 +269,7 @@ function Home() {
                         </form>
                     }
                     {
-                        location.href.includes('#QR') && <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white shadow rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
+                        location.href.includes('#QR') && <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de usuario</h5>
                             <div className='flex justify-center md:col-span-2 '>
                                 <img src={perfil.url} className='w-[200px] h-auto ' alt="" />
@@ -276,7 +280,7 @@ function Home() {
                     }
                     {
                         location.href.includes('#Saldo') &&
-                        <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white shadow rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={handlerSubmit}>
+                        <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={handlerSubmit}>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Saldo</h5>
 
                             <div>
@@ -310,7 +314,7 @@ function Home() {
             </div >
 
 
-            {Object.entries(cart).length !== 0 && <div className="fixed lg:hidden fixed w-screen px-5 bottom-[70px]  z-20">
+            {Object.entries(cart).length !== 0 && <div className="fixed lg:hidden w-screen px-5 bottom-[70px]  z-20">
                 {(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/')
                     ? (userDB.rol === 'Cliente'
                         ? <Button theme="SuccessBuy" click={HandlerCheckOut}>Calcular Pago</Button>
