@@ -13,8 +13,10 @@ export default function Home() {
 
     const signUpHandler = (e) => {
         e.preventDefault()
+        setModal('')
         function callback() {
-            setModal('')
+            if (user && user !== undefined && userDB === null) router.push('/Register')
+            setModal('Guardando')
         }
         let email = e.target[0].value
         let password = e.target[1].value
