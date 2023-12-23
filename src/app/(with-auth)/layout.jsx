@@ -179,6 +179,27 @@ function Home({ children }) {
             </div>
 
             {userDB && userDB !== undefined && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
+
+            <div
+                className='absolute top-0 w-full h-full flex flex-col justify-center items-center'
+                style={{
+                    backgroundImage: 'url(/bg.jpeg)',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
+                    backgroundColor: '#00E2FF'
+                }}></div>
+            <div
+                className='absolute bottom-0 w-full h-full flex flex-col justify-center items-center'
+                style={{
+                    background: ' #00E2FF80 50%'
+                    //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
+                }}>
+            </div>
+
+
+
               <BottomNavigation rol={userDB.rol} />
             </div>}
 
