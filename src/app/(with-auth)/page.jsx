@@ -51,10 +51,36 @@ function Home() {
         setState({ ...state, [e.target.name]: e.target.value })
     }
     async function HandlerCheckOut(e) {
+        data = {
+            servicios: cart,
+            date: new Date().getTime(),
+            fecha: getDayMonthYearHour(),
+            mes: getMonthYear(),
+            ['sucursal uuid']: userDB['sucursal uuid'],
 
-        var whatsappMessage= "Texto"+"\r\n\r\n"+"más texto o link"
+        }
+
+        const db =Object.values(cart).reduce((acc, i, index) => {
+            const data = `
+                            Nombre: ${i['nombre 1']},\r\n
+                            Categoria: ${i.categoria},\r\n
+                            Cantidad: ${i.cantidad},\r\n
+                        `
+            return data + '\r\n' + acc
+
+        }, ``)
+
+
+        var whatsappMessage = "Solicitud de cotización" + "\r\n\r\n" + db
+
         whatsappMessage = window.encodeURIComponent(whatsappMessage)
+        console.log(whatsappMessage)
+
         window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=${whatsappMessage}`, '_blank')
+
+
+
+
     }
 
     function HandlerOnChange(e) {
@@ -139,15 +165,15 @@ function Home() {
 
         return
     }
-  
+
     function finish() {
         setState({})
         setUserCart({})
-        setPdfDB(undefined)  
-        setPDF(false)  
-      }
+        setPdfDB(undefined)
+        setPDF(false)
+    }
     function autocompletar() {
-        const res = Object.values(clientes).find((i) => i.CI === state.autocomplete || i.whatsapp === state.autocomplete )
+        const res = Object.values(clientes).find((i) => i.CI === state.autocomplete || i.whatsapp === state.autocomplete)
         if (res !== undefined) {
             const data = {
                 nombre: res.nombre,
@@ -161,12 +187,14 @@ function Home() {
         }
     }
 
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-  console.log('mobile')
-}else{
-  // false for not mobile device
-  console.log('no mobile')
-}
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        console.log('mobile')
+    } else {
+        // false for not mobile device
+        console.log('no mobile')
+    }
+    console.log(state)
+    console.log(cart)
 
     // useEffect(() => {
     //     if (user === undefined) onAuth(setUserProfile)
@@ -253,6 +281,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     {Object.values(cart).map((i, index) => <MiniCard
                                         i={i}
                                         inmediato={i['costos y entregas'][`costo inmediato ${userDB && userDB !== undefined && userDB['sucursal uuid']}`]}
+                                        key={index}
                                     />)}
                                     <tr className="bg-white text-[14px] border-b">
                                         <td className="px-2 py-4 text-[16px] text-gray-900">
@@ -281,7 +310,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <div className="md:grid md:grid-cols-2 md:gap-[5px] md:col-span-2">
-                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI" required />
+                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI o whatsapp" required />
                                 <Button type="button" theme="Primary" click={autocompletar}>Autocompletar</Button>
                             </div>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
