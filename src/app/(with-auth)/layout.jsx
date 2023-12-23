@@ -38,8 +38,8 @@ function Home({ children }) {
     setUserProfile(null)
     setUserCart({})
     setUserProduct(undefined),
-    setRecetaDB(undefined),
-    setUserData(undefined)
+      setRecetaDB(undefined),
+      setUserData(undefined)
     setModal('')
     return router.push('/Login')
   }
@@ -103,25 +103,25 @@ function Home({ children }) {
 
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-white lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }} >
             <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm  flex items-center justify-between bg-[#00E2FF]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
-              
-            <div
+
+              <div
                 className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center'
                 style={{
-                    backgroundImage: 'url(/bg.jpeg)',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center',
-                    //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
-                    backgroundColor: '#00E2FF'
+                  backgroundImage: 'url(/bg.jpeg)',
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
+                  backgroundColor: '#00E2FF'
                 }}></div>
-            <div
+              <div
                 className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center'
                 style={{
-                    background: ' #00E2FF80 50%'
-                    //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
+                  background: ' #00E2FF80 50%'
+                  //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
                 }}>
-            </div>
-              
+              </div>
+
               {pathname === '/' && !location.href.includes('#') ?
                 <div className='flex lg:block z-10'>
                   <div className='flex '>
@@ -132,19 +132,19 @@ function Home({ children }) {
                   </div>
                 </div>
                 :
-                <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg  dark:hover:bg-gray-700 dark:focus:ring-gray-600" onClick={() => back(!nav)}>
+                <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg   z-10" onClick={() => back(!nav)}>
                   <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>}
-              {pathname === '/' && !location.href.includes('#') && <div className="relative  md:block lg:min-w-[500px]">
+              {pathname === '/' && !location.href.includes('#') && <div className="relative  md:block lg:min-w-[500px]  z-10">
                 <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
                   <svg className="w-8 h-8  bg-transparent " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                   <span className="sr-only">Search icon</span>
                 </div>
                 <input type="text" id="search-navbar" onChange={handlerFilter} className="block w-full bg-white rounded-full lg:min-w-[400px] p-2 pl-10 text-[14px] text-gray-950 text-center border-b border-gray-300  bg-transparent focus:ring-white focus:border-white focus:outline-transparent" defaultValue={filter} placeholder="Buscar servicio..." />
               </div>}
-              {location.href.includes('#') && <div className="relative hidden md:block lg:min-w-[500px]">
+              {location.href.includes('#') && <div className="relative hidden md:block lg:min-w-[500px]  z-10">
                 <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
                   <svg className="w-8 h-8  bg-transparent " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                   <span className="sr-only">Search icon</span>
@@ -168,7 +168,7 @@ function Home({ children }) {
                     if (i['nombre de producto 2'] && i['nombre de producto 2'].toLowerCase().includes(filter.toLowerCase())) { return i }
                     if (i['nombre de producto 3'] && i['nombre de producto 3'].toLowerCase().includes(filter.toLowerCase())) { return i }
                   }
-                  ).map((i, index) => <div className={`w-full text-[14px] px-5 py-2 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 1'])}>
+                  ).map((i, index) => <div className={`w-full text-[14px] px-5 py-2  z-10 ${(index + 1) % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`} style={{ display: 'grid', gridTemplateColumns: '30px auto', }} onClick={() => handlerSearchFilter(i['nombre de producto 1'])}>
                     <svg className="w-8 h-8 text-white " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                     <div className='pl-5'>{i['nombre de producto 1'] && i['nombre de producto 1']}</div>
                   </div>)}
@@ -179,27 +179,23 @@ function Home({ children }) {
             </div>
 
             {userDB && userDB !== undefined && perfil !== undefined && <div className="fixed bottom-0  z-30 w-full h-[65px] bg-[#00E2FF] rounded-t-[40px] border-t-[1px] border-gray-50  lg:hidden">
-
-            <div
-                className='absolute top-0 w-full h-full flex flex-col justify-center items-center'
+              <div
+                className='absolute top-0 w-full h-full flex flex-col justify-center items-center rounded-t-[40px] '
                 style={{
-                    backgroundImage: 'url(/bg.jpeg)',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center',
-                    //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
-                    backgroundColor: '#00E2FF'
+                  backgroundImage: 'url(/bg.jpeg)',
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center bottom',
+                  //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
+                  backgroundColor: '#00E2FF'
                 }}></div>
-            <div
-                className='absolute bottom-0 w-full h-full flex flex-col justify-center items-center'
+              <div
+                className='absolute bottom-0 w-full h-full flex flex-col justify-center items-center rounded-t-[40px] '
                 style={{
-                    background: ' #00E2FF80 50%'
-                    //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
+                  background: ' #00E2FF80 50%'
+                  //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
                 }}>
-            </div>
-
-
-
+              </div>
               <BottomNavigation rol={userDB.rol} />
             </div>}
 
