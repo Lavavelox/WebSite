@@ -51,14 +51,6 @@ function Home() {
         setState({ ...state, [e.target.name]: e.target.value })
     }
     async function HandlerCheckOut(e) {
-        data = {
-            servicios: cart,
-            date: new Date().getTime(),
-            fecha: getDayMonthYearHour(),
-            mes: getMonthYear(),
-            ['sucursal uuid']: userDB['sucursal uuid'],
-
-        }
 
         const db =Object.values(cart).reduce((acc, i, index) => {
             const data = `
@@ -72,13 +64,10 @@ function Home() {
 
 
         var whatsappMessage = "Solicitud de cotización" + "\r\n\r\n" + db
-
-        whatsappMessage = window.encodeURIComponent(whatsappMessage)
         console.log(whatsappMessage)
-
+        whatsappMessage = window.encodeURIComponent(whatsappMessage)
+        
         window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=${whatsappMessage}`, '_blank')
-
-
 
 
     }
