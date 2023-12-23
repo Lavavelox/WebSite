@@ -53,7 +53,7 @@ function Home() {
     async function HandlerCheckOut(e) {
 
         const db =Object.values(cart).reduce((acc, i, index) => {
-            const data = `Nombre: ${i['nombre 1']},\nCategoria: ${i.categoria},\nCantidad: ${i.cantidad},\n`
+            const data = `imgURL: ${i.url},\nNombre: ${i['nombre 1']},\nCategoria: ${i.categoria},\nCantidad: ${i.cantidad},\n`
             return data + '\r\n' + acc
 
         }, ``)
