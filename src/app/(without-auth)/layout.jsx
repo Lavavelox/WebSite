@@ -19,6 +19,7 @@ export default function layout({ children }) {
       backgroundImage: 'url(/bg.jpeg)',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
       //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
       backgroundColor: '#00E2FF'
      }}>
