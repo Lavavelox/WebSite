@@ -64,11 +64,9 @@ function Home() {
 
 
         var whatsappMessage = "Solicitud de cotización" + "\r\n\r\n" + db
-        console.log(whatsappMessage)
         whatsappMessage = window.encodeURIComponent(whatsappMessage)
-        
+        console.log(whatsappMessage)
         window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=${whatsappMessage}`, '_blank')
-
 
     }
 
