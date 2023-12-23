@@ -46,7 +46,7 @@ export default function layout({ children }) {
       <div className='z-50'>
         {children}
       </div>
-      <div className='pt-[40px] sm:fixed sm:top-[50px] sm:left-[50px] z-30'>
+      <div className='pt-[40px] sm:pt-0 sm:fixed sm:top-[50px] sm:left-[50px] z-30'>
         <button type="button" class="flex items-center justify-center w-48 text-white bg-black rounded-lg h-14">
           <div class="mr-3">
             <svg viewBox="30 336.7 120.9 129.2" width="30">

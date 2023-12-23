@@ -51,7 +51,10 @@ function Home() {
         setState({ ...state, [e.target.name]: e.target.value })
     }
     async function HandlerCheckOut(e) {
-        window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=hola%20Lavavelox%20¿Pueden%20ayudarme?%20`, '_blank')
+
+        var whatsappMessage= "Texto"+"\r\n\r\n"+"más texto o link"
+        whatsappMessage = window.encodeURIComponent(whatsappMessage)
+        window.open(`https://api.whatsapp.com/send?phone=${perfil.whatsapp.replaceAll(' ', '')}&text=${whatsappMessage}`, '_blank')
     }
 
     function HandlerOnChange(e) {
@@ -136,11 +139,15 @@ function Home() {
 
         return
     }
-    function navigate() {
-        router.back()
-    }
+  
+    function finish() {
+        setState({})
+        setUserCart({})
+        setPdfDB(undefined)  
+        setPDF(false)  
+      }
     function autocompletar() {
-        const res = Object.values(clientes).find((i) => i.CI === state.autocomplete)
+        const res = Object.values(clientes).find((i) => i.CI === state.autocomplete || i.whatsapp === state.autocomplete )
         if (res !== undefined) {
             const data = {
                 nombre: res.nombre,
@@ -152,8 +159,15 @@ function Home() {
         } else {
             setModal('user non exit')
         }
-
     }
+
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+  console.log('mobile')
+}else{
+  // false for not mobile device
+  console.log('no mobile')
+}
+
     // useEffect(() => {
     //     if (user === undefined) onAuth(setUserProfile)
     //     if (user === null) router.push('/Login')
@@ -307,7 +321,14 @@ function Home() {
                         location.href.includes('#Saldo') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={handlerSubmit}>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Saldo</h5>
-
+                            <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha recojo de prenda</label>
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandler} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? state['fecha para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora recojo de prenda</label>
+                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                            </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">A cuenta</label>
                                 <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
@@ -331,7 +352,7 @@ function Home() {
                             </div>
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
-                            {pdf && <Button type="button" theme="Danger">Finalizar</Button>}
+                            {pdf && <Button type="button" theme="Danger" click={finish}>Finalizar</Button>}
                             {pdf && pdfDB && <InvoicePDF i={pdfDB} />}
                         </form>
                     }
