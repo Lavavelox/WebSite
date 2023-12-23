@@ -103,8 +103,27 @@ function Home({ children }) {
 
           <main className={`relative w-screen min-w-screen  lg:pb-0  lg:min-w-auto my-[0px] bg-white lg:min-h-screen  ${nav ? 'w-screen pl-[220px] lg:pl-[280px] ' : '  lg:px-[0px]'}`} onClick={() => setNav(false)} style={{ transition: 'all 0.5' }} >
             <nav className="w-screen fixed top-0 border-b border-gray-200 shadow-sm  flex items-center justify-between bg-[#00E2FF]  p-4 h-[70px] z-30" onClick={() => setNav(false)}>
+              
+            <div
+                className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center'
+                style={{
+                    backgroundImage: 'url(/bg.jpeg)',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
+                    backgroundColor: '#00E2FF'
+                }}></div>
+            <div
+                className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center'
+                style={{
+                    background: ' #00E2FF80 50%'
+                    //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
+                }}>
+            </div>
+              
               {pathname === '/' && !location.href.includes('#') ?
-                <div className='flex lg:block'>
+                <div className='flex lg:block z-10'>
                   <div className='flex '>
                     <button type="button" className="inline-flex items-center bg-white p-[2px] text-[14px] text-white rounded-lg  lg:block" onClick={openNav}>
                       <svg className="w-9 h-9 text-white" aria-hidden="true" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"  ></path></svg>
