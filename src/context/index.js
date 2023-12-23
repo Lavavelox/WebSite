@@ -29,7 +29,7 @@ export function UserProvider({ children }) {
 	const [recetaDB, setRecetaDB] = useState({});
 	const [filter, setFilter] = useState('');
 	const [filterQR, setFilterQR] = useState('');
-	const [recetaDBP, setRecetaDBP] = useState(undefined);
+	const [pendienteDB, setPendienteDB] = useState(undefined);
 	const [nav, setNav] = useState(false)
 	const [temporal, setTemporal] = useState(undefined)
 	const [userUuid, setUserUuid] = useState(undefined)
@@ -138,7 +138,7 @@ export function UserProvider({ children }) {
 			recetaDB,
 			filter,
 			filterQR,
-			recetaDBP,
+			pendienteDB,
 			nav,
 			userUuid,
 			modal,
@@ -188,7 +188,7 @@ export function UserProvider({ children }) {
 			temporal,
 			setTemporal,
 			setNav,
-			setRecetaDBP,
+			setPendienteDB,
 			setFilterQR,
 			setFilter,
 			setRecetaDB,
@@ -203,7 +203,7 @@ export function UserProvider({ children }) {
 			setUserSuccess,
 			setUserItem
 		})
-	}, [user, userDB, distributorPDB, productDB, pedidos, item, cart, success, qr, QRurl, recetaDB, filter, filterQR, recetaDBP, nav, temporal, userUuid, modal, msg, tienda, introVideo, play, sound, state, videoClientRef,
+	}, [user, userDB, distributorPDB, productDB, pedidos, item, cart, success, qr, QRurl, recetaDB, filter, filterQR, pendienteDB, nav, temporal, userUuid, modal, msg, tienda, introVideo, play, sound, state, videoClientRef,
 		soundClient,
 		introClientVideo,
 		search,

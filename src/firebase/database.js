@@ -72,6 +72,17 @@ function readUserData(route, setUserData, callback) {
     }
   });
 }
+function readUserDataLength(route, callback) {
+  onValue(ref(db, route), (snapshot) => {
+    if (snapshot.exists()) {
+      console.log(snapshot.size)
+      const length = snapshot.size
+      callback && callback !== undefined ? callback(length) : ''
+    } else {
+      callback && callback !== undefined ? callback() : ''
+    }
+  });
+}
 async function removeData(rute, setUserSuccess, callback) {
   await remove(ref(db, rute))
     .then(() => {
@@ -84,4 +95,4 @@ async function removeData(rute, setUserSuccess, callback) {
 }
 
 
-export { readUserData, removeData, getSpecificData, getSpecificDataEq, getLate, writeUserData }
+export { readUserData, readUserDataLength, removeData, getSpecificData, getSpecificDataEq, getLate, writeUserData }

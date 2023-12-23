@@ -1,5 +1,5 @@
 'use client'
-import { readUserData, writeUserData, readLateData } from '@/firebase/database'
+import { readUserData, readUserDataLength, writeUserData, readLateData } from '@/firebase/database'
 import { useUser } from '@/context'
 import Button from '@/components/Button'
 import Subtitle from '@/components/Subtitle'
@@ -20,6 +20,7 @@ import MiniCard from '@/components/MiniCard'
 import { useReactPath } from '@/HOCs/useReactPath'
 import { useMask } from '@react-input/mask';
 import { getDayMonthYearHour, getMonthYear } from '@/utils/getDate'
+import { generateUUID } from '@/utils/UIDgenerator'
 import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
@@ -29,7 +30,7 @@ function Home() {
         user, userDB, cart, setUserCart,
         modal, setUserData,
         setModal, servicios, setServicios,
-        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, recetaDBP, setRecetaDBP, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
+        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, pendienteDB, setPendienteDB, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
         qrBCP, setQrBCP,
         ultimoPedido, setUltimoPedido, success, perfil, clientes } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
@@ -54,7 +55,7 @@ function Home() {
     }
 
     function HandlerOnChange(e) {
-        QRreaderUtils(e, setFilterQR, setFilter, readUserData, setRecetaDBP)
+        QRreaderUtils(e, setFilterQR, setFilter, readUserData, setPendienteDB)
     }
 
     function storeConfirm() {
@@ -92,20 +93,22 @@ function Home() {
     const handlerSubmit = (e) => {
         e.preventDefault()
         setPDF(true)
+
         // const res = getlate('tareas', )
-        // const nextNum = res && res.data && res.data[0] && res.data[0].code !== undefined ? res.data[0].code.split('_')[1] * 1 + 1 : '1'
         // const code = generateNO(nextNum)
 
-        readUserData(`sucursales/${userDB['sucursal uuid']}/code`, setNextNum)
-        const code = 1
+        const uuid = generateUUID()
+
         const data = {
             ...state,
             servicios: cart,
-            code,
             date: new Date().getTime(),
             fecha: getDayMonthYearHour(),
             mes: getMonthYear(),
             sucursal: userDB.sucursal,
+            uuid,
+            estado: 'Pendiente',
+            ['sucursal uuid']: userDB['sucursal uuid'],
             saldo: state.ac && state.ac !== undefined
                 ? Object.values(cart).reduce((acc, i, index) => {
                     const sum = i['costo'] * i['cantidad']
@@ -119,29 +122,37 @@ function Home() {
                 }, 0)
         }
 
-        const callback = () => {
-            readUserData(`tareas/${i.uuid}`, setServicios)
-            setModal('')
+        const callback = (length) => {
+            const code = length !== undefined ? length : 1
+            const callback2 = () => {
+                setModal('')
+                setPdfDB({ ...data, code: generateNO(code) })
+            }
+            writeUserData(`tareas/${userDB['sucursal uuid']}/${uuid}`, { ...data, code: generateNO(code) }, callback2)
         }
-        writeUserData(`tareas/${i.uuid}`, data, callback)
-        setPdfDB(data)
+
+        readUserDataLength(`/tareas/${userDB['sucursal uuid']}`, callback)
+
+
         return
     }
     function navigate() {
         router.back()
     }
     function autocompletar() {
-
-        const res = Object.values(clientes).find((i)=> i.CI === state.autocomplete)
-        console.log(res)
-        
-        const data = {
-            nombre: res.nombre,
-            CI: res.CI,
-            direccion: res.direccion,
-            whatsapp: res.whatsapp
+        const res = Object.values(clientes).find((i) => i.CI === state.autocomplete)
+        if (res !== undefined) {
+            const data = {
+                nombre: res.nombre,
+                CI: res.CI,
+                direccion: res.direccion,
+                whatsapp: res.whatsapp
+            }
+            setState({ ...state, ...data })
+        } else {
+            setModal('user non exit')
         }
-        setState({ ...state, ...data })
+
     }
     // useEffect(() => {
     //     if (user === undefined) onAuth(setUserProfile)
@@ -156,6 +167,8 @@ function Home() {
             {(modal == 'Recetar' || modal == 'Comprar') && <Modal funcion={storeConfirm}>Estas seguro de cambiar a {modal}. <br /> {Object.keys(cart).length > 0 && 'Tus datos se borraran'}</Modal>}
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
+            {modal == 'user non exit' && <Modal funcion={() => setModal('')} alert={true}>El usuario no existe</Modal>}
+
             <div className={`h-[85vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
                 {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[90px] lg:pb-0 flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
                     {filter.length == 0 &&
@@ -318,7 +331,7 @@ function Home() {
                             </div>
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
-                            {pdf && <Button type="submit" theme="Danger">Finalizar</Button>}
+                            {pdf && <Button type="button" theme="Danger">Finalizar</Button>}
                             {pdf && pdfDB && <InvoicePDF i={pdfDB} />}
                         </form>
                     }

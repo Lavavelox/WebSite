@@ -30,6 +30,7 @@ function Home() {
     const [entrega, setEntrega] = useState('')
     const [tag, setTag] = useState('')
     const [filter, setFilter] = useState('')
+    const [filterDate, setFilterDate] = useState('')
     const refFirst = useRef(null);
 
     function onChangeHandler(e, i) {
@@ -39,19 +40,19 @@ function Home() {
         setFilter(e.target.value)
     }
     function onChangeHandlerFilterMonth(e, i) {
-        readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', e.target.value)
+        console.log(e.target.value)
+        setFilterDate(e.target.value)
     }
     function onChangeHandlerCalc(e, i) {
         setState({ ...state, [i.uuid]: { ...state[i.uuid], ac: e.target.value * 1 + i.ac * 1, saldo: i.saldo * 1 - e.target.value * 1 } })
     }
     const onClickHandlerSelect = (name, value, uuid) => {
-        console.log(uuid)
         setState({ ...state, [uuid]: { ...state[uuid], [name]: value } })
     }
     async function save(i) {
         if (state[i.uuid]['nombre receptor'] || state[i.uuid]['CI receptor'] || state[i.uuid]['whatsapp receptor']) {
             if (state[i.uuid]['nombre receptor'] && state[i.uuid]['CI receptor'] && state[i.uuid]['whatsapp receptor']) {
-                await writeUserData(`tareas`, { ...state[i.uuid], estado: 'Entregado', ['fecha entrega']: getDayMonthYearHour() }, i.uuid)
+                await writeUserData(`tareas/${i['sucursal uuid']}/${i.uuid}`, { ...state[i.uuid], estado: 'Entregado', ['fecha entrega']: getDayMonthYearHour() }, i.uuid)
                 const obj = { ...state }
                 delete obj[i.uuid]
                 setState(obj)
@@ -61,7 +62,7 @@ function Home() {
             }
             return
         }
-        await writeUserData(`tareas/${i.uuid}`, state[i.uuid], i.uuid)
+        await writeUserData(`tareas/${i['sucursal uuid']}/${i.uuid}`, state[i.uuid])
         const obj = { ...state }
         delete obj[i.uuid]
         setState(obj)
@@ -100,26 +101,31 @@ function Home() {
             refFirst.current.scrollLeft = scrollLeft + itemWidth;
         });
     };
+    // useEffect(() => {
+    //     console.log(user)
+    //     console.log(sucursales)
+    //     // if (userDB && userDB.rol !== undefined && userDB.rol === 'Admin' && tareas === undefined) readUserData(`tareas`, getMonthYear(), setTareas, 'mes')
+    //     // if (userDB && userDB.rol !== undefined && userDB.rol === 'Personal' && tareas === undefined) readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', getMonthYear())
+    //     // if (userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined) readUserDataEq(`tareas`, 'CI', userDB.CI, setTareas, 'mes', getMonthYear())
+    //     // if (sucursales === undefined) {
+    //     //     onAuth(setUserProfile)
+    //     //     console.log('ejecutando')
+    //     //    return ()=> readUserData('Sucursales', setSucursales)
+    //     // }
+    // }, [user, tareas, sucursales])
     useEffect(() => {
-        console.log(user)
-        console.log(sucursales)
-        // if (userDB && userDB.rol !== undefined && userDB.rol === 'Admin' && tareas === undefined) readUserData(`tareas`, getMonthYear(), setTareas, 'mes')
-        // if (userDB && userDB.rol !== undefined && userDB.rol === 'Personal' && tareas === undefined) readUserDataEq(`tareas`, 'sucursal', user['sucursal'], setTareas, 'mes', getMonthYear())
-        // if (userDB && userDB.rol !== undefined && userDB.rol === 'Cliente' && tareas === undefined) readUserDataEq(`tareas`, 'CI', userDB.CI, setTareas, 'mes', getMonthYear())
-        // if (sucursales === undefined) {
-        //     onAuth(setUserProfile)
-        //     console.log('ejecutando')
-        //    return ()=> readUserData('Sucursales', setSucursales)
-        // }
-    }, [user, tareas, sucursales])
+        readUserData('sucursales', setSucursales)
+        readUserData('tareas', setTareas)
+    }, [tag])
 
+    tareas !== null && tareas !== undefined && console.log(Object.values(Object.values(tareas).reduce((acc, el)=>{ return {...acc, ...el}}, {})))
     return (
 
         <div className='h-full'>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block left-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:left-[20px]' onClick={prev}>{'<'}</button>
             <button className='fixed text-[20px] text-gray-500 h-[50px] w-[50px] rounded-full inline-block right-[0px] top-0 bottom-0 my-auto bg-[#00000010] z-20 lg:right-[20px]' onClick={next}>{'>'}</button>
 
-            <div className="relative h-full w-full bg-red-500 overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smooth" ref={refFirst}>
+            <div className="relative h-full w-full overflow-auto shadow-2xl p-5 bg-white min-h-[80vh] scroll-smooth" ref={refFirst}>
                 {modal === 'Delete' && <Modal funcion={deletConfirm}>Estas seguro de eliminar al siguiente usuario {msg}</Modal>}
                 <h3 className='font-medium text-[16px]'>Pendientes</h3>
                 <br />
@@ -137,7 +143,7 @@ function Home() {
                         }
                     </div>
                 </div>
-                
+
                 <div className='min-w-[1500px] flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Estado</h3>
                     <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: `repeat(3, 150px)` }}>
@@ -211,23 +217,21 @@ function Home() {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {tareas !== null && tareas !== undefined && Object.values(tareas).sort(sortArray).map((i, index) => {
+                  <tbody>
+                        {tareas !== null && tareas !== undefined && Object.values(Object.values(tareas).reduce((acc, el)=>{ return {...acc, ...el}}, {})).map((i, index) => {
 
-                            return i.sucursal.toLowerCase().includes(tag.toLowerCase()) &&  i.estado.toLowerCase().includes(entrega.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) &&
+                            return i.sucursal.toLowerCase().includes(tag.toLowerCase()) && i.estado.toLowerCase().includes(entrega.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) && i.mes.includes(filterDate) &&
                                 <tr className={` text-[16px] border-b dark:bg-gray-800 `} key={index}>
                                     <td className="px-3 py-4  flex  text-gray-900 ">
                                         <span className='h-full flex py-2'>{index + 1}</span>
                                     </td>
                                     <td className={`min-w-[200px] px-3 py-4  text-gray-900 `} >
-                                       <span className={`p-3 rounded-xl ${i.estado === 'Entregado' && 'bg-green-400'}  ${i.estado === 'Concluido' && 'bg-yellow-300'}  ${i.estado === 'Pendiente' && 'bg-gray-50'}`}>{i['code']}</span> 
+                                        <span className={`p-3 rounded-xl ${i.estado === 'Entregado' && 'bg-green-400'}  ${i.estado === 'Concluido' && 'bg-yellow-300'}  ${i.estado === 'Pendiente' && 'bg-gray-50'}`}>{i['code']}</span>
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                        {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                         {i['nombre']}
                                     </td>
                                     <td className="px-3 py-4  text-gray-900 " >
-                                        {/* <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea> */}
                                         {i['CI']}
                                     </td>
                                     <td className="min-w-[300px] px-3 py-4  text-gray-900 " >
@@ -332,7 +336,7 @@ function Home() {
                                 </tr>
                         })
                         }
-                    </tbody>
+                    </tbody> 
                 </table>
             </div>
         </div>

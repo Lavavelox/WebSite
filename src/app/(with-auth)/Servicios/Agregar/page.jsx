@@ -70,7 +70,7 @@ function Home() {
         e.preventDefault()
         setModal('Guardando')
         const uuid = generateUUID()
-        uploadStorage(`servicios/${uuid}`, postImage, { categoria: perfil.categoria[0], ['recepcion por']: perfil['recepcion por'][0] , ...state, uuid, ['costos y entregas']: costos }, callback)
+        uploadStorage(`servicios/${uuid}`, postImage, { categoria: perfil.categoria[0], ['recepcion por']: perfil['recepcion por'][0], ...state, uuid, ['costos y entregas']: costos }, callback)
     }
 
     console.log(costos)
@@ -137,12 +137,12 @@ function Home() {
                             return <div>
                                 <h5 className='text-center col-span-2 text-[16px] p-5'>{i.nombre}</h5>
                                 <div>
-                                    <Label htmlFor="">Costo adicional entrega inmediata</Label>
-                                    <Input type="text" name={`costo inmediato ${i.uuid}`} styled={{ textAlign: 'center' }} reference={inputRef5} onChange={onChangeHandlerDynimic} />
-                                </div>
-                                <div>
                                     <Label htmlFor="">Costo entrega en 24 hrs</Label>
                                     <Input type="text" name={`costo 24 hrs ${i.uuid}`} styled={{ textAlign: 'center' }} reference={inputRef5} onChange={onChangeHandlerDynimic} />
+                                </div>
+                                <div>
+                                    <Label htmlFor="">Costo adicional entrega inmediata</Label>
+                                    <Input type="text" name={`costo inmediato ${i.uuid}`} styled={{ textAlign: 'center' }} reference={inputRef5} onChange={onChangeHandlerDynimic} />
                                 </div>
                             </div>
                         })
