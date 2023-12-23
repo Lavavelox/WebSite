@@ -10,9 +10,7 @@ export default function BottomNavigation({ rol }) {
     const { user, userDB, modal, setModal, setUserProfile, perfil, setUserData, setUserProduct, setRecetaDB, setUserCart, setUserDistributorPDB, filter, setFilter, nav, setNav } = useUser()
     const router = useRouter()
 
-    const redirectHandler = (ref) => {
-        router.push(ref)
-    }
+
     const signOutHandler = () => {
         setModal('SignOut')
     }

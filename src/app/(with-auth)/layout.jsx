@@ -4,7 +4,7 @@ import { writeUserData, readUserData } from '@/firebase/database'
 import LoaderWithLogo from '@/components/LoaderWithLogo'
 
 import { useEffect } from 'react'
-import { onAuth, signOut } from '@/firebase/utils'
+import { onAuth, handleSignOut } from '@/firebase/utils'
 import { useRouter } from 'next/navigation';
 import Cart from '@/components/Cart'
 import Link from 'next/link'
@@ -34,15 +34,13 @@ function Home({ children }) {
   }
 
   const signOutConfirm = async () => {
-    await signOut()
+    handleSignOut()
     setUserProfile(null)
     setUserCart({})
     setUserProduct(undefined),
-      setRecetaDB(undefined),
-      setPrecioJustoPDB(undefined)
+    setRecetaDB(undefined),
     setUserData(undefined)
     setModal('')
-    setTienda(undefined)
     return router.push('/Login')
   }
 
@@ -61,7 +59,7 @@ function Home({ children }) {
     setNav(false)
     // setWhatsapp(!whatsapp)
   }
-  console.log(userDB)
+
   useEffect(() => {
     if (user === undefined) onAuth(setUserProfile, setUserData)
     if (user === null) router.push('/Login')
