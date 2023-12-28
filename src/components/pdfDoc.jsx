@@ -20,57 +20,82 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 0,
         margin: 0,
-        fontSize: '10px',
+        fontSize: '5px',
     },
     textBold: {
         padding: 0,
         margin: 0,
-        fontWeight: 800,
+        fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: '10px',
+        fontSize: '5px',
     },
-    textRight: {
+    key: {
         padding: 0,
         margin: 0,
-        fontSize: '10px',
+        fontSize: '5px',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+    },
+    value: {
+        textAlign: 'center',
+        padding: 0,
+        margin: 0,
+        fontSize: '5px',
     },
     table: {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        border: '1px solid black',
+
     },
     row: {
+        position: 'relative',
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
         fontSize: '10px',
-    },
+        paddingBottom: '3px',
+    }, 
     celda: {
         textAlign: 'center',
         width: '100%',
-        border: '1px solid black',
-        fontSize: '10px',
+        fontSize: '5px',
+        fontWeight: 'bold',
     },
+    celda1: {
+        textAlign: 'center',
+        width: '140px',
+        fontSize: '5px',
+        fontWeight: 'bold',
+    },
+
+    celda4: {
+        textAlign: 'center',
+        width: '150px',
+        fontSize: '5px',
+        fontWeight: 'bold',
+    },
+    celda5: {
+        textAlign: 'center',
+        width: '100px',
+        fontSize: '5px',
+        fontWeight: 'bold',
+    },
+
     celdaWhite: {
         textAlign: 'center',
         width: '100%',
-        fontSize: '10px',
+        fontSize: '5px',
     },
 
 })
 
 
-
-
-
 const PDF = ({ i }) => {
     const [isCliente, setisCliente] = useState(false);
-
     const Br = () => {
-        return <View style={{ height: '16px' }}></View>
+        return <View style={{ height: '8px' }}></View>
     }
-
     useEffect(() => {
         setisCliente(true)
     }, []);
@@ -78,35 +103,48 @@ const PDF = ({ i }) => {
         <div className="min-w-full height-[30px]">
             {isCliente && <PDFDownloadLink document={
                 <Document >
-                    <Page size="A4" style={{ boxSizing: 'border-box', padding: '2cm', position: 'relative'}}>
-                        <Image src="/logo.png" style={{ position: 'absolute', top: '1cm', left: '2cm', height: '40px', width: '100px' }} />
+                    <Page size={227} style={{ boxSizing: 'border-box', padding: '5mm', position: 'relative' }}>
+                        <View>
+                        <Image src="/logo.png" style={{ position: 'relative', right: '0', left: '0', marginHorizontal: 'auto', paddingBottom: '5px', height: '40px', width: '100px' }} />
                         {/* <Text style={styles.textBold}>COMPROBANTE IMPRESO</Text> */}
                         {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
-                        <Text style={styles.textBold}>ORDEN DE TRABAJO {i['code']}</Text>
+                        <Text style={styles.textBold}>ORDEN DE TRABAJO {i['sucursal']}</Text>
+                        <Text style={{...styles.textBold, fontSize: '10px'}}>{i['code']}</Text>
                         {/* <Text style={styles.text}>{i['code']}</Text> */}
                         <Text style={styles.text}>CONTACTOS 61278192 - 79588684</Text>
-                        <Text style={styles.text}>LA PAZ - BOLIVIA</Text>
+                        <Text style={{...styles.key, textAlign: 'center',}}>LA PAZ - BOLIVIA</Text>
                         <Br />
-                        <Text style={styles.textRight}>FECHA Y HORA DE RECEPCIÓN: {i['fecha']}</Text>
-                        <Text style={styles.textRight}>NOMBRE DEL CLIENTE: {i['nombre']}</Text>
-                        <Text style={styles.textRight}>CELULAR: {i['whatsapp']}</Text>
-                        <Text style={styles.textRight}>CI: {i['CI']}</Text>
+                        <Text style={styles.textRight}>
+                            <Text style={styles.key}>FECHA DE RECEPCIÓN: </Text><Text style={styles.value}>{i['fecha'].split(' ')[2]}</Text>
+                        </Text>
+                        <Text style={styles.textRight}>
+                            <Text style={styles.key}>HORA DE RECEPCIÓN: </Text><Text style={styles.value}>{i['fecha'].split(' ')[0]} {i['fecha'].split(' ')[1]}</Text>
+                        </Text>
+                        <Text style={styles.textRight}>
+                            <Text style={styles.key}>NOMBRE DEL CLIENTE: </Text><Text style={styles.value}>{i['nombre']}</Text>
+                        </Text>
+                        <Text style={styles.textRight}>
+                            <Text style={styles.key}>CELULAR: </Text><Text style={styles.value}>{i['whatsapp']}</Text>
+                        </Text>
+                        <Text style={styles.textRight}>
+                            <Text style={styles.key}>CI: </Text><Text style={styles.value}>{i['CI']}</Text>
+                        </Text>
                         <Br />
                         <View style={styles.row}>
-                            <Text style={styles.celda}>CANTIDAD</Text>
+                            <Text style={styles.celda1}>CANTIDAD</Text>
                             <Text style={styles.celda}>DETALLE</Text>
                             <Text style={styles.celda}>OBSERVACIONES</Text>
-                            <Text style={styles.celda}>PRECIO UNIDAD / ADICIONAL</Text>
-                            <Text style={styles.celda}>SUB TOTAL</Text>
+                            <Text style={styles.celda4}>{'PRECIO\nUNIDAD+\nADICIONAL'}</Text>
+                            <Text style={styles.celda5}>{'SUB\nTOTAL'}</Text>
                         </View>
 
                         {Object.values(i.servicios).map((el, index) => <li key={index}>
                             <View style={styles.row}>
-                                <Text style={styles.celda}>{el['cantidad']}</Text>
+                                <Text style={styles.celda1}>{el['cantidad']}</Text>
                                 <Text style={styles.celda}>{el['nombre 1']}</Text>
                                 <Text style={styles.celda}>{el['observacion']}</Text>
-                                <Text style={styles.celda}>{el['costo']} BS {(el['adicional'] ? `(${el['adicional']} BS)` : '')}</Text>
-                                <Text style={styles.celda}>{(el['costo'] * el['cantidad']) + (el['adicional'] ? el['adicional'] * el['cantidad'] : 0)} BS</Text>
+                                <Text style={styles.celda4}>{el['costo']} BS {(el['adicional'] ? `(${el['adicional']} BS)` : '')}</Text>
+                                <Text style={styles.celda5}>{(el['costo'] * el['cantidad']) + (el['adicional'] ? el['adicional'] * el['cantidad'] : 0)} BS</Text>
                             </View>
                         </li>)}
                         <Br />
@@ -148,6 +186,9 @@ const PDF = ({ i }) => {
 
 
 
+                        <Text style={styles.text}>Fecha de entrega:</Text>
+                        <Text style={styles.text}>Hora de entrega:</Text>
+
 
 
 
@@ -163,7 +204,7 @@ const PDF = ({ i }) => {
                             empresa
                             *LAVAVELOX* como compensación con los gastos de limpieza y almacenaje.</Text>
                         <Text style={styles.text}>!GRACIAS POR SU PREFERENCÍA!</Text>
-                        <Text style={styles.text}>SERVIRLES ES UN PLACER</Text>
+                        </View>
                     </Page>
                 </Document>
             }

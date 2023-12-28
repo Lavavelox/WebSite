@@ -4,7 +4,7 @@ function getDayMonthYearHour () {
     const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
     const date = new Date();
     
-    return `${date.getHours() > 9  ? date.getHours() : '0' + date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes():'0' + date.getMinutes()}   ${date.getDate()}-${months[date.getMonth()]}-${date.getUTCFullYear()}`  
+    return `${date.getHours() > 9  ? date.getHours() : '0' + date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes():'0' + date.getMinutes()} ${date.getHours() >= 12 ? 'pm' : 'am'} ${date.getDate()}-${months[date.getMonth()]}-${date.getUTCFullYear()}`  
 }
 
 function getDayMonthYear () {

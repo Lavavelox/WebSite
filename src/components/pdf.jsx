@@ -41,10 +41,14 @@ const styles = StyleSheet.create({
         border: '1px solid black',
     },
     row: {
+        position: 'relative',
         width: '100%',
+        height:'20px',
         display: 'flex',
         flexDirection: 'row',
         fontSize: '10px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #00000090',
     },
     celda: {
         textAlign: 'center',
@@ -68,7 +72,7 @@ const PDF = ({ i }) => {
     const [isCliente, setisCliente] = useState(false);
 
     const Br = () => {
-        return <View style={{ height: '16px' }}></View>
+        return <View style={{ height: '8px' }}></View>
     }
 
     useEffect(() => {
@@ -80,7 +84,7 @@ const PDF = ({ i }) => {
                 <Document >
                     <Page size="A4" style={{ boxSizing: 'border-box', padding: '2cm', position: 'relative' }}>
                         <Image src="/logo.png" style={{ position: 'absolute', top: '1cm', left: '2cm', height: '40px', width: '100px' }} />
-                        <Text style={styles.textBold}>COMPROBANTE DE ENTREGA {i['code']}</Text>
+                        <Text style={styles.textBold}>COMPROBANTE DE ENTREGA {i['sucursal']}</Text>
                         <Text style={styles.text}>CONTACTOS 61278192 - 79588684</Text>
                         <Text style={styles.text}>LA PAZ - BOLIVIA</Text>
                         <Br />

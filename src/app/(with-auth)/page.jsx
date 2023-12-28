@@ -100,7 +100,7 @@ function Home() {
 
     function generateNO(num) {
         const zero = `${num < 10 ? '00' : ''}${num > 9 && num < 100 ? '0' : ''}${num === 100 ? '100' : ''}${num === 101 ? '001' : ''}`
-        return num != 101 && num != 100 ? userDB.sucursal + '_' + zero + num : userDB.sucursal + '_' + zero
+        return num != 101 && num != 100 ? 'NUMERO_' + zero + num : 'NUMERO_' + zero
     }
     const handlerSubmit = (e) => {
         e.preventDefault()
@@ -170,14 +170,8 @@ function Home() {
         }
     }
 
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        console.log('mobile')
-    } else {
-        // false for not mobile device
-        console.log('no mobile')
-    }
     console.log(state)
-    console.log(cart)
+    console.log(pdfDB)
 
     // useEffect(() => {
     //     if (user === undefined) onAuth(setUserProfile)
@@ -194,7 +188,7 @@ function Home() {
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'user non exit' && <Modal funcion={() => setModal('')} alert={true}>El usuario no existe</Modal>}
 
-            <div className={`h-[85vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
+             <div className={`h-[85vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
                 {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[90px] lg:pb-0 flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
                     {filter.length == 0 &&
                         servicios !== null && servicios !== undefined &&
@@ -221,7 +215,7 @@ function Home() {
                         })
                     }
                 </div>}
-                <div className={`relative flex-col items-center w-full max-w-screen bg-red-500 h-[80vh] overflow-y-scroll bg-transparent  transition-all px-[15px]	z-0  lg:flex ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'flex' : 'hidden'} `} >
+                {userDB !== undefined && userDB.rol !== 'Cliente' && <div className={`relative flex-col items-center w-full max-w-screen bg-red-500 h-[80vh] overflow-y-scroll bg-transparent  transition-all px-[15px]	z-0  lg:flex ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'flex' : 'hidden'} `} >
                     <div className='w-full gap-[10px]'>
                         <ul className="flex border-b">
                             <li className={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
@@ -368,7 +362,7 @@ function Home() {
                             {pdf && pdfDB && <InvoicePDF i={pdfDB} />}
                         </form>
                     }
-                </div >
+                </div >}
             </div >
 
 
