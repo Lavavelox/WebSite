@@ -369,7 +369,7 @@ function Home() {
             </div >
 
         
-                {Object.entries(cart).length !== 0 && userDB.rol === 'Cliente' && <div className="fixed w-screen sm:w-[500px] px-5 lg:px-0 lg:pr-[14px] bottom-[70px] lg:bottom-5 left-0 right-0 mx-auto z-20">
+                {Object.entries(cart).length !== 0 && <div className="fixed w-screen sm:w-[500px] px-5 lg:px-0 lg:pr-[14px] bottom-[70px] lg:bottom-5 left-0 right-0 mx-auto z-20">
                     {(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/')
                         ? (userDB.rol === 'Cliente'
                             ? <Button theme="SuccessBuy" click={HandlerCheckOut}>Calcular Pago</Button>
