@@ -19,7 +19,7 @@ import Input from '@/components/Input'
 import MiniCard from '@/components/MiniCard'
 import { useReactPath } from '@/HOCs/useReactPath'
 import { useMask } from '@react-input/mask';
-import { getDayMonthYearHour, getMonthYear } from '@/utils/getDate'
+import { getDayMonthYearHour, getMonthYear, formatDayMonthYear, formatDayMonthYearInput } from '@/utils/getDate'
 import { generateUUID } from '@/utils/UIDgenerator'
 import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
@@ -49,6 +49,9 @@ function Home() {
 
     function onChangeHandler(e) {
         setState({ ...state, [e.target.name]: e.target.value })
+    }
+    function onChangeHandlerDate(e) {
+        setState({ ...state, [e.target.name]: formatDayMonthYear(e.target.value) })
     }
     async function HandlerCheckOut(e) {
 
@@ -329,7 +332,7 @@ function Home() {
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Saldo</h5>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha recojo de prenda</label>
-                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandler} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? state['fecha para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora recojo de prenda</label>
@@ -359,7 +362,7 @@ function Home() {
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
                             {pdf && <Button type="button" theme="Danger" click={finish}>Finalizar</Button>}
-                            {pdf && pdfDB && <InvoicePDF i={pdfDB} />}
+                            {pdf && pdfDB && <InvoicePDF i={{...pdfDB, ...state}} />}
                         </form>
                     }
                 </div >}

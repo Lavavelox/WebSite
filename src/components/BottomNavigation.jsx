@@ -21,6 +21,7 @@ export default function BottomNavigation({ rol }) {
     const { user, userDB, setUserProfile, filter, setFilter, nav, setNav, setIntroClientVideo, introClientVideo, videoClientRef, setSoundClient, whatsapp, setWhatsapp, businessData, perfil } = useUser()
 
     const router = useRouter()
+    const pathname = usePathname()
 
     const redirectHandler = (ref, name) => {
         router.push(ref)
@@ -137,19 +138,19 @@ export default function BottomNavigation({ rol }) {
             break
         case 'Personal':
             return <div className={`grid h-full max-w-lg grid-cols-3 mx-auto font-medium `}>
-            <Button click={() => redirectHandler(`/Cliente/Pedidos`, 'Pedidos')} name={'Pedidos'}>
-                <Order />
-                <span className="inline-block  text-[14px] text-white   ">Pedidos</span>
-            </Button>
-            <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
-                <Store />
-                <span className="text-[14px] text-white   ">Tienda</span>
-            </Button>
-            <Button click={redirectHandlerWindow} name={'Plantilla'}>
-                <Support />
-                <span className="text-[14px] text-white   ">Operador</span>
-            </Button>
-        </div>
+                <Button click={() => redirectHandler(`/Cliente/Pedidos`, 'Pedidos')} name={'Pedidos'}>
+                    <Order />
+                    <span className="inline-block  text-[14px] text-white   ">Pedidos</span>
+                </Button>
+                <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
+                    <Store />
+                    <span className="text-[14px] text-white   ">Tienda</span>
+                </Button>
+                <Button click={redirectHandlerWindow} name={'Plantilla'}>
+                    <Support />
+                    <span className="text-[14px] text-white   ">Operador</span>
+                </Button>
+            </div>
             break
         case 'Admin':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
@@ -157,13 +158,17 @@ export default function BottomNavigation({ rol }) {
                     <Store />
                     <span className="text-[14px] text-white   ">Tienda</span>
                 </Button>
-
-                <Button click={() => redirectHandler(`Servicios/Agregar`)} name={'Agregar'}>
-                    <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
-                    </svg>
-                </Button>
-
+                {pathname === '/Servicios/Agregar' || pathname === '/Sucursales/Agregar'
+                    ? <Button click={() => redirectHandler(`Servicios/Agregar`)} name={'Agregar'}>
+                        <svg className="min-w-11 h-11 mb-1 text-white rounded-full  p-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path clipRule="evenodd" fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
+                        </svg>
+                    </Button>
+                    : <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
+                        <Store />
+                        <span className="text-[14px] text-white   ">Tienda</span>
+                    </Button>
+                }
                 <Button click={redirectHandlerWindow} name={'Plantilla'}>
                     <Support />
                     <span className="text-[14px] text-white   ">Operador</span>

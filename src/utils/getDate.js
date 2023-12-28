@@ -6,7 +6,6 @@ function getDayMonthYearHour () {
     
     return `${date.getHours() > 9  ? date.getHours() : '0' + date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes():'0' + date.getMinutes()} ${date.getHours() >= 12 ? 'pm' : 'am'} ${date.getDate()}-${months[date.getMonth()]}-${date.getUTCFullYear()}`  
 }
-
 function getDayMonthYear () {
 
     const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '10', '12']
@@ -15,8 +14,6 @@ function getDayMonthYear () {
     
     return `${days[date.getDate()]}-${months[date.getMonth()]}-${date.getFullYear()}`  
 }
-
-
 function getMonthYear () {
 
     const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
@@ -24,5 +21,16 @@ function getMonthYear () {
     
     return `${date.getFullYear()}-${months[date.getMonth()]}`  
 }
+function formatDayMonthYear (inputDate) {
 
-export { getDayMonthYearHour, getDayMonthYear, getMonthYear }
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
+    return `${inputDate.split('-')[2]}-${months[inputDate.split('-')[1]-1]}-${inputDate.split('-')[0]}`  
+}
+function formatDayMonthYearInput (inputDate) {
+
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
+    return `${inputDate.split('-')[2]}-${months.indexOf(inputDate.split('-')[1])}-${inputDate.split('-')[0]}`  
+}
+export { getDayMonthYearHour, getDayMonthYear, getMonthYear, formatDayMonthYear, formatDayMonthYearInput }
