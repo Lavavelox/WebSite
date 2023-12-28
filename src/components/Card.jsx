@@ -59,8 +59,8 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
             </div>
 
             <div>
-                <div className="relative w-[150px] rounded-[20px] text-center" >
-                    <img src={i.url} className='w-150px rounded-[20px]' alt="" />
+                <div className="relative w-[150px]  object-contain rounded-[20px] text-center" >
+                    <img src={i.url} className='w-[150px]  rounded-[20px]' alt="" />
                 </div>
             </div>
 

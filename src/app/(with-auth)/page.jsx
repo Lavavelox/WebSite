@@ -55,8 +55,8 @@ function Home() {
     }
     async function HandlerCheckOut(e) {
 
-        const db =Object.values(cart).reduce((acc, i, index) => {
-            const data = `imgURL: ${i.url},\nNombre: ${i['nombre 1']},\nCategoria: ${i.categoria},\nCantidad: ${i.cantidad},\n`
+        const db = Object.values(cart).reduce((acc, i, index) => {
+            const data = `Nombre: ${i['nombre 1']},\nCategoria: ${i.categoria},\nCantidad: ${i.cantidad},\n`
             return data + '\r\n' + acc
 
         }, ``)
@@ -191,8 +191,8 @@ function Home() {
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'user non exit' && <Modal funcion={() => setModal('')} alert={true}>El usuario no existe</Modal>}
 
-             <div className={`h-[85vh] w-screen lg:w-full overflow-hidden relative z-10 flex flex-col items-center lg:grid `} style={{ gridTemplateColumns: '500px auto', gridAutoFlow: 'dense' }}>
-                {<div className={`relative w-full h-full lg:bg-transparent overflow-y-scroll  px-5 pb-[90px] lg:pb-0 flex-col items-center ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'hidden lg:flex' : 'flex'}`}  >
+            <div className={`h-[85vh] w-screen lg:w-full relative z-10 flex flex-col items-center lg:grid ${userDB.rol === 'Cliente' ? 'lg:h-auto' : 'overflow-hidden'} `} style={{ gridTemplateColumns: userDB.rol !== 'Cliente' && '500px auto', gridAutoFlow: 'dense' }}>
+                {<div className={`relative  lg:bg-transparent overflow-y-scroll  px-5 pb-[90px]  ${userDB.rol === 'Cliente' ? 'py-10 w-full' : 'w-full h-full'} ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? (userDB.rol === 'Cliente' ? 'flex flex-col  items-center' : 'hidden lg:flex flex-col  items-center') : (userDB.rol === 'Cliente' ? 'flex flex-col  items-center' : 'flex flex-col  items-center')}`}  >
                     {filter.length == 0 &&
                         servicios !== null && servicios !== undefined &&
                         Object.values(servicios).sort(sortArray).map((i, index) => {
@@ -362,21 +362,23 @@ function Home() {
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
                             {pdf && <Button type="button" theme="Danger" click={finish}>Finalizar</Button>}
-                            {pdf && pdfDB && <InvoicePDF i={{...pdfDB, ...state}} />}
+                            {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB, ...state }} />}
                         </form>
                     }
                 </div >}
             </div >
 
+        
+                {Object.entries(cart).length !== 0 && <div className="fixed w-screen sm:w-[500px] px-5 lg:px-0 lg:pr-[14px] bottom-[70px] lg:bottom-5 left-0 right-0 mx-auto z-20">
+                    {(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/')
+                        ? (userDB.rol === 'Cliente'
+                            ? <Button theme="SuccessBuy" click={HandlerCheckOut}>Calcular Pago</Button>
+                            : <a href="#Services"><Button theme="SuccessBuy">Asignar Servicio</Button></a>)
+                        : ''
+                    }
+                </div>}
+        
 
-            {Object.entries(cart).length !== 0 && <div className="fixed lg:hidden w-screen px-5 bottom-[70px]  z-20">
-                {(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/')
-                    ? (userDB.rol === 'Cliente'
-                        ? <Button theme="SuccessBuy" click={HandlerCheckOut}>Calcular Pago</Button>
-                        : <a href="#Services"><Button theme="SuccessBuy">Asignar Servicio</Button></a>)
-                    : ''
-                }
-            </div>}
         </main >
     )
 }
