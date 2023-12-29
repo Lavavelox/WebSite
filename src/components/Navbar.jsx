@@ -41,11 +41,6 @@ export default function BottomNavigation({ rol }) {
                     //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
                 }}>
             </div>
-
-
-
-
-
             <img src="/logo.png" className='h-[50px] z-10' alt="" />
             <br />
             <h3 className='text-white font-bold text-center z-10'

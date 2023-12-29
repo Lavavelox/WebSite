@@ -63,19 +63,20 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                     <img src={i.url} className='w-[150px]  rounded-[20px]' alt="" />
                 </div>
             </div>
-
-            <div className='w-full flex justify-between  items-center p-4'>
-                {userDB && userDB.rol !== 'Cliente' ? <>
-                    <div className="flex items-baseline text-gray-900 bg-white rounded-full px-5 py-2">
-                        <span className="text-[24px]  text-red-600 font-extrabold tracking-tight">{costo}</span>
-                        <span className="text-[18px] text-red-600 font-semibold">BS</span>
-                    </div>
-                    <div className="flex items-baseline text-gray-900 bg-white rounded-full px-5 py-2">
-                        <span className="text-[18px]  text-gray-400 font-semibold">+{inmediato}</span>
-                        <span className="text-[18px] text-gray-400 font-semibold">BS</span>
-                    </div>
-                </>
-                :  <span className="text-[18px] text-red-600 font-semibold">Añadir {i['recepcion por']}</span>}
+            <div className='w-full flex justify-start  items-center px-2 py-4'>
+                {userDB && userDB.rol !== 'Cliente'
+                    ? <>
+                        <div className="flex items-baseline text-gray-900 bg-white rounded-full p-2">
+                            <span className="text-[24px]  text-red-600 font-bold">{costo}</span>
+                            <span className="text-[24px] text-red-600 font-bold">BS</span>
+                        </div>
+                        <div className="flex items-baseline text-gray-900 bg-white rounded-full px-0 py-2">
+                            <span className="text-[18px]  text-gray-400">{inmediato}</span>
+                            <span className="text-[18px] text-gray-400">BS</span>
+                        </div>
+                    </>
+                    : <span className="text-[18px] text-red-600 font-semibold">Añadir {i['recepcion por']}</span>
+                }
             </div>
             <div className='flex py-4 pr-4'>
                 {cart && cart[i.uuid] && cart[i.uuid].cantidad !== undefined && cart[i.uuid].cantidad !== 0

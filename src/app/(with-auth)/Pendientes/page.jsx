@@ -137,7 +137,7 @@ function Home() {
                 </div>
                 <div className='min-w-[1500px] flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Sucursal</h3>
-                    <div className="gap-4" style={{ display: 'grid', gridTemplateColumns: `repeat(${sucursales && sucursales !== undefined ? sucursales.length : 2}, 150px)` }}>
+                    <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${sucursales && sucursales !== undefined ? sucursales.length : 2}, 150px)` }}>
                         {
                             sucursales && sucursales !== undefined && Object.values(sucursales).map(i => <Tag theme={tag == i.nombre ? 'Primary' : 'Secondary'} click={() => setTag(tag == i.nombre ? '' : i.nombre)}>{i.nombre}</Tag>)
                         }
