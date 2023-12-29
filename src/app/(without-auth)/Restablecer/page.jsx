@@ -37,11 +37,11 @@ export default function Home() {
                 <h5 className="text-[18px] text-center text-gray-800">Restablecer</h5>
                 <div>
                     <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Email</label>
-                    <Input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="name@company.com" required />
+                    <Input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="name@company.com" require />
                 </div>
                 <div>
                     <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Escribe: Restablecer</label>
-                    <Input type="email" name="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Restablecer" required />
+                    <Input type="email" name="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Restablecer" require />
                 </div>
                 <Button type="submit" theme="Primary">Restablecer</Button>
                 <div className="text-[14px] text-center font-medium text-gray-800">Ya tienes una cuenta? <Link href="/Login" className="text-gray-400 underline">Inicia Sesión</Link ></div>

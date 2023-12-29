@@ -107,10 +107,14 @@ function Home() {
     }
     const handlerSubmit = (e) => {
         e.preventDefault()
-        setPDF(true)
 
-        // const res = getlate('tareas', )
-        // const code = generateNO(nextNum)
+        if (state.nombre !== undefined &&
+            (state.whatsapp !== undefined || state.CI !== undefined) &&
+            state.direccion !== undefined) {
+
+    
+
+        setPDF(true)
 
         const uuid = generateUUID()
 
@@ -150,6 +154,9 @@ function Home() {
 
 
         return
+    } else {
+        setModal('Complete')
+    }
     }
 
     function finish() {
@@ -175,7 +182,7 @@ function Home() {
 
     console.log(state)
     console.log(pdfDB)
-  
+
     // useEffect(() => {
     //     if (user === undefined) onAuth(setUserProfile)
     //     if (user === null) router.push('/Login')
@@ -190,6 +197,7 @@ function Home() {
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'user non exit' && <Modal funcion={() => setModal('')} alert={true}>El usuario no existe</Modal>}
+            {modal === 'Complete' && <Modal alert={true}>Complete los campos requeridos </Modal>}
 
             <div className={`h-[85vh] w-screen lg:w-full relative z-10 flex flex-col items-center lg:grid ${userDB.rol === 'Cliente' ? 'lg:h-auto' : 'overflow-hidden'} `} style={{ gridTemplateColumns: userDB.rol !== 'Cliente' && '500px auto', gridAutoFlow: 'dense' }}>
                 {<div className={`relative  lg:bg-transparent overflow-y-scroll  px-5 pb-[90px]  ${userDB.rol === 'Cliente' ? 'py-10 w-full' : 'w-full h-full'} ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? (userDB.rol === 'Cliente' ? 'flex flex-col  items-center' : 'hidden lg:flex flex-col  items-center') : (userDB.rol === 'Cliente' ? 'flex flex-col  items-center' : 'flex flex-col  items-center')}`}  >
@@ -290,18 +298,18 @@ function Home() {
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <div className="md:grid md:grid-cols-2 md:gap-[5px] md:col-span-2">
-                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI o whatsapp" required />
+                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI o whatsapp"/>
                                 <Button type="button" theme="Primary" click={autocompletar}>Autocompletar</Button>
                             </div>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
 
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Nombre</label>
-                                <Input type="text" name="nombre" id="email" onChange={onChangeHandler} defValue={state.nombre && state.nombre !== undefined && state.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                                <Input type="text" name="nombre" id="email" onChange={onChangeHandler} defValue={state.nombre && state.nombre !== undefined && state.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">CI</label>
-                                <Input type="text" name="CI" id="email" onChange={onChangeHandler} defValue={state.CI && state.CI !== undefined && state.CI} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                                <Input type="text" name="CI" id="email" onChange={onChangeHandler} defValue={state.CI && state.CI !== undefined && state.CI} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Direccion</label>
@@ -332,15 +340,15 @@ function Home() {
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Saldo</h5>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha recojo de prenda</label>
-                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora recojo de prenda</label>
-                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">A cuenta</label>
-                                <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" required />
+                                <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Saldo</label>

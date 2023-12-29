@@ -40,7 +40,9 @@ export default function Button({ click, type, name, onChange, reference, placeho
                 </svg>
                 {showPassword == false && <span className='absolute bg-[#00000080] border-x-[1px] border-gray-50 right-[8px] transform rotate-45 w-[4px] h-[30px]'></span>}
             </span>}
-            {/* {require ?<span className='absolute bottom-[-16px] right-[10px] h-[16px] px-[10px] text-red-500'> *Requerido</span> : <span className='absolute bottom-[-16px] right-[10px] h-[16px] px-[10px]  text-gray-700'>Opcional</span>} */}
+            {require 
+            ?<span className='absolute top-[-7px] left-[10px] h-[16px] px-[10px] text-[10px] bg-white text-red-500'> *Requerido</span> 
+            : <span className='absolute top-[-7px] left-[10px] h-[16px] px-[10px] text-[10px] bg-white text-gray-700'> Opcional</span>}
 
             {/* {require ?<span className='absolute top-[-28px] left-[-18px] h-[16px] px-[10px]'> *</span> : ''} */}
         </span>

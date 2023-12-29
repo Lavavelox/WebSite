@@ -12,11 +12,14 @@ import { usePathname } from 'next/navigation'
 import BottomNavigation from '@/components/BottomNavigation'
 import Navbar from '@/components/Navbar'
 import Modal from '@/components/Modal'
+import { useReactPath } from '@/HOCs/useReactPath'
 
 function Home({ children }) {
   const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, pendienteDB, setPendienteDB, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil, clientes, setClientes } = useUser()
   const router = useRouter()
   const pathname = usePathname()
+  const path = useReactPath();
+
 
   const handlerFilter = (e) => {
     const data = e.target.value
@@ -66,7 +69,7 @@ function Home({ children }) {
     if (clientes === undefined) readUserData('usuarios', setClientes)
     if (servicios === undefined) readUserData('servicios', setServicios)
     if (perfil === undefined) readUserData('perfil', setPerfil)
-  }, [user, clientes, servicios, perfil])
+  }, [user, clientes, servicios, perfil, path])
 
   return (
 
