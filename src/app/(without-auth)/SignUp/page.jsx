@@ -16,9 +16,9 @@ export default function Home() {
     const signUpHandler = (e) => {
         e.preventDefault()
         setModal('Guardando')
-        function callback() {
-            router.push('/Register')
-            setModal('')
+        function callback(err) {
+           err !== true && router.push('/Register')
+           setModal('')
         }
         let email = e.target[0].value
         let password = e.target[1].value
