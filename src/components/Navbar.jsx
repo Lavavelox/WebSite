@@ -207,7 +207,7 @@ export default function BottomNavigation({ rol }) {
 
     switch (rol) {
         case 'Admin':
-            return <ul className="space-y-3 text-[16px]  text-gray-600 font-medium">
+            return <ul className="space-y-3 text-[16px] h-screen text-gray-600 font-medium">
                 <Header />
                 <Store />
                 <Profile />

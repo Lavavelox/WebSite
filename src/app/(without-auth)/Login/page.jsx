@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <div className='w-screen flex flex-col justify-center items-center p-5 '>
-      <form className={`w-full max-w-[450px] space-y-4 shadow-2xl bg-white shadow rounded-[20px] px-5 py-10`} onSubmit={!isDisable ? signInHandler : (e) => e.preventDefault()} >
+      <form className={`w-full max-w-[450px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10`} onSubmit={!isDisable ? signInHandler : (e) => e.preventDefault()} >
         {/* <form className={`w-full max-w-[450px] space-y-4 border-[1px] border-white shadow-2xl shadow-white px-5 py-10`} onSubmit={!isDisable ? signInHandler : (e) => e.preventDefault()} > */}
         <h5 className="text-[18px] text-center text-gray-800" >Iniciar Sesión</h5>
         <div>

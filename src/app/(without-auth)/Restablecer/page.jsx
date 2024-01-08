@@ -32,7 +32,7 @@ export default function Home() {
     }
 
     return (
-        <div className='w-full flex flex-col justify-center items-center p-5 '>
+        <div className='w-screen flex flex-col justify-center items-center p-5 '>
             <form className={`w-full max-w-[450px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 `} onSubmit={handlerResset}>
                 <h5 className="text-[18px] text-center text-gray-800">Restablecer</h5>
                 <div>

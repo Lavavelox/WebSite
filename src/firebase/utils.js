@@ -23,13 +23,15 @@ async function signUpWithEmail(email, password, setUserProfile, setUserSuccess, 
     const res = await createUserWithEmailAndPassword(auth, email, password)
     const user = res.user;
     setUserProfile(user)
-    callback && callback !== undefined ? callback() : ''
+    callback && callback !== undefined ? callback(false) : ''
   } catch (error) {
     console.log(error)
     const errorCode = error.code;
     const errorMessage = error.message;
     setUserProfile(null)
     setUserSuccess(errorMessage)
+    callback && callback !== undefined ? callback(true) : ''
+
   }
 }
 async function signInWithEmail(email, password, setUserProfile) {

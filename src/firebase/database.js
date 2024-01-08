@@ -60,7 +60,9 @@ function writeUserData(rute, object, callback) {
     .then(() => {
       callback !== null ? callback() : ''
     })
-    .catch((err) => console.log(err))
+    .catch((err) =>{ 
+      console.log(err)
+    })
 }
 function readUserData(route, setUserData, callback) {
   onValue(ref(db, route), (snapshot) => {
