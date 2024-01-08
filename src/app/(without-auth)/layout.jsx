@@ -47,7 +47,7 @@ export default function layout({ children }) {
         {children}
       </div>
       <div className='pt-[40px] sm:pt-0 sm:fixed sm:top-[50px] sm:left-[50px] z-30'>
-        <button type="button" class="flex items-center justify-center w-48 text-white bg-black rounded-lg h-14">
+        <a type="button" href='/LavaVelox.apk' download class="flex items-center justify-center w-48 text-white bg-black rounded-lg h-14">
           <div class="mr-3">
             <svg viewBox="30 336.7 120.9 129.2" width="30">
               <path fill="#FFD400"
@@ -71,7 +71,7 @@ export default function layout({ children }) {
               APK android
             </div>
           </div>
-        </button>
+        </a>
       </div>
 
       {success == 'AccountNonExist' && <Msg>Cuenta inexistente</Msg>}
