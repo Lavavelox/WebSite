@@ -41,7 +41,7 @@ export default function Home() {
 
     return (
         <div className='w-full  flex flex-col justify-center items-center p-5 '>
-            <form className={`w-full max-w-[450px] md:max-w-[600px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:mt-[0px] md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={signInHandler} >
+            <form className={`w-full sm:max-w-[450px] md:max-w-[600px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:mt-[0px] md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={signInHandler} >
                 <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Registrate</h5>
                 <div>
                     <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Nombre</label>
