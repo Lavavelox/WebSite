@@ -28,7 +28,6 @@ export default function Home() {
     signInWithEmail(email, password, setUserProfile)
   }
 
-
   return (
     <div className='w-screen flex flex-col justify-center items-center p-5 '>
       <form className={`w-full max-w-[450px] space-y-4 shadow-2xl bg-white shadow rounded-[20px] px-5 py-10`} onSubmit={!isDisable ? signInHandler : (e) => e.preventDefault()} >

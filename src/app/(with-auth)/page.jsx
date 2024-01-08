@@ -112,51 +112,51 @@ function Home() {
             (state.whatsapp !== undefined || state.CI !== undefined) &&
             state.direccion !== undefined) {
 
-    
 
-        setPDF(true)
 
-        const uuid = generateUUID()
+            setPDF(true)
 
-        const data = {
-            ...state,
-            servicios: cart,
-            date: new Date().getTime(),
-            fecha: getDayMonthYearHour(),
-            mes: getMonthYear(),
-            sucursal: userDB.sucursal,
-            uuid,
-            estado: 'Pendiente',
-            ['sucursal uuid']: userDB['sucursal uuid'],
-            saldo: state.ac && state.ac !== undefined
-                ? Object.values(cart).reduce((acc, i, index) => {
-                    const sum = i['costo'] * i['cantidad']
-                    const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-                    return sum + sum2 + acc
-                }, 0) - state.ac
-                : Object.values(cart).reduce((acc, i, index) => {
-                    const sum = i['costo'] * i['cantidad']
-                    const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-                    return sum + sum2 + acc
-                }, 0)
-        }
+            const uuid = generateUUID()
 
-        const callback = (length) => {
-            const code = length !== undefined ? length : 1
-            const callback2 = () => {
-                setModal('')
-                setPdfDB({ ...data, code: generateNO(code) })
+            const data = {
+                ...state,
+                servicios: cart,
+                date: new Date().getTime(),
+                fecha: getDayMonthYearHour(),
+                mes: getMonthYear(),
+                sucursal: userDB.sucursal,
+                uuid,
+                estado: 'Pendiente',
+                ['sucursal uuid']: userDB['sucursal uuid'],
+                saldo: state.ac && state.ac !== undefined
+                    ? Object.values(cart).reduce((acc, i, index) => {
+                        const sum = i['costo'] * i['cantidad']
+                        const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+                        return sum + sum2 + acc
+                    }, 0) - state.ac
+                    : Object.values(cart).reduce((acc, i, index) => {
+                        const sum = i['costo'] * i['cantidad']
+                        const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+                        return sum + sum2 + acc
+                    }, 0)
             }
-            writeUserData(`tareas/${userDB['sucursal uuid']}/${uuid}`, { ...data, code: generateNO(code) }, callback2)
+
+            const callback = (length) => {
+                const code = length !== undefined ? length : 1
+                const callback2 = () => {
+                    setModal('')
+                    setPdfDB({ ...data, code: generateNO(code) })
+                }
+                writeUserData(`tareas/${userDB['sucursal uuid']}/${uuid}`, { ...data, code: generateNO(code) }, callback2)
+            }
+
+            readUserDataLength(`/tareas/${userDB['sucursal uuid']}`, callback)
+
+
+            return
+        } else {
+            setModal('Complete')
         }
-
-        readUserDataLength(`/tareas/${userDB['sucursal uuid']}`, callback)
-
-
-        return
-    } else {
-        setModal('Complete')
-    }
     }
 
     function finish() {
@@ -179,18 +179,7 @@ function Home() {
             setModal('user non exit')
         }
     }
-
-    console.log(state)
-    console.log(pdfDB)
-
-    // useEffect(() => {
-    //     if (user === undefined) onAuth(setUserProfile)
-    //     if (user === null) router.push('/Login')
-    //     if (user !== undefined && user !== null && userDB === undefined) {
-    //         readUserData('Usuarios', userDB.uuid, setUserData, null, true)
-    //     }
-    // }, [user, userDB, path, servicios])
-
+    console.log(location.href)
     return (
         <main className="">
             {(modal == 'Recetar' || modal == 'Comprar') && <Modal funcion={storeConfirm}>Estas seguro de cambiar a {modal}. <br /> {Object.keys(cart).length > 0 && 'Tus datos se borraran'}</Modal>}
@@ -200,7 +189,14 @@ function Home() {
             {modal === 'Complete' && <Modal alert={true}>Complete los campos requeridos </Modal>}
 
             <div className={`h-[85vh] w-screen lg:w-full relative z-10 flex flex-col items-center lg:grid ${userDB.rol === 'Cliente' ? 'lg:h-auto' : 'overflow-hidden'} `} style={{ gridTemplateColumns: userDB.rol !== 'Cliente' && '500px auto', gridAutoFlow: 'dense' }}>
-                {<div className={`relative  lg:bg-transparent overflow-y-scroll  px-5 pb-[90px]  ${userDB.rol === 'Cliente' ? 'py-10 w-full' : 'w-full h-full'} ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? (userDB.rol === 'Cliente' ? 'flex flex-col  items-center' : 'hidden lg:flex flex-col  items-center') : (userDB.rol === 'Cliente' ? 'flex flex-col  items-center' : 'flex flex-col  items-center')}`}  >
+                {<div className={`relative  lg:bg-transparent overflow-y-scroll  px-5 pb-[90px]  
+                ${userDB.rol === 'Cliente' ? 'py-10 w-full' : 'w-full h-full'} 
+                ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? (userDB.rol === 'Cliente'
+                        ? 'flex flex-col  items-center' : 'hidden lg:flex flex-col  items-center')
+                        : (userDB.rol === 'Cliente'
+                            ? 'flex flex-col  items-center'
+                            : 'flex flex-col  items-center'
+                        )}`} >
                     {filter.length == 0 &&
                         servicios !== null && servicios !== undefined &&
                         Object.values(servicios).sort(sortArray).map((i, index) => {
@@ -229,7 +225,7 @@ function Home() {
                 {userDB !== undefined && userDB.rol !== 'Cliente' && <div className={`relative flex-col items-center w-full max-w-screen bg-red-500 h-[80vh] overflow-y-scroll bg-transparent  transition-all px-[15px]	z-0  lg:flex ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'flex' : 'hidden'} `} >
                     <div className='w-full gap-[10px]'>
                         <ul className="flex border-b">
-                            <li className={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
+                            <li className={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/'|| location.href === 'http://localhost:3000/#' || location.href === 'https://app.lavavelox.com/#' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
                                 <a href='#Services' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? 'border-l border-t border-r rounded-t' : ''}`} >Servicios</a>
                             </li>
                             <li className={`mr-1 ${location.href.includes('#Client') ? '-mb-px' : ''}`}>
@@ -298,7 +294,7 @@ function Home() {
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <div className="md:grid md:grid-cols-2 md:gap-[5px] md:col-span-2">
-                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI o whatsapp"/>
+                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI o whatsapp" />
                                 <Button type="button" theme="Primary" click={autocompletar}>Autocompletar</Button>
                             </div>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
@@ -377,11 +373,11 @@ function Home() {
             </div >
 
 
-            {Object.entries(cart).length !== 0 && userDB.rol !== 'Cliente' && (location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/')
+            {Object.entries(cart).length !== 0 && userDB.rol !== 'Cliente' && (location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href === 'http://localhost:3000/#' || location.href === 'https://app.lavavelox.com/#')
                 ? <div className="fixed lg:hidden w-screen sm:w-[500px] px-5 lg:px-0 lg:pr-[14px] bottom-[70px] lg:bottom-5 left-0 right-0 mx-auto z-20">
                     <a href="#Services"><Button theme="SuccessBuy">Asignar Servicio</Button></a>
                 </div>
-                : Object.entries(cart).length !== 0 && <div className="fixed lg:hidden w-screen sm:w-[500px] px-5 lg:px-0 lg:pr-[14px] bottom-[70px] lg:bottom-5 left-0 right-0 mx-auto z-20">
+                : Object.entries(cart).length !== 0 && userDB.rol === 'Cliente' && <div className="fixed lg:hidden w-screen sm:w-[500px] px-5 lg:px-0 lg:pr-[14px] bottom-[70px] lg:bottom-5 left-0 right-0 mx-auto z-20">
                     <Button theme="SuccessBuy" click={HandlerCheckOut}>Calcular Pago</Button>
                 </div>
             }
@@ -390,10 +386,3 @@ function Home() {
 }
 
 export default Home
-{/* {
-                        mode === 'Client' &&
-                        <div className='grid grid-cols-2 gap-[5px] md:col-span-2'>
-                            <input type="text" className='border-b border-gray-300 gap-4 text-center focus:outline-none  w-[300px]' onChange={onChangeHandler} placeholder='Autocompletar por CI' />
-                            <Button theme="Primary" click={() => ''}>Buscar</Button>
-                        </div>
-                    } */}

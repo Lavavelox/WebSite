@@ -125,7 +125,7 @@ function Home({ children }) {
                 }}>
               </div>
 
-              {pathname === '/' && !location.href.includes('#') ?
+              {pathname === '/' && (!location.href.includes('#') || location.href === 'http://localhost:3000/#' || location.href === 'https://app.lavavelox.com/#') ?
                 <div className='flex lg:block z-10'>
                   <div className='flex '>
                     <button type="button" className="inline-flex items-center bg-white p-[2px] text-[14px] text-white rounded-lg  lg:block" onClick={openNav}>

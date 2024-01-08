@@ -73,7 +73,7 @@ function Home() {
             readUserData(`tareas`, setTareas)
             setModal('')
         }
-        removeData(`tareas/${i.uuid}`, callback)
+        removeData(`tareas/${item['sucursal uuid']}/${item.uuid}`, null, callback)
     }
     function delet(i) {
         setUserItem(i)
@@ -137,11 +137,11 @@ function Home() {
                 </div>
                 <div className='min-w-[1500px] flex justify-start items-center my-5 '>
                     <h3 className="flex pr-12 text-[14px]" htmlFor="">Sucursal</h3>
-                    <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${sucursales && sucursales !== undefined ? sucursales.length : 2}, 150px)` }}>
+                    {sucursales && sucursales !== undefined && <div className="w-full grid gap-4 grid-cols-10" style={{ gridTemplateColumns: `repeat(${sucursales && sucursales !== undefined ? sucursales.length : 2}, 150px)` }}>
                         {
                             sucursales && sucursales !== undefined && Object.values(sucursales).map(i => <Tag theme={tag == i.nombre ? 'Primary' : 'Secondary'} click={() => setTag(tag == i.nombre ? '' : i.nombre)}>{i.nombre}</Tag>)
                         }
-                    </div>
+                    </div>}
                 </div>
 
                 <div className='min-w-[1500px] flex justify-start items-center my-5 '>
