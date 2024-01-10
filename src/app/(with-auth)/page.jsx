@@ -21,6 +21,7 @@ import { useReactPath } from '@/HOCs/useReactPath'
 import { useMask } from '@react-input/mask';
 import { getDayMonthYearHour, getMonthYear, formatDayMonthYear, formatDayMonthYearInput } from '@/utils/getDate'
 import { generateUUID } from '@/utils/UIDgenerator'
+import Link from 'next-link'
 import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
@@ -225,7 +226,7 @@ function Home() {
                 {userDB !== undefined && userDB.rol !== 'Cliente' && <div className={`relative flex-col items-center w-full max-w-screen bg-red-500 h-[80vh] overflow-y-scroll bg-transparent  transition-all px-[15px]	z-0  lg:flex ${(location.href.includes('#Services') || location.href.includes('#Client') || location.href.includes('#QR') || location.href.includes('#Saldo')) ? 'flex' : 'hidden'} `} >
                     <div className='w-full gap-[10px]'>
                         <ul className="flex border-b">
-                            <li className={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/'|| location.href === 'http://localhost:3000/#' || location.href === 'https://app.lavavelox.com/#' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
+                            <li className={`mr-1  ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href === 'http://localhost:3000/#' || location.href === 'https://app.lavavelox.com/#' || location.href.includes('#Services')) ? '-mb-px' : ''}`}>
                                 <a href='#Services' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? 'border-l border-t border-r rounded-t' : ''}`} >Servicios</a>
                             </li>
                             <li className={`mr-1 ${location.href.includes('#Client') ? '-mb-px' : ''}`}>
@@ -365,7 +366,9 @@ function Home() {
                             </div>
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
-                            {pdf && <Button type="button" theme="Danger" click={finish}>Finalizar</Button>}
+                            {pdf && <Link href='/#'>
+                                <Button type="button" theme="Danger" click={finish}>Finalizar</Button>
+                            </Link>}
                             {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB, ...state }} />}
                         </form>
                     }

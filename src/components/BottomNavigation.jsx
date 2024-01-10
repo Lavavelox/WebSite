@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context'
 import { usePathname } from 'next/navigation'
-
+import Link from 'next-link'
 function Button({ click, children, name }) {
     const { introClientVideo } = useUser()
 
@@ -140,12 +140,12 @@ export default function BottomNavigation({ rol }) {
             break
         case 'Personal':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <a href='/#' className='relative w-full flex justify-center'>
+                <Link href='/#' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
                     </Button>
-                </a>
+                </Link>
                 <Button click={() => redirectHandler(`/Pendientes`, 'Pendientes')} name={'Pedidos'}>
                     <Order />
                     <span className="inline-block  text-[14px] text-white">Pendientes</span>
