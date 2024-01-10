@@ -122,16 +122,17 @@ export default function BottomNavigation({ rol }) {
     switch (rol) {
         case 'Cliente':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <a href='/#' className='relative w-full flex justify-center'>
+                <Link href='/#Services' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
                     </Button>
-                </a>
+                </Link>
                 <Button click={() => redirectHandler(`/Pendientes`, 'Pendientes')} name={'Pedidos'}>
                     <Order />
                     <span className="inline-block  text-[14px] text-white">Pendientes</span>
                 </Button>
+
                 <Button click={redirectHandlerWindow} name={'Plantilla'}>
                     <Support />
                     <span className="text-[14px] text-white   ">Operador</span>
@@ -140,7 +141,7 @@ export default function BottomNavigation({ rol }) {
             break
         case 'Personal':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <Link href='/#' className='relative w-full flex justify-center'>
+                <Link href='/#Services' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
@@ -158,12 +159,12 @@ export default function BottomNavigation({ rol }) {
             break
         case 'Admin':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <a href='/#' className='relative w-full flex justify-center'>
+                <Link href='/#Services' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
                     </Button>
-                </a>
+                </Link>
 
                 {
                     pathname === '/Servicios' || pathname === '/Sucursales'
