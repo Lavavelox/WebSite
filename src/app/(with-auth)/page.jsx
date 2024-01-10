@@ -21,7 +21,7 @@ import { useReactPath } from '@/HOCs/useReactPath'
 import { useMask } from '@react-input/mask';
 import { getDayMonthYearHour, getMonthYear, formatDayMonthYear, formatDayMonthYearInput } from '@/utils/getDate'
 import { generateUUID } from '@/utils/UIDgenerator'
-import Link from 'next-link'
+import Link from 'next/link'
 import dynamic from "next/dynamic";
 const InvoicePDF = dynamic(() => import("@/components/pdfDoc"), {
     ssr: false,
