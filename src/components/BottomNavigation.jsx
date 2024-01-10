@@ -122,12 +122,12 @@ export default function BottomNavigation({ rol }) {
     switch (rol) {
         case 'Cliente':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <Link href='/#Services' className='relative w-full flex justify-center'>
+                <a href='/#Services' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
                     </Button>
-                </Link>
+                </a>
                 <Button click={() => redirectHandler(`/Pendientes`, 'Pendientes')} name={'Pedidos'}>
                     <Order />
                     <span className="inline-block  text-[14px] text-white">Pendientes</span>
@@ -141,12 +141,12 @@ export default function BottomNavigation({ rol }) {
             break
         case 'Personal':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <Link href='/#Services' className='relative w-full flex justify-center'>
+                <a href='/#Services' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
                     </Button>
-                </Link>
+                </a>
                 <Button click={() => redirectHandler(`/Pendientes`, 'Pendientes')} name={'Pedidos'}>
                     <Order />
                     <span className="inline-block  text-[14px] text-white">Pendientes</span>
@@ -159,12 +159,12 @@ export default function BottomNavigation({ rol }) {
             break
         case 'Admin':
             return <div className={`grid h-full   grid-cols-3 mx-auto font-medium z-50`}>
-                <Link href='/#Services' className='relative w-full flex justify-center'>
+                <a href='/#Services' className='relative w-full flex justify-center'>
                     <Button click={() => redirectHandler(`/`, 'Cliente')} name={'Cliente'}>
                         <Store />
                         <span className="text-[14px] text-white">Tienda</span>
                     </Button>
-                </Link>
+                </a>
 
                 {
                     pathname === '/Servicios' || pathname === '/Sucursales'
