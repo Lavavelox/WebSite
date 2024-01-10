@@ -366,7 +366,7 @@ function Home() {
                             </div>
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
-                            {pdf && <Link href='/#'>
+                            {pdf && <Link href='/#Services'>
                                 <Button type="button" theme="Danger" click={finish}>Finalizar</Button>
                             </Link>}
                             {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB, ...state }} />}
