@@ -207,24 +207,146 @@ const PDF = ({ i }) => {
                             </View>
                             <Br />
 
-                            <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fecha para recojo']}</Text>
-                            <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega:{i['hora para recojo']}</Text>
+                            {i['fechaDeEntrega'] !== 'Velox' && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fechaDeEntrega']}</Text>}
+
+                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['fecha para recojo'] && i['fecha para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega VELOX: {i['fecha para recojo']}</Text>}
+                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['hora para recojo'] && i['hora para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega VELOX:{i['hora para recojo']}</Text>}
+
+
+
+                            {/* {(Object.values(i.servicios).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(i.servicios).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(i.servicios).length) && <div className='md:col-span-2'>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha y hora de recojo de prenda</label>
+                                {getDayMonthYearHourPluss3()}
+                            </div>}
+                            {Object.values(i.servicios).find(i => i.adicional && i.adicional !== null) !== undefined && <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha velox de prenda</label>
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                            </div>} */}
+
+
                             <Br />
                             <Br />
                             <Br />
                             <Br />
                             <Text style={styles.textBold}>NOTA IMPORTANTE</Text>
-                            <Text style={styles.text}>La presente orden de trabajo es obligatoría para la entrega de su prenda.</Text>
-                            <Text style={styles.text}>No se responsabilizara por objetos, dinero u otro dejado en las prendas, ni perdidas de botones,
-                                hebillas, etc.
+                            <Text style={styles.text}>1. La presente orden de trabajo es obligatoria ya que acredita el derecho de propiedad del cliente para la entrega de su prenda, que serán entregados al portador sin ninguna responsabilidad para la empresa.</Text>
+                            <Text style={styles.text}>2. No nos responsabilizamos por objetos dejados en sus prendas de vestir.</Text>
+                            <Text style={styles.text}>3. No nos responsabilizamos por el deterioro de prendas que en el transcurso de la limpieza sufra daño por la mala calidad de las telas o la confección..</Text>
+                            <Text style={styles.text}>4. Señor cliente tiene un plazo de 30 días posteriores a la fecha de entrega acordada, para el recojo de su prenda.</Text>
+                            <Text style={styles.text}>5. En casó de no recoger su prenda de vestir en un plazo máximo de 60 días de la fecha de entrega, quedará a disposición de la empresa como compensación por los gastos de producción.</Text>
+                            <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
+                        </View>
+                    </Page>
+                    <Page size={227} style={{ boxSizing: 'border-box', padding: '5mm', position: 'relative' }}>
+                        <View>
+                            <Image src="/logo.png" style={{ position: 'relative', right: '0', left: '0', marginHorizontal: 'auto', paddingBottom: '5px', height: '40px', width: '100px' }} />
+                            {/* <Text style={styles.textBold}>COMPROBANTE IMPRESO</Text> */}
+                            {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
+                            <Text style={styles.textBold}>ORDEN DE TRABAJO {i['sucursal']}</Text>
+                            <Text style={{ ...styles.textBold, fontSize: '10px' }}>{i['code']}</Text>
+                            {/* <Text style={styles.text}>{i['code']}</Text> */}
+                            <Text style={styles.textItalic}>CONTACTOS 61278192 - 79588684</Text>
+                            <Text style={{ ...styles.key, textAlign: 'center', }}>LA PAZ - BOLIVIA</Text>
+                            <Br />
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Fecha de recepción: </Text><Text style={styles.value}>{i['fecha'].split(' ')[2]}</Text>
                             </Text>
-                            <Text style={styles.text}>Los clientes tienen un máximo de 30 días posteriores a la fecha de entrega estipulada, pasado este
-                                tiempo pagaran
-                                un incremento del 100% del valor estipulado</Text>
-                            <Text style={styles.text}>Ademas, al NO ser retiradas hasta los 60 días de la fecha de entrega quedaran a disposición de la
-                                empresa
-                                *LAVAVELOX* como compensación con los gastos de limpieza y almacenaje.</Text>
-                            <Text style={{...styles.key, textAlign: 'center'}}>!GRACIAS POR SU PREFERENCÍA!</Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Hora de recepción: </Text><Text style={styles.value}>{i['fecha'].split(' ')[0]} {i['fecha'].split(' ')[1]}</Text>
+                            </Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Nombre del cliente: </Text><Text style={styles.value}>{i['nombre']}</Text>
+                            </Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Celular: </Text><Text style={styles.value}>{i['whatsapp']}</Text>
+                            </Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>CI: </Text><Text style={styles.value}>{i['CI']}</Text>
+                            </Text>
+                            <Br />
+                            <View style={styles.row}>
+                                <Text style={styles.celda1}>CANTIDAD</Text>
+                                <Text style={styles.celda}>DETALLE</Text>
+                                <Text style={styles.celda}>OBSERVACIONES</Text>
+                                <Text style={styles.celda4}>{'PRECIO\nUNIDAD+\nADICIONAL'}</Text>
+                                <Text style={styles.celda5}>{'SUB\nTOTAL'}</Text>
+                            </View>
+
+                            {Object.values(i.servicios).map((el, index) => <li key={index}>
+                                <View style={styles.row}>
+                                    <Text style={{ ...styles.celda1, ...styles.text }}>{el['cantidad']}</Text>
+                                    <Text style={{ ...styles.celda, ...styles.text }}>{el['nombre 1']}</Text>
+                                    <Text style={{ ...styles.celda, ...styles.text }}>{el['observacion']}</Text>
+                                    <Text style={{ ...styles.celda4, ...styles.text }}>{el['costo']} BS {(el['adicional'] ? `(${el['adicional']} BS)` : '')}</Text>
+                                    <Text style={{ ...styles.celda5, ...styles.text }}>{(el['costo'] * el['cantidad']) + (el['adicional'] ? el['adicional'] * el['cantidad'] : 0)} BS</Text>
+                                </View>
+                            </li>)}
+                            <Br />
+                            <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>TOTAL</Text>
+                                <Text style={styles.celda}>{
+                                    Object.values(i.servicios).reduce((acc, i, index) => {
+                                        const sum = i['costo'] * i['cantidad']
+                                        const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+                                        return sum + sum2 + acc
+                                    }, 0)
+                                } BS
+                                </Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>AC</Text>
+                                <Text style={styles.celda}>{
+                                    i['ac']
+                                } BS
+                                </Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={{ ...styles.celda, backgroundColor: 'yellow' }}>SALDO</Text>
+                                <Text style={{ ...styles.celda, backgroundColor: 'yellow' }}>{
+                                    i['saldo']
+                                } BS
+                                </Text>
+                            </View>
+                            <Br />
+
+                            {i['fechaDeEntrega'] !== 'Velox' && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fechaDeEntrega']}</Text>}
+
+                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['fecha para recojo'] && i['fecha para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega VELOX: {i['fecha para recojo']}</Text>}
+                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['hora para recojo'] && i['hora para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega VELOX:{i['hora para recojo']}</Text>}
+
+
+
+                            {/* {(Object.values(i.servicios).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(i.servicios).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(i.servicios).length) && <div className='md:col-span-2'>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha y hora de recojo de prenda</label>
+                                {getDayMonthYearHourPluss3()}
+                            </div>}
+                            {Object.values(i.servicios).find(i => i.adicional && i.adicional !== null) !== undefined && <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha velox de prenda</label>
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                            </div>} */}
+
+
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                          
                         </View>
                     </Page>
                 </Document>

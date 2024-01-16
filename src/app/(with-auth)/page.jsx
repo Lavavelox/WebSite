@@ -19,7 +19,7 @@ import Input from '@/components/Input'
 import MiniCard from '@/components/MiniCard'
 import { useReactPath } from '@/HOCs/useReactPath'
 import { useMask } from '@react-input/mask';
-import { getDayMonthYearHour, getMonthYear, formatDayMonthYear, formatDayMonthYearInput } from '@/utils/getDate'
+import { getDayMonthYearHour, getMonthYear, formatDayMonthYear, formatDayMonthYearInput, getDayMonthYearHourPluss3 } from '@/utils/getDate'
 import { generateUUID } from '@/utils/UIDgenerator'
 import Link from 'next/link'
 import dynamic from "next/dynamic";
@@ -121,6 +121,8 @@ function Home() {
 
             const data = {
                 ...state,
+                fechaDeEntrega: (Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length) 
+                ? getDayMonthYearHourPluss3() : 'Velox',
                 servicios: cart,
                 date: new Date().getTime(),
                 fecha: getDayMonthYearHour(),
@@ -180,7 +182,9 @@ function Home() {
             setModal('user non exit')
         }
     }
-    console.log(location.href)
+    console.log(state)
+    console.log(cart)
+
     return (
         <main className="">
             {(modal == 'Recetar' || modal == 'Comprar') && <Modal funcion={storeConfirm}>Estas seguro de cambiar a {modal}. <br /> {Object.keys(cart).length > 0 && 'Tus datos se borraran'}</Modal>}
@@ -335,14 +339,19 @@ function Home() {
                         location.href.includes('#Saldo') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={handlerSubmit}>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Saldo</h5>
-                            <div>
-                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha recojo de prenda</label>
+
+                            {(Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length) && <div className='md:col-span-2'>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha y hora de recojo de prenda</label>
+                                {getDayMonthYearHourPluss3()}
+                            </div>}
+                            {Object.values(cart).find(i => i.adicional && i.adicional !== null) !== undefined && <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha velox de prenda</label>
                                 <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora recojo de prenda</label>
+                            </div>}
+                            {Object.values(cart).find(i => i.adicional && i.adicional !== null) !== undefined && <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora velox de prenda</label>
                                 <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
-                            </div>
+                            </div>}
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">A cuenta</label>
                                 <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
@@ -367,8 +376,8 @@ function Home() {
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
                             {pdf && <a href='/#'>
-                                    <Button type="button" theme="Danger" click={finish}>Finalizar</Button>
-                                </a>
+                                <Button type="button" theme="Danger" click={finish}>Finalizar</Button>
+                            </a>
                             }
                             {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB, ...state }} />}
                         </form>
