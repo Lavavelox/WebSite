@@ -206,6 +206,101 @@ const PDF = ({ i }) => {
                             <Br />
                             <Br />
                             <Br />
+                            <Text style={styles.textBold}>NOTA IMPORTANTE</Text>
+                            <Text style={styles.text}>1. La presente orden de trabajo es obligatoria ya que acredita el derecho de propiedad del cliente para la entrega de su prenda, que serán entregados al portador sin ninguna responsabilidad para la empresa.</Text>
+                            <Text style={styles.text}>2. No nos responsabilizamos por objetos dejados en sus prendas de vestir.</Text>
+                            <Text style={styles.text}>3. No nos responsabilizamos por el deterioro de prendas que en el transcurso de la limpieza sufra daño por la mala calidad de las telas o la confección..</Text>
+                            <Text style={styles.text}>4. Señor cliente tiene un plazo de 30 días posteriores a la fecha de entrega acordada, para el recojo de su prenda.</Text>
+                            <Text style={styles.text}>5. En casó de no recoger su prenda de vestir en un plazo máximo de 60 días de la fecha de entrega, quedará a disposición de la empresa como compensación por los gastos de producción.</Text>
+                            <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
+                        </View>
+                    </Page>
+                    <Page size={227} style={{ boxSizing: 'border-box', padding: '5mm', position: 'relative' }}>
+                        <View>
+                            <Image src="/logo.png" style={{ position: 'relative', right: '0', left: '0', marginHorizontal: 'auto', paddingBottom: '5px', height: '40px', width: '100px' }} />
+                            {/* <Text style={styles.textBold}>COMPROBANTE IMPRESO</Text> */}
+                            {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
+                            <Text style={styles.textBold}>COMPROBANTE DE ENTREGA {i['sucursal']}</Text>
+                            <Text style={{ ...styles.textBold, fontSize: '10px' }}>{i['code']}</Text>
+                            {/* <Text style={styles.text}>{i['code']}</Text> */}
+                            <Text style={styles.textItalic}>CONTACTOS 61278192 - 79588684</Text>
+                            <Text style={{ ...styles.key, textAlign: 'center', }}>LA PAZ - BOLIVIA</Text>
+                            <Br />
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Fecha de entrega: </Text><Text style={styles.value}>{i['fecha entrega']}</Text>
+                            </Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Nombre del receptor: </Text><Text style={styles.value}>{i['nombre receptor']}</Text>
+                            </Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>Celular del receptor: </Text><Text style={styles.value}>{i['whatsapp receptor']}</Text>
+                            </Text>
+                            <Text style={styles.textRight}>
+                                <Text style={styles.key}>CI del receptor: </Text><Text style={styles.value}>{i['CI receptor']}</Text>
+                            </Text>
+                            <Br />
+                            <View style={styles.row}>
+                                <Text style={styles.celda1}>CANTIDAD</Text>
+                                <Text style={styles.celda}>DETALLE</Text>
+                                <Text style={styles.celda}>OBSERVACIONES</Text>
+                                <Text style={styles.celda4}>{'PRECIO\nUNIDAD+\nADICIONAL'}</Text>
+                                <Text style={styles.celda5}>{'SUB\nTOTAL'}</Text>
+                            </View>
+
+                            {Object.values(i.servicios).map((el, index) => <li key={index}>
+                                <View style={styles.row}>
+                                    <Text style={{ ...styles.celda1, ...styles.text }}>{el['cantidad']}</Text>
+                                    <Text style={{ ...styles.celda, ...styles.text }}>{el['nombre 1']}</Text>
+                                    <Text style={{ ...styles.celda, ...styles.text }}>{el['observacion']}</Text>
+                                    <Text style={{ ...styles.celda4, ...styles.text }}>{el['costo']} BS {(el['adicional'] ? `(${el['adicional']} BS)` : '')}</Text>
+                                    <Text style={{ ...styles.celda5, ...styles.text }}>{(el['costo'] * el['cantidad']) + (el['adicional'] ? el['adicional'] * el['cantidad'] : 0)} BS</Text>
+                                </View>
+                            </li>)}
+                            <Br />
+                            <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>TOTAL</Text>
+                                <Text style={styles.celda}>{
+                                    Object.values(i.servicios).reduce((acc, i, index) => {
+                                        const sum = i['costo'] * i['cantidad']
+                                        const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+                                        return sum + sum2 + acc
+                                    }, 0)
+                                } BS
+                                </Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>AC</Text>
+                                <Text style={styles.celda}>{
+                                    i['ac']
+                                } BS
+                                </Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={{ ...styles.celda, backgroundColor: 'yellow' }}>SALDO</Text>
+                                <Text style={{ ...styles.celda, backgroundColor: 'yellow' }}>{
+                                    i['saldo']
+                                } BS
+                                </Text>
+                            </View>
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
+                            <Br />
                             <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
                         </View>
                     </Page>

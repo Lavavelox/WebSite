@@ -345,7 +345,7 @@ const PDF = ({ i }) => {
                             <Br />
                             <Br />
                             <Br />
-                            <Br />
+                            <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
                           
                         </View>
                     </Page>
