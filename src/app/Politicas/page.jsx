@@ -20,7 +20,42 @@ function Home() {
 
 
     return (
-       <div className='w-full p-3 pb-[70px] sm:pl-0 text-[12px] text-black'>
+        <div className='w-full h-full overflow-y-scroll p-3 pt-[80px]  sm:pl-0 text-[12px] text-black'>
+            <nav className="w-screen fixed top-0 left-0 border-b border-gray-200 shadow-sm  flex items-center justify-between bg-[#00E2FF]  p-4 h-[70px] z-30" >
+
+                <div
+                    className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center'
+                    style={{
+                        backgroundImage: 'url(/bg.jpeg)',
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center',
+                        //  background: 'linear-gradient(0deg, #ffffff 50%, #00E2FF 50%)' 
+                        backgroundColor: '#00E2FF'
+                    }}></div>
+                <div
+                    className='absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center'
+                    style={{
+                        background: ' #00E2FF80 50%'
+                        //  background: 'linear-gradient(0deg, #ffffff80 50%, #00E2FF80 50%)' 
+                    }}>
+                </div>
+
+                <div className='flex lg:block z-10' onClick={() => router.back()}>
+                    <div className='flex '>
+                        <button type="button" className="inline-flex items-center p-[2px] text-[14px] text-white rounded-lg  lg:block">
+                            <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>                  </button>
+                        <h1 className='text-[18px] flex justify-between ml-5 w-[240px] items-center text-white font-medium'> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
+                    </div>
+                </div>
+
+
+
+
+
+            </nav>
             <div className='shadow-2xl p-5 sm:p-10'>
 
                 <h1 className='text-[20px] text-center font-medium'>POLITICAS DE PRIVACIDAD Y SERVICIO</h1>

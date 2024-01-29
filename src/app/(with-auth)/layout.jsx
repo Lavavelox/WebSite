@@ -141,7 +141,7 @@ function Home({ children }) {
                      <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                        <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                    </svg>                  </button>
-                  <h1 className='text-[18px] hidden lg:flex lg:justify-between ml-5 lg:w-[240px] lg:items-center text-white font-medium' onClick={() => router.replace('/')}> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
+                  <h1 className='text-[18px] flex justify-between ml-5 w-[240px] items-center text-white font-medium' onClick={() => router.replace('/')}> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
                 </div>
               </div>
                 
