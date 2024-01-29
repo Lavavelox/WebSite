@@ -11,7 +11,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-white bg-gray-500 border border-gray-100  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-3 text-center space-x-2 z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 <svg className="inline-block h-6 w-6 animate-spin mr-5 stroke-white" viewBox="0 0 256 256"><line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="195.9" y1="195.9" x2="173.3" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="128" y1="224" x2="128" y2="192" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="195.9" x2="82.7" y2="173.3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="32" y1="128" x2="64" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line><line x1="60.1" y1="60.1" x2="82.7" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line></svg>
@@ -23,7 +23,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className={`text-gray-500 bg-transparent border border-gray-500  focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-3 text-center z-20  ${styled}`}
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -34,7 +34,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className={`text-white bg-[#00095F] text-[16px] border border-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-3 text-center z-20 ${styled}`}
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -45,7 +45,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-white bg-[#00095F] border border-gray-100  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-3 text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 <svg className='inline mr-3 h-[18px] w-[18px]' viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +59,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-white bg-[#00E2FF]  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-3 text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -70,7 +70,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-gray-950 bg-[#32CD32] font-medium focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-[16px] w-full px-2 py-3 text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -80,7 +80,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-white font-bold flex justify-center items-center bg-[#00095F] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-[18px] w-full px-2 py-2 text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {/* <svg className='inline mr-3 h-[30px] w-[30px]' viewBox="0 0 41 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +94,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-gray-900 font-bold flex justify-center items-center border-[1px] border-white bg-[#32CD32]  focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-[18px] w-full min-w-[150px] px-2 py-2 text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 <svg className='inline mr-3 h-[35px] w-[35px]' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +107,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-white bg-red-500  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full min-w-[150px] px-2 py-3 text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -117,7 +117,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-white bg-gray-400  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-3 text-center z-50"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -127,7 +127,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="relative text-white bg-[#00095F] border border-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-full text-[25px] w-[45px] h-[45px] leading-[0px] block font-medium z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -138,7 +138,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="relative text-white bg-[#00095F] border border-gray-100  focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-full text-[16px] w-full px-6 py-3  text-center font-bold z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {/* <svg className='inline mr-3 h-[18px] w-[18px]' viewBox="0 0 41 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -155,7 +155,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="relative text-white bg-[#2a52BE] border border-gray-100  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-[16px] w-full px-2 py-2  text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 <svg className='inline mr-3 h-[20px] w-[20px]' viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +169,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="relative text-white  bg-[#00E2FF] border border-gray-100  focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-full text-[25px] p-0 w-[45px] h-[45px] block text-center font-medium z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -180,7 +180,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="relative text-white bg-[#32CD32] border border-gray-100  focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-full text-[16px] text-[25px] p-0 w-[45px] h-[45px] text-center font-medium z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
                 {children}
@@ -190,7 +190,7 @@ export default function Button({ theme, styled, click, children, type }) {
                 type={type}
                 className="text-gray-950 bg-[#32CD32] flex items-center justify-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-full text-[16px] w-full px-6 py-3  text-center z-20"
                 // className="text-white bg-violet-700 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center 
-                // dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // "
                 onClick={click}
             >
 

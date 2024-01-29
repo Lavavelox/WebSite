@@ -226,7 +226,7 @@ function Home() {
                         {tareas !== null && tareas !== undefined && Object.values(Object.values(tareas).reduce((acc, el) => { return { ...acc, ...el } }, {})).map((i, index) => {
 
                             return i.sucursal.toLowerCase().includes(tag.toLowerCase()) && i.estado.toLowerCase().includes(entrega.toLowerCase()) && (i.nombre.toLowerCase().includes(filter.toLowerCase()) || i.code.toLowerCase().includes(filter.toLowerCase())) && i.mes.includes(filterDate) &&
-                                <tr className={` text-[16px] border-b dark:bg-gray-800 `} key={index}>
+                                <tr className={` text-[16px] border-b  `} key={index}>
                                     <td className="px-3 py-4  flex  text-gray-900 ">
                                         <span className='h-full flex py-2'>{index + 1}</span>
                                     </td>

@@ -140,10 +140,10 @@ function Home() {
                                     <Label htmlFor="">Costo entrega en 24 hrs</Label>
                                     <Input type="text" name={`costo 24 hrs ${i.uuid}`} styled={{ textAlign: 'center' }} reference={inputRef5} onChange={onChangeHandlerDynimic} />
                                 </div>
-                                <div>
+                                {/* <div>
                                     <Label htmlFor="">Costo adicional entrega inmediata</Label>
                                     <Input type="text" name={`costo inmediato ${i.uuid}`} styled={{ textAlign: 'center' }} reference={inputRef5} onChange={onChangeHandlerDynimic} />
-                                </div>
+                                </div> */}
                             </div>
                         })
                     }

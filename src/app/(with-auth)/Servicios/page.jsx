@@ -132,7 +132,7 @@ function Home() {
                 </div>
                 <br />
                 <table className={`w-[3000px]  min-w-[${sucursales && sucursales !== undefined ? sucursales.length * 200 + 1500 : 1500}px] text-[14px] text-left text-gray-500 border-t-4 border-gray-400`}>
-                    <thead className="text-[14px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead className="text-[14px] text-gray-700 uppercase bg-gray-50  ">
                         <tr>
                             <th scope="col" className="min-w-[50px] px-3 py-3">
                                 #
@@ -163,10 +163,10 @@ function Home() {
                                         Costo 24 hrs <br />
                                         {i.nombre}
                                     </th>
-                                    <th scope="col" className="min-w-[100px] text-center px-3 py-3">
+                                    {/* <th scope="col" className="min-w-[100px] text-center px-3 py-3">
                                         Adicional inmediato <br />
                                         {i.nombre}
-                                    </th>
+                                    </th> */}
                                 </>
                             })}
                             <th scope="col" className="px-3 py-3">
@@ -183,7 +183,7 @@ function Home() {
                             return (i['nombre 1'].toLowerCase().includes(filter) ||
                                 i['nombre 2'].toLowerCase().includes(filter) ||
                                 i['nombre 3'].toLowerCase().includes(filter)) &&
-                                <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                                <tr className="bg-white text-[14px] border-b   hover:bg-gray-50 " key={index}>
                                     <td className="min-w-[50px] px-3 py-4 text-gray-900 align-middle">
                                         {index + 1}
                                     </td>
@@ -213,13 +213,8 @@ function Home() {
                                     {sucursales && sucursales !== undefined && Object.values(sucursales).map((item) => {
 
                                         return <>
-
                                             <td>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo 24 hrs ${item.uuid}`} defaultValue={i['costos y entregas'] !== undefined ? i['costos y entregas'][`costo 24 hrs ${item.uuid}`] : 0} className="block p-1.5  w-full text-center h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                            </td>
-
-                                            <td>
-                                                <textarea id="message" rows="1" onChange={(e) => onChangeHandlerDynamic(e, i)} cols="6" name={`costo inmediato ${item.uuid}`} defaultValue={i['costos y entregas'] !== undefined ? i['costos y entregas'][`costo inmediato ${item.uuid}`] : 0} className="block p-1.5  w-full h-full text-center text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                                             </td>
                                         </>
                                     }

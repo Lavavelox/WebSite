@@ -98,7 +98,7 @@ function Home() {
                 </div>
                 <br />
                 <table className="min-w-[1500px]  text-[14px] text-left text-gray-500 border-t-4 border-gray-400">
-                    <thead className="text-[14px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead className="text-[14px] text-gray-700 uppercase bg-gray-50  ">
                         <tr>
                             <th scope="col" className="min-w-[50px] px-3 py-3">
                                 #
@@ -130,7 +130,7 @@ function Home() {
                     <tbody>
                         {clientes !== undefined && sucursales !== undefined && Object.values(clientes).sort(sortArray).map((i, index) => {
 
-                            return i.rol !== 'Cliente' && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b dark:bg-gray-800  hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                            return i.rol !== 'Cliente' && i.nombre.toLowerCase().includes(filter) && <tr className="bg-white text-[14px] border-b   hover:bg-gray-50 " key={index}>
                                 <td className="min-w-[50px] h-full px-3 py-4 text-gray-900 align-middle">
                                    {index + 1}
                                 </td>

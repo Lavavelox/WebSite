@@ -70,10 +70,10 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                             <span className="text-[24px]  text-red-600 font-bold">{costo}</span>
                             <span className="text-[24px] text-red-600 font-bold">BS</span>
                         </div>
-                        <div className="flex items-baseline text-gray-900 bg-white rounded-full px-0 py-2">
+                        {/* <div className="flex items-baseline text-gray-900 bg-white rounded-full px-0 py-2">
                             <span className="text-[18px]  text-gray-400">{inmediato}</span>
                             <span className="text-[18px] text-gray-400">BS</span>
-                        </div>
+                        </div> */}
                     </>
                     : <span className="text-[18px] text-red-600 font-semibold">Añadir {i['recepcion por']}</span>
                 }

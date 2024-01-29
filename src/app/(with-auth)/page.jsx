@@ -325,26 +325,26 @@ function Home() {
                         location.href.includes('#Client') &&
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white  rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`}>
                             <div className="md:grid md:grid-cols-2 md:gap-[5px] md:col-span-2">
-                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Introduce el DNI o whatsapp" />
+                                <Input type="text" name="autocomplete" id="email" onChange={onChangeHandler} defValue={state.autocomplete && state.autocomplete !== undefined && state.autocomplete} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="Introduce el DNI o whatsapp" />
                                 <Button type="button" theme="Primary" click={autocompletar}>Autocompletar</Button>
                             </div>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Datos de Cliente</h5>
 
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Nombre</label>
-                                <Input type="text" name="nombre" id="email" onChange={onChangeHandler} defValue={state.nombre && state.nombre !== undefined && state.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                                <Input type="text" name="nombre" id="email" onChange={onChangeHandler} defValue={state.nombre && state.nombre !== undefined && state.nombre} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">CI</label>
-                                <Input type="text" name="CI" id="email" onChange={onChangeHandler} defValue={state.CI && state.CI !== undefined && state.CI} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" />
+                                <Input type="text" name="CI" id="email" onChange={onChangeHandler} defValue={state.CI && state.CI !== undefined && state.CI} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Direccion</label>
-                                <Input type="text" name="direccion" id="email" onChange={onChangeHandler} defValue={state.direccion && state.direccion !== undefined && state.direccion} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" />
+                                <Input type="text" name="direccion" id="email" onChange={onChangeHandler} defValue={state.direccion && state.direccion !== undefined && state.direccion} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Whatsapp</label>
-                                <Input type="text" name="whatsapp" id="email" onChange={onChangeHandler} defValue={state.whatsapp && state.whatsapp !== undefined && state.whatsapp} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" reference={inputRefWhatsApp} placeholder="" require />
+                                <Input type="text" name="whatsapp" id="email" onChange={onChangeHandler} defValue={state.whatsapp && state.whatsapp !== undefined && state.whatsapp} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " reference={inputRefWhatsApp} placeholder="" require />
                             </div>
 
                             <a href='#Services' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent" >Atras</Button></a>
@@ -372,19 +372,19 @@ function Home() {
                             </div>} */}
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha velox de prenda</label>
-                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : getDayMonthYearHourPluss3()} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : getDayMonthYearHourPluss3()} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora velox de prenda</label>
-                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : '19:00'} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : '19:00'} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">A cuenta</label>
-                                <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                                <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" require />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Descuento</label>
-                                <Input type="text" name="descuento" id="email" onChange={onChangeHandler} defValue={state.descuento && state.descuento !== undefined ? state.descuento : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder=""  />
+                                <Input type="text" name="descuento" id="email" onChange={onChangeHandler} defValue={state.descuento && state.descuento !== undefined ? state.descuento : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder=""  />
                             </div>
 
                             <div>

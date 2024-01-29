@@ -82,7 +82,7 @@ function Home({ children }) {
           {userDB && userDB.bloqueado === true ? <Modal funcion={soporte} close={true} cancel={signOutConfirm} cancelText="Cerrar sesión" successText="Contactar">
             Esta cuenta esta bloqueada, <br />por favor comuniquese con soporte.
             <br />
-            {/* <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
+            {/* <button type="button" onClick={soporte} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg  inline-flex items-center px-5 py-4 text-center">
               Contactar
             </button> */}
           </Modal> : ''}
