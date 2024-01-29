@@ -9,7 +9,7 @@ import LoaderBlack from '@/components/LoaderBlack'
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-    const { user, introVideo, setSound, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setModal, modal,  } = useUser()
+    const { user, introVideo, setSound, setIntroVideo, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG, sound1, sound2, setSound1, setSound2, setModal, modal, } = useUser()
     const [isDisable, setIsDisable] = useState(false)
     const router = useRouter()
 
@@ -17,8 +17,8 @@ export default function Home() {
         e.preventDefault()
         setModal('Guardando')
         function callback(err) {
-           err !== true && router.push('/Register')
-           setModal('')
+            err !== true && router.push('/Register')
+            setModal('')
         }
         let email = e.target[0].value
         let password = e.target[1].value
@@ -46,8 +46,13 @@ export default function Home() {
                     <label htmlFor="password" className="block mb-2 text-[16px] text-left  font-medium text-gray-800">Contraseña</label>
                     <Input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " require />
                 </div>
-                <div className="flex items-start">
-                    <Link href='/Resetear' className="ml-auto  text-[14px] text-gray-400 underline">Olvidaste tu contraseña?</Link>
+                <div className="flex items-right">
+                    <div className="flex items-center">
+                        <div className="flex items-center h-5">
+                            <input id="remember" type="checkbox" value="" className="w-[16px] h-[16px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" require />
+                        </div>
+                        <Link href="/Politicas" className="ml-2 text-[14px] font-medium underline">Políticas de Servicio</Link>
+                    </div>
                 </div>
                 <Button type="submit" theme="Primary">Registrarme</Button>
                 <div className="text-[14px] text-center font-medium text-gray-800">Ya tienes una cuenta? <Link href="/Login" className="text-gray-400 underline">Inicia Sesión</Link ></div>
