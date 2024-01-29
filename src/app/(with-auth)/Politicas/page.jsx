@@ -20,7 +20,7 @@ function Home() {
 
 
     return (
-        user && <div className='w-full p-3 pb-[70px] sm:pl-0 text-[12px]'>
+       <div className='w-full p-3 pb-[70px] sm:pl-0 text-[12px] text-black'>
             <div className='shadow-2xl p-5 sm:p-10'>
 
                 <h1 className='text-[20px] text-center font-medium'>POLITICAS DE PRIVACIDAD Y SERVICIO</h1>
@@ -127,9 +127,6 @@ function Home() {
                 </p>
 
             </div>
-
-
-
         </div>
     )
 }
