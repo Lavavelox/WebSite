@@ -51,7 +51,7 @@ export default function Home() {
                         <div className="flex items-center h-5">
                             <input id="remember" type="checkbox" value="" className="w-[16px] h-[16px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" require />
                         </div>
-                        <Link href="/Politicas" className="ml-2 text-[14px] font-medium underline">Políticas de Servicio</Link>
+                        <Link href="/Politicas" className="ml-2 text-[14px] font-medium underline text-gray-800">Políticas de Servicio</Link>
                     </div>
                 </div>
                 <Button type="submit" theme="Primary">Registrarme</Button>
