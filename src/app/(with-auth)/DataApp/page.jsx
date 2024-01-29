@@ -34,6 +34,7 @@ function Home() {
             whatsapp: e.target[1].value,
             categoria: e.target[2].value.replaceAll(' ', '').split(','),
             ['recepcion por']: e.target[3].value.replaceAll(' ', '').split(','),
+            adicional: e.target[4].value * 1,
         }       
         const callback = () => {
             setModal('')
@@ -84,6 +85,10 @@ function Home() {
                     <div>
                         <Label htmlFor="">Recepcion por</Label>
                         <Input type="text" name="recepcion por" onChange={onChangeHandler}  defValue={perfil && perfil['recepcion por'] !== undefined && perfil['recepcion por'].length > 0 ? perfil['recepcion por'].toString().replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ') : ''} require />
+                    </div>
+                    <div>
+                        <Label htmlFor="">Adicional Velox</Label>
+                        <Input type="text" name="adicional" onChange={onChangeHandler}  defValue={perfil && perfil['adicional'] !== undefined && perfil['adicional'].length > 0 ? perfil['adicional'].toString().replaceAll('"', '').replaceAll('[', '').replaceAll('"', '').replaceAll(']', '').replaceAll(',', ', ') : ''} require />
                     </div>
                 </div>
                 <br />

@@ -119,6 +119,7 @@ const PDF = ({ i }) => {
     const Br = () => {
         return <View style={{ height: '8px' }}></View>
     }
+    console.log(i)
     useEffect(() => {
         setisCliente(true)
     }, []);
@@ -132,6 +133,7 @@ const PDF = ({ i }) => {
                             {/* <Text style={styles.textBold}>COMPROBANTE IMPRESO</Text> */}
                             {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
                             <Text style={styles.textBold}>ORDEN DE TRABAJO {i['sucursal']}</Text>
+                            <Text style={styles.textBold}>{i.direccionSucursal}</Text>
                             <Text style={{ ...styles.textBold, fontSize: '10px' }}>{i['code']}</Text>
                             {/* <Text style={styles.text}>{i['code']}</Text> */}
                             <Text style={styles.textItalic}>CONTACTOS 61278192 - 79588684</Text>
@@ -166,7 +168,7 @@ const PDF = ({ i }) => {
                                     <Text style={{ ...styles.celda1, ...styles.text }}>{el['cantidad']}</Text>
                                     <Text style={{ ...styles.celda, ...styles.text }}>{el['nombre 1']}</Text>
                                     <Text style={{ ...styles.celda, ...styles.text }}>{el['observacion']}</Text>
-                                    <Text style={{ ...styles.celda4, ...styles.text }}>{el['costo']} BS {(el['adicional'] ? `(${el['adicional']} BS)` : '')}</Text>
+                                    <Text style={{ ...styles.celda4, ...styles.text }}>{el['costo']} BS </Text>
                                     <Text style={{ ...styles.celda5, ...styles.text }}>{(el['costo'] * el['cantidad']) + (el['adicional'] ? el['adicional'] * el['cantidad'] : 0)} BS</Text>
                                 </View>
                             </li>)}
@@ -177,14 +179,31 @@ const PDF = ({ i }) => {
                                 <Text style={styles.celdaWhite}></Text>
                                 <Text style={styles.celda}>TOTAL</Text>
                                 <Text style={styles.celda}>{
-                                    Object.values(i.servicios).reduce((acc, i, index) => {
-                                        const sum = i['costo'] * i['cantidad']
-                                        const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-                                        return sum + sum2 + acc
-                                    }, 0)
+                                    i.total
                                 } BS
                                 </Text>
                             </View>
+                            {i.descuento && i.descuento !== undefined && <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>Descuento -</Text>
+                                <Text style={styles.celda}>{
+                                    i.descuento
+                                } BS
+                                </Text>
+                            </View>}
+                            {i.adicional && i.adicional !== undefined && i.velox === true&& <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>Velox +</Text>
+                                <Text style={styles.celda}>{
+                                    i.adicional
+                                } BS
+                                </Text>
+                            </View>}
+                           
                             <View style={styles.row}>
                                 <Text style={styles.celdaWhite}></Text>
                                 <Text style={styles.celdaWhite}></Text>
@@ -207,10 +226,11 @@ const PDF = ({ i }) => {
                             </View>
                             <Br />
 
-                            {i['fechaDeEntrega'] !== 'Velox' && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fechaDeEntrega']}</Text>}
+                            {/* {i['fechaDeEntrega'] !== 'Velox' && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fechaDeEntrega']}</Text>} */}
 
-                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['fecha para recojo'] && i['fecha para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega VELOX: {i['fecha para recojo']}</Text>}
-                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['hora para recojo'] && i['hora para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega VELOX:{i['hora para recojo']}</Text>}
+                            {i['fecha para recojo'] && i['fecha para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fecha para recojo']}</Text>}
+                            {i['hora para recojo'] && i['hora para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega:{i['hora para recojo']}</Text>}
+                            {i['velox'] && <Text style={{ ...styles.key, textAlign: 'center', }}>INMEDIATA VELOX</Text>}
 
 
 
@@ -224,7 +244,6 @@ const PDF = ({ i }) => {
                             </div>} */}
 
 
-                            <Br />
                             <Br />
                             <Br />
                             <Br />
@@ -235,6 +254,7 @@ const PDF = ({ i }) => {
                             <Text style={styles.text}>4. Señor cliente tiene un plazo de 30 días posteriores a la fecha de entrega acordada, para el recojo de su prenda.</Text>
                             <Text style={styles.text}>5. En casó de no recoger su prenda de vestir en un plazo máximo de 60 días de la fecha de entrega, quedará a disposición de la empresa como compensación por los gastos de producción.</Text>
                             <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
+                            <Text style={{ ...styles.key, textAlign: 'center' }}>www.app.lavavelox.com</Text>
                         </View>
                     </Page>
                     <Page size={227} style={{ boxSizing: 'border-box', padding: '5mm', position: 'relative' }}>
@@ -243,6 +263,7 @@ const PDF = ({ i }) => {
                             {/* <Text style={styles.textBold}>COMPROBANTE IMPRESO</Text> */}
                             {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
                             <Text style={styles.textBold}>ORDEN DE TRABAJO {i['sucursal']}</Text>
+                            <Text style={styles.textBold}>{i.direccionSucursal}</Text>
                             <Text style={{ ...styles.textBold, fontSize: '10px' }}>{i['code']}</Text>
                             {/* <Text style={styles.text}>{i['code']}</Text> */}
                             <Text style={styles.textItalic}>CONTACTOS 61278192 - 79588684</Text>
@@ -277,7 +298,7 @@ const PDF = ({ i }) => {
                                     <Text style={{ ...styles.celda1, ...styles.text }}>{el['cantidad']}</Text>
                                     <Text style={{ ...styles.celda, ...styles.text }}>{el['nombre 1']}</Text>
                                     <Text style={{ ...styles.celda, ...styles.text }}>{el['observacion']}</Text>
-                                    <Text style={{ ...styles.celda4, ...styles.text }}>{el['costo']} BS {(el['adicional'] ? `(${el['adicional']} BS)` : '')}</Text>
+                                    <Text style={{ ...styles.celda4, ...styles.text }}>{el['costo']} BS </Text>
                                     <Text style={{ ...styles.celda5, ...styles.text }}>{(el['costo'] * el['cantidad']) + (el['adicional'] ? el['adicional'] * el['cantidad'] : 0)} BS</Text>
                                 </View>
                             </li>)}
@@ -288,14 +309,31 @@ const PDF = ({ i }) => {
                                 <Text style={styles.celdaWhite}></Text>
                                 <Text style={styles.celda}>TOTAL</Text>
                                 <Text style={styles.celda}>{
-                                    Object.values(i.servicios).reduce((acc, i, index) => {
-                                        const sum = i['costo'] * i['cantidad']
-                                        const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-                                        return sum + sum2 + acc
-                                    }, 0)
+                                    i.total
                                 } BS
                                 </Text>
                             </View>
+                            {i.descuento && i.descuento !== undefined && <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>Descuento -</Text>
+                                <Text style={styles.celda}>{
+                                    i.descuento
+                                } BS
+                                </Text>
+                            </View>}
+                            {i.adicional && i.adicional !== undefined && i.velox === true&& <View style={styles.row}>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celdaWhite}></Text>
+                                <Text style={styles.celda}>Velox +</Text>
+                                <Text style={styles.celda}>{
+                                    i.adicional
+                                } BS
+                                </Text>
+                            </View>}
+                           
                             <View style={styles.row}>
                                 <Text style={styles.celdaWhite}></Text>
                                 <Text style={styles.celdaWhite}></Text>
@@ -318,10 +356,11 @@ const PDF = ({ i }) => {
                             </View>
                             <Br />
 
-                            {i['fechaDeEntrega'] !== 'Velox' && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fechaDeEntrega']}</Text>}
+                            {/* {i['fechaDeEntrega'] !== 'Velox' && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fechaDeEntrega']}</Text>} */}
 
-                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['fecha para recojo'] && i['fecha para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega VELOX: {i['fecha para recojo']}</Text>}
-                            {Object.values(i.servicios).find(el => el.adicional && el.adicional !== null) !== undefined && i['hora para recojo'] && i['hora para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega VELOX:{i['hora para recojo']}</Text>}
+                            {i['fecha para recojo'] && i['fecha para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Fecha de entrega: {i['fecha para recojo']}</Text>}
+                            {i['hora para recojo'] && i['hora para recojo'] !== undefined && <Text style={{ ...styles.key, textAlign: 'center', }}>Hora de entrega:{i['hora para recojo']}</Text>}
+                            {i['velox'] && <Text style={{ ...styles.key, textAlign: 'center', }}>INMEDIATA VELOX</Text>}
 
 
 
@@ -342,12 +381,8 @@ const PDF = ({ i }) => {
                             <Br />
                             <Br />
                             <Br />
-                            <Br />
-                            <Br />
-                            <Br />
-                            <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
-                          
-                        </View>
+                            
+                    </View>
                     </Page>
                 </Document>
             }

@@ -15,7 +15,7 @@ import Modal from '@/components/Modal'
 import { useReactPath } from '@/HOCs/useReactPath'
 
 function Home({ children }) {
-  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, pendienteDB, setPendienteDB, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil, clientes, setClientes } = useUser()
+  const { user, userDB, setUserProfile, setUserCart, businessData, setUserProduct, setRecetaDB, precioJustoPDB, setPrecioJustoPDB, whatsapp, setUserData, filter, setFilter, nav, setNav, modal, setModal, cart, introClientVideo, setIntroClientVideo, pendienteDB, setPendienteDB, productDB, search, setSearch, videoClientRef, setFilterQR, webScann, setWebScann, setTienda, setBusinessData, servicios, setServicios, perfil, setPerfil, clientes, setClientes, sucursales, setSucursales } = useUser()
   const router = useRouter()
   const pathname = usePathname()
   const path = useReactPath();
@@ -69,6 +69,7 @@ function Home({ children }) {
     if (clientes === undefined) readUserData('usuarios', setClientes)
     if (servicios === undefined) readUserData('servicios', setServicios)
     if (perfil === undefined) readUserData('perfil', setPerfil)
+    sucursales === undefined && readUserData('sucursales', setSucursales)
   }, [user, clientes, servicios, perfil, path])
 
   return (
@@ -134,12 +135,25 @@ function Home({ children }) {
                     <h1 className='text-[18px] hidden lg:flex lg:justify-between ml-5 lg:w-[240px] lg:items-center text-white font-medium'> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
                   </div>
                 </div>
-                :
-                <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg   z-10" onClick={() => back(!nav)}>
-                  <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>}
+                : <div className='flex lg:block z-10'>
+                <div className='flex '>
+                  <button type="button" className="inline-flex items-center p-[2px] text-[14px] text-white rounded-lg  lg:block" onClick={openNav}>
+                     <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                       <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                   </svg>                  </button>
+                  <h1 className='text-[18px] hidden lg:flex lg:justify-between ml-5 lg:w-[240px] lg:items-center text-white font-medium' onClick={() => router.replace('/')}> <img src="/logo.png" className='h-[50px]' alt="" /> </h1>
+                </div>
+              </div>
+                
+                // <div className='flex'>
+                //   <button type="button" className="inline-flex items-center p-2 text-[14px] text-white rounded-lg   z-10" onClick={() => back(!nav)}>
+                //     <svg width="19" height="34" viewBox="0 0 19 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                //       <path d="M17 32L2 17L17 2" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                //     </svg>
+                //   </button>
+                //   <img src="/logo.png" className='ml-5 h-[50px]' alt="" onClick={() => router.replace('/')} />
+                // </div>
+              }
               {pathname === '/' && !location.href.includes('#') && <div className="relative  md:block lg:min-w-[500px]  z-10">
                 <div className="absolute inset-y-0 right-[5px] flex items-center py-3 z-50 ">
                   <svg className="w-8 h-8  bg-transparent " aria-hidden="true" fill="text-gray-100" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#00E2FF" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>

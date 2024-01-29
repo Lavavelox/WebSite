@@ -31,9 +31,10 @@ function Home() {
         user, userDB, cart, setUserCart,
         modal, setUserData,
         setModal, servicios, setServicios,
-        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, pendienteDB, setPendienteDB, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
+        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, 
+        pendienteDB, setPendienteDB, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
         qrBCP, setQrBCP,
-        ultimoPedido, setUltimoPedido, success, perfil, clientes } = useUser()
+        ultimoPedido, setUltimoPedido, success, perfil, clientes, sucursales, setSucursales, } = useUser()
     const [disponibilidad, setDisponibilidad] = useState('')
     const [categoria, setCategoria] = useState('')
     const router = useRouter()
@@ -41,6 +42,7 @@ function Home() {
     const inputRefWhatsApp = useMask({ mask: '+ 591 __ ___ ___', replacement: { _: /\d/ } });
     const [state, setState] = useState({})
     const [pdfDB, setPdfDB] = useState(null)
+    const [velox, setVelox] = useState(false);
 
     const [mode, setMode] = useState('Services')
     const [pdf, setPDF] = useState(false)
@@ -52,6 +54,7 @@ function Home() {
         setState({ ...state, [e.target.name]: e.target.value })
     }
     function onChangeHandlerDate(e) {
+        console.log(e)
         setState({ ...state, [e.target.name]: formatDayMonthYear(e.target.value) })
     }
     async function HandlerCheckOut(e) {
@@ -101,7 +104,16 @@ function Home() {
             ? setFilter('')
             : setFilter(data)
     }
-
+    const handlerPlussVelox = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setVelox(true)
+    }
+    const handlerLessVelox = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setVelox(false)
+    }
     function generateNO(num) {
         const zero = `${num < 10 ? '00' : ''}${num > 9 && num < 100 ? '0' : ''}${num === 100 ? '100' : ''}${num === 101 ? '001' : ''}`
         return num != 101 && num != 100 ? 'NUMERO_' + zero + num : 'NUMERO_' + zero
@@ -120,28 +132,39 @@ function Home() {
             const uuid = generateUUID()
 
             const data = {
+                ['fecha para recojo']: getDayMonthYearHourPluss3(),
+                ['hora para recojo']: '19:00',
                 ...state,
-                fechaDeEntrega: (Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length) 
-                ? getDayMonthYearHourPluss3() : 'Velox',
+                fechaDeEntrega: (Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length)
+                    ? getDayMonthYearHourPluss3() : 'Velox',
                 servicios: cart,
                 date: new Date().getTime(),
                 fecha: getDayMonthYearHour(),
                 mes: getMonthYear(),
                 sucursal: userDB.sucursal,
+                direccionSucursal: sucursales[userDB['sucursal uuid']].direccion,
                 uuid,
                 estado: 'Pendiente',
                 ['sucursal uuid']: userDB['sucursal uuid'],
+                velox,
+                adicional: perfil.adicional,
+                total: Object.values(cart).reduce((acc, i, index) => {
+                    const sum = i['costo'] * i['cantidad']
+                    const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
+                    return sum + sum2 + acc
+                }, 0),
                 saldo: state.ac && state.ac !== undefined
                     ? Object.values(cart).reduce((acc, i, index) => {
                         const sum = i['costo'] * i['cantidad']
                         const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
                         return sum + sum2 + acc
-                    }, 0) - state.ac
+                    }, 0) - state.ac - (state.descuento ? state.descuento : 0) + (velox ? perfil.adicional : 0)
                     : Object.values(cart).reduce((acc, i, index) => {
                         const sum = i['costo'] * i['cantidad']
                         const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
-                        return sum + sum2 + acc
-                    }, 0)
+                        return sum + sum2 + acc + (velox ? perfil.adicional : 0)
+                    }, 0)  - (state.descuento ? state.descuento : 0) + (velox ? perfil.adicional : 0)
+                
             }
 
             const callback = (length) => {
@@ -182,11 +205,10 @@ function Home() {
             setModal('user non exit')
         }
     }
-    console.log(state)
-    console.log(cart)
+    console.log(userDB)
 
     return (
-        <main className="">
+        sucursales && sucursales !== undefined && <main className="">
             {(modal == 'Recetar' || modal == 'Comprar') && <Modal funcion={storeConfirm}>Estas seguro de cambiar a {modal}. <br /> {Object.keys(cart).length > 0 && 'Tus datos se borraran'}</Modal>}
             {modal == 'Auth' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
@@ -234,12 +256,16 @@ function Home() {
                                 <a href='#Services' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? 'border-l border-t border-r rounded-t' : ''}`} >Servicios</a>
                             </li>
                             <li className={`mr-1 ${location.href.includes('#Client') ? '-mb-px' : ''}`}>
+
                                 <a href='#Client' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Client') ? 'border-l border-t border-r  rounded-t' : ''}`} >Cliente</a>
                             </li>
                             <li className={`mr-1 ${location.href.includes('#QR') ? '-mb-px' : ''}`}>
-                                <a href='#QR' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>
+                                {
+                                    <a href='#QR' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>
+                                }
                             </li>
                             <li className={`mr-1 ${location.href.includes('#Saldo') ? '-mb-px' : ''}`}>
+
                                 <a href='#Saldo' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Saldo') ? 'border-l border-t border-r  rounded-t' : ''}`} >Saldo</a>
                             </li>
                         </ul>
@@ -252,9 +278,9 @@ function Home() {
                                         <th scope="col" className="w-[200px] px-2 py-1 font-bold">
                                             Prenda
                                         </th>
-                                        <th scope="col" className="px-2 py-1 text-center font-bold">
+                                        {/* <th scope="col" className="px-2 py-1 text-center font-bold">
                                             Velox
-                                        </th>
+                                        </th> */}
                                         <th scope="col" className="w-[100px] px-2 py-1 text-center font-bold">
                                             Observación
                                         </th>
@@ -310,7 +336,7 @@ function Home() {
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">CI</label>
-                                <Input type="text" name="CI" id="email" onChange={onChangeHandler} defValue={state.CI && state.CI !== undefined && state.CI} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                                <Input type="text" name="CI" id="email" onChange={onChangeHandler} defValue={state.CI && state.CI !== undefined && state.CI} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" />
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Direccion</label>
@@ -318,7 +344,7 @@ function Home() {
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Whatsapp</label>
-                                <Input type="text" name="whatsapp" id="email" onChange={onChangeHandler} defValue={state.whatsapp && state.whatsapp !== undefined && state.whatsapp} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" reference={inputRefWhatsApp} placeholder="" />
+                                <Input type="text" name="whatsapp" id="email" onChange={onChangeHandler} defValue={state.whatsapp && state.whatsapp !== undefined && state.whatsapp} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" reference={inputRefWhatsApp} placeholder="" require />
                             </div>
 
                             <a href='#Services' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent" >Atras</Button></a>
@@ -340,38 +366,57 @@ function Home() {
                         <form className={`w-full max-w-[450px] md:max-w-[600px]  mt-[15px] space-y-4 shadow-2xl bg-white rounded-[20px] px-5 py-10 md:grid md:grid-cols-2 md:gap-[5px]`} onSubmit={handlerSubmit}>
                             <h5 className="text-[18px] text-center text-gray-800 md:col-span-2" >Saldo</h5>
 
-                            {(Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length) && <div className='md:col-span-2'>
+                            {/* {(Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length) && <div className='md:col-span-2'>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha y hora de recojo de prenda</label>
                                 {getDayMonthYearHourPluss3()}
-                            </div>}
-                            {Object.values(cart).find(i => i.adicional && i.adicional !== null) !== undefined && <div>
+                            </div>} */}
+                            <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Fecha velox de prenda</label>
-                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
-                            </div>}
-                            {Object.values(cart).find(i => i.adicional && i.adicional !== null) !== undefined && <div>
+                                <Input type="date" name="fecha para recojo" id="email" onChange={onChangeHandlerDate} defValue={state['fecha para recojo'] && state['fecha para recojo'] !== undefined ? formatDayMonthYearInput(state['fecha para recojo']) : getDayMonthYearHourPluss3()} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                            </div>
+                            <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">hora velox de prenda</label>
-                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : ''} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
-                            </div>}
+                                <Input type="time" name="hora para recojo" id="email" onChange={onChangeHandler} defValue={state['hora para recojo'] && state['hora para recojo'] !== undefined ? state['hora para recojo'] : '19:00'} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
+                            </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">A cuenta</label>
                                 <Input type="text" name="ac" id="email" onChange={onChangeHandler} defValue={state.ac && state.ac !== undefined ? state.ac : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="" require />
                             </div>
                             <div>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Descuento</label>
+                                <Input type="text" name="descuento" id="email" onChange={onChangeHandler} defValue={state.descuento && state.descuento !== undefined ? state.descuento : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder=""  />
+                            </div>
+
+                            <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Saldo</label>
-                                <span className=" border border-gray-300 text-gray-900 text-[16px] rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" >
+                                <span className=" border border-gray-300 text-gray-900 text-[16px] rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" >
                                     {
                                         state.ac && state.ac !== undefined
                                             ? Object.values(cart).reduce((acc, i, index) => {
                                                 const sum = i['costo'] * i['cantidad']
                                                 const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
                                                 return sum + sum2 + acc
-                                            }, 0) - state.ac
+                                            }, 0) - state.ac - (state.descuento ? state.descuento : 0) + (velox ? perfil.adicional : 0)
                                             : Object.values(cart).reduce((acc, i, index) => {
                                                 const sum = i['costo'] * i['cantidad']
                                                 const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
                                                 return sum + sum2 + acc
-                                            }, 0)}
+                                            }, 0) - (state.descuento ? state.descuento : 0) + (velox ? perfil.adicional : 0)}
                                 </span>
+                            </div>
+                            <div className=''>
+                                <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Velox</label>
+                                <div className='w-full h-[45px] flex justify-center items-center'>
+                                    {velox ? <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handlerLessVelox}>
+                                        <circle cx="12.5" cy="12.5" r="12.5" fill="#32CD32" />
+                                        <path fill-rule="evenodd" clipRule="evenodd" d="M4 13.5L6.16667 11.3333L10.5 15.6667L19.1667 7L21.3333 9.16667L10.5 20L4 13.5Z" fill="white" />
+                                    </svg>
+                                        : <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handlerPlussVelox}>
+                                            <circle cx="12.5" cy="12.5" r="12.5" fill="#9ca3af" />
+                                            <path fill-rule="evenodd" clipRule="evenodd" d="M4 13.5L6.16667 11.3333L10.5 15.6667L19.1667 7L21.3333 9.16667L10.5 20L4 13.5Z" fill="white" />
+                                        </svg>}
+                                </div>
+
                             </div>
                             {pdf === false && <a href='#QR' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent">Atras</Button></a>}
                             {pdf === false && <Button type="submit" theme="Primary">Registrar</Button>}
@@ -379,7 +424,7 @@ function Home() {
                                 <Button type="button" theme="Danger" click={finish}>Finalizar</Button>
                             </a>
                             }
-                            {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB, ...state }} />}
+                            {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB }}/>}
                         </form>
                     }
                 </div >}

@@ -54,7 +54,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                     {i['nombre 1']} <br />
                     <span className="text-[16px]  text-gray-700  tracking-tight">{i.costo} Bs.</span>
                 </td>
-                <td className="text-center ">
+                {/* <td className="text-center ">
                     <div className='w-full flex justify-center'>
                         {velox ? <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handlerLessVelox}>
                             <circle cx="12.5" cy="12.5" r="12.5" fill="#32CD32" />
@@ -65,7 +65,7 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                                 <path fill-rule="evenodd" clipRule="evenodd" d="M4 13.5L6.16667 11.3333L10.5 15.6667L19.1667 7L21.3333 9.16667L10.5 20L4 13.5Z" fill="white" />
                             </svg>}
                     </div>
-                </td>
+                </td> */}
                 <td className="min-w-[150px] text-center">
                     <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='nombre de producto 1' defaultValue={i['nombre de producto 1']} className="block p-1.5  w-full h-full text-sm text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
                 {/* <Button theme='Primary' click={(e) => addObs(e, i)}>Observación</Button> */}
@@ -94,7 +94,6 @@ export default function Card({ nombre1, nombre2, nombre3, costo, url, empresa, d
                     </div>
                 </td>
             </tr>
-
     )
 }
 
