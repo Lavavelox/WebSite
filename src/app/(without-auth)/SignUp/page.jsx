@@ -48,7 +48,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-right">
                     <div className="flex items-center">
-                        <input id="remember" type="checkbox" value="" className="w-[16px] h-[16px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" required />
+                        <input id="remember" type="checkbox" value="" className="w-[16px] h-[16px] border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" title='Debes aceptar las politicas de privacidad.' required />
                         <Link href="/Politicas" className="ml-2 text-[14px] font-medium underline text-gray-800">Políticas de Servicio</Link>
                     </div>
                 </div>

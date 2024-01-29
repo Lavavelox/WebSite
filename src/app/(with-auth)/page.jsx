@@ -31,7 +31,7 @@ function Home() {
         user, userDB, cart, setUserCart,
         modal, setUserData,
         setModal, servicios, setServicios,
-        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR, 
+        setUserProduct, setUserPedidos, setUserItem, item, filter, setFilter, filterQR, setTienda, setFilterQR,
         pendienteDB, setPendienteDB, tienda, setIntroClientVideo, search, setSearch, distributorPDB, setUserDistributorPDB, webScann, setWebScann,
         qrBCP, setQrBCP,
         ultimoPedido, setUltimoPedido, success, perfil, clientes, sucursales, setSucursales, } = useUser()
@@ -163,8 +163,8 @@ function Home() {
                         const sum = i['costo'] * i['cantidad']
                         const sum2 = i.adicional && i.adicional !== undefined ? i['adicional'] * i['cantidad'] : 0
                         return sum + sum2 + acc + (velox ? perfil.adicional : 0)
-                    }, 0)  - (state.descuento ? state.descuento : 0) + (velox ? perfil.adicional : 0)
-                
+                    }, 0) - (state.descuento ? state.descuento : 0) + (velox ? perfil.adicional : 0)
+
             }
 
             const callback = (length) => {
@@ -205,6 +205,9 @@ function Home() {
             setModal('user non exit')
         }
     }
+    function handlerNext() {
+        setModal('Complete Cliente')
+    }
     console.log(userDB)
 
     return (
@@ -214,6 +217,7 @@ function Home() {
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'user non exit' && <Modal funcion={() => setModal('')} alert={true}>El usuario no existe</Modal>}
             {modal === 'Complete' && <Modal alert={true}>Complete los campos requeridos </Modal>}
+            {modal === 'Complete Cliente' && <Modal alert={true}>Complete los campos requeridos de Cliente </Modal>}
 
             <div className={`h-[85vh] w-screen lg:w-full relative z-10 flex flex-col items-center lg:grid ${userDB.rol === 'Cliente' ? 'lg:h-auto' : 'overflow-hidden'} `} style={{ gridTemplateColumns: userDB.rol !== 'Cliente' && '500px auto', gridAutoFlow: 'dense' }}>
                 {<div className={`relative  lg:bg-transparent overflow-y-scroll  px-5 pb-[90px]  
@@ -256,17 +260,33 @@ function Home() {
                                 <a href='#Services' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${(location.href === 'http://localhost:3000/' || location.href === 'https://app.lavavelox.com/' || location.href.includes('#Services')) ? 'border-l border-t border-r rounded-t' : ''}`} >Servicios</a>
                             </li>
                             <li className={`mr-1 ${location.href.includes('#Client') ? '-mb-px' : ''}`}>
-
                                 <a href='#Client' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Client') ? 'border-l border-t border-r  rounded-t' : ''}`} >Cliente</a>
                             </li>
                             <li className={`mr-1 ${location.href.includes('#QR') ? '-mb-px' : ''}`}>
-                                {
-                                    <a href='#QR' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>
+                                {state.nombre && state.whatsapp && state.nombre !== undefined && state.whatsapp !== undefined && state.nombre !== '' && state.whatsapp !== ''
+                                    ? <a href='#QR'
+                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>
+                                    : <a href='#Client'
+                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`}
+                                        onClick={handlerNext}>Pago por QR</a>
                                 }
                             </li>
+                            {/* <li className={`mr-1 ${location.href.includes('#QR') ? '-mb-px' : ''}`}>
+                                {<a href={
+                                    state.nombre && state.whatsapp && state.nombre !== undefined && state.whatsapp !== undefined && state.nombre !== '' && state.whatsapp !== ''
+                                        ? '#QR'
+                                        : '#Client'
+                                } className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >Pago por QR</a>}
+                            </li> */}
                             <li className={`mr-1 ${location.href.includes('#Saldo') ? '-mb-px' : ''}`}>
-
-                                <a href='#Saldo' className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Saldo') ? 'border-l border-t border-r  rounded-t' : ''}`} >Saldo</a>
+                                {state.nombre && state.whatsapp && state.nombre !== undefined && state.whatsapp !== undefined && state.nombre !== '' && state.whatsapp !== ''
+                                    ? <a href='#Saldo'
+                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >
+                                        Saldo</a>
+                                    : <a href='#Client'
+                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`}
+                                        onClick={handlerNext}>Saldo</a>
+                                }
                             </li>
                         </ul>
                     </div>
@@ -348,7 +368,16 @@ function Home() {
                             </div>
 
                             <a href='#Services' className="hidden md:block mb-2 text-[16px] text-left font-medium text-gray-800"><Button type="button" theme="Transparent" >Atras</Button></a>
-                            <a href='#QR' className="block mb-2 text-[16px] text-left font-medium text-gray-800" ><Button type="button" theme="Primary">Continuar</Button></a>
+                            
+                            
+                            {state.nombre && state.whatsapp && state.nombre !== undefined && state.whatsapp !== undefined && state.nombre !== '' && state.whatsapp !== ''
+                                    ? <a href='#QR' className="block mb-2 text-[16px] text-left font-medium text-gray-800" ><Button type="button" theme="Primary">Continuar</Button></a>
+
+                                    : <a href='#Client'
+                                        className={`block mb-2 text-[16px] text-left font-medium text-gray-800`}
+                                        onClick={handlerNext}><Button type="button" theme="Primary">Continuar</Button></a>
+                                }
+                            
                         </form>
                     }
                     {
@@ -384,7 +413,7 @@ function Home() {
                             </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-[16px] text-left font-medium text-gray-800">Descuento</label>
-                                <Input type="text" name="descuento" id="email" onChange={onChangeHandler} defValue={state.descuento && state.descuento !== undefined ? state.descuento : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder=""  />
+                                <Input type="text" name="descuento" id="email" onChange={onChangeHandler} defValue={state.descuento && state.descuento !== undefined ? state.descuento : 0} className="bg-gray-50 border border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    " placeholder="" />
                             </div>
 
                             <div>
@@ -424,7 +453,7 @@ function Home() {
                                 <Button type="button" theme="Danger" click={finish}>Finalizar</Button>
                             </a>
                             }
-                            {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB }}/>}
+                            {pdf && pdfDB && <InvoicePDF i={{ ...pdfDB }} />}
                         </form>
                     }
                 </div >}
