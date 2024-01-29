@@ -62,16 +62,12 @@ function Home() {
                 <h1 className='text-[20px] text-center font-medium'>POLITICAS DE PRIVACIDAD Y SERVICIO</h1>
                 <p className=''>
                     Fecha de entrada en vigencia: 01/01/2024
-
                     Nuestra empresa Lavavelox S.A. legalmente establecida, opera la aplicación web Lavavelox. Esta página le informa sobre nuestras políticas con respecto a nuestros servicios, recopilación, uso y pulgación de información personal que recibimos de los usuarios de la Aplicación.
-
                 </p>
 
                 <h3 className='text-[20px] font-medium pt-5  pl-5'>Información que Recopilamos</h3>
                 <p className=''>
-
                     Al utilizar nuestra Aplicación, podemos recopilar y procesar la siguiente información:
-
                 </p>
 
                 <h5 className='text-[16px] font-medium pt-3 pl-0'>Información de Identificación Personal:</h5>
