@@ -49,20 +49,32 @@ function Home() {
     const onClickHandlerSelect = (name, value, uuid) => {
         setState({ ...state, [uuid]: { ...state[uuid], [name]: value } })
     }
-    async function save(i) {
-        if (state[i.uuid]['nombre receptor'] || state[i.uuid]['CI receptor'] || state[i.uuid]['whatsapp receptor']) {
-            if (state[i.uuid]['nombre receptor'] && state[i.uuid]['CI receptor'] && state[i.uuid]['whatsapp receptor']) {
-                await writeUserData(`tareas/${i['sucursal uuid']}/${i.uuid}`, { ...state[i.uuid], estado: 'Entregado', ['fecha entrega']: getDayMonthYearHour() }, i.uuid)
-                const obj = { ...state }
-                delete obj[i.uuid]
-                setState(obj)
-                readUserData(`tareas/${i.uuid}`, setTareas)
-            } else {
-                setUserSuccess('Complete')
-            }
-            return
+
+    function entregar(i) {
+
+        const data = {
+            ['nombre receptor']: i['nombre'],
+            ['CI receptor']: i['CI'],
+            ['whatsapp receptor']: i['whatsapp'],
+            ...state[i.uuid],
+            estado: 'Entregado',
+            ['fecha entrega']: getDayMonthYearHour()
         }
-        await writeUserData(`tareas/${i['sucursal uuid']}/${i.uuid}`, state[i.uuid])
+        console.log(data)
+
+
+        function callback () {
+           const obj = { ...state }
+        delete obj[i.uuid]
+        setState(obj)
+        readUserData(`tareas/${i.uuid}`, setTareas) 
+        }
+        writeUserData(`tareas/${i['sucursal uuid']}/${i.uuid}`, data, callback)
+        
+    }
+
+    function save(i) {
+        writeUserData(`tareas/${i['sucursal uuid']}/${i.uuid}`, state[i.uuid])
         const obj = { ...state }
         delete obj[i.uuid]
         setState(obj)
@@ -117,7 +129,7 @@ function Home() {
         readUserData('sucursales', setSucursales)
         readUserData('tareas', setTareas)
     }, [tag])
-
+    console.log(state)
     tareas !== null && tareas !== undefined && console.log(Object.values(Object.values(tareas).reduce((acc, el) => { return { ...acc, ...el } }, {})))
     return (
 
@@ -164,20 +176,22 @@ function Home() {
                                 Code
                             </th>
                             <th scope="col" className="px-3 py-3">
-                                Nombre
-                            </th>
-                            <th scope="col" className="px-3 py-3">
+                                Nombre <br />
                                 CI
                             </th>
+                            {/* <th scope="col" className="px-3 py-3">
+                                CI
+                            </th>*/}
                             <th scope="col" className="px-3 py-3">
                                 Dirección
                             </th>
                             <th scope="col" className="px-3 py-3">
-                                Servicios
-                            </th>
-                            <th scope="col" className="px-3 py-3">
                                 Whatsapp
                             </th>
+                            <th scope="col" className="px-3 py-3">
+                                Servicios
+                            </th>
+
 
                             <th scope="col" className="px-3 py-3">
                                 A cuenta
@@ -234,17 +248,28 @@ function Home() {
                                         <span className={`p-3 rounded-xl ${i.estado === 'Entregado' && 'bg-green-400'}  ${i.estado === 'Concluido' && 'bg-yellow-300'}  ${i.estado === 'Pendiente' && 'bg-gray-50'}`}>{i['code']}</span>
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                        {i['nombre']}
-                                    </td>
-                                    <td className="min-w-[100px] px-3 py-4  text-gray-900 " >
+                                        {i['nombre']} <br />
                                         {i['CI']}
                                     </td>
+                                    {/* <td className="min-w-[100px] px-3 py-4  text-gray-900 " >
+                                        {i['CI']}
+                                    </td> */}
                                     <td className="min-w-[300px] px-3 py-4  text-gray-900 " >
-                                        {i['direccion']}
-                                        {/* {i['nombre receptor']
+                                        {/* {i['direccion']} */}
+                                        {i['nombre receptor']
                                             ? i['direccion']
-                                            : userDB.rol !== 'Cliente' && <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='direccion' defaultValue={i['direccion']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                        } */}
+                                            : userDB.rol !== 'Cliente'
+                                                ? <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='direccion' defaultValue={i['direccion']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                                : i['direccion']
+                                        }
+                                    </td>
+                                    <td className="min-w-[180px] px-3 py-4  text-gray-900  ">
+                                        {i['nombre receptor']
+                                            ? i['whatsapp']
+                                            : userDB.rol !== 'Cliente'
+                                                ? <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='whatsapp' defaultValue={i['whatsapp']} className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
+                                                : i['whatsapp']
+                                        }
                                     </td>
                                     <td className="min-w-[300px] px-3 py-4  text-gray-900 ">
                                         {Object.values(i.servicios).map((el, index) => <li key={index}>
@@ -252,13 +277,6 @@ function Home() {
                                             {el['observacion'] !== undefined && `${'['}${el['observacion']}${']'}`}
                                         </li>)}
                                     </td>
-                                    <td className="min-w-[180px] px-3 py-4  text-gray-900  ">
-                                        {i['nombre receptor']
-                                            ? i['whatsapp']
-                                            : userDB.rol !== 'Cliente' && <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="1" name='whatsapp' defaultValue={i['whatsapp']} className="block p-1.5 text-center  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                        }
-                                    </td>
-
                                     <td className="min-w-[100px] px-3 py-4  text-gray-900">
                                         {i['nombre receptor']
                                             ? i['ac']
@@ -284,33 +302,33 @@ function Home() {
                                         {i['nombre receptor']
                                             ? <>
                                                 {i['nombre receptor']}
-                                                <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span>
+                                                {/* <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span> */}
                                             </>
                                             : userDB.rol !== 'Cliente' && <>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='nombre receptor' defaultValue={i['nombre receptor']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                                <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
+                                                {/* <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span> */}
                                             </>}
                                     </td>
                                     <td className="relative w-[200px] px-3 py-4  text-gray-900 ">
                                         {i['CI receptor']
                                             ? <>
                                                 {i['CI receptor']}
-                                                <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span>
+                                                {/* <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span> */}
                                             </>
                                             : userDB.rol !== 'Cliente' && <>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='CI receptor' defaultValue={i['CI receptor']} className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                                <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
+                                                {/* <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span> */}
                                             </>}
                                     </td>
                                     <td className="relative w-[150px] px-3 py-4  text-gray-900 ">
                                         {i['whatsapp receptor']
                                             ? <>
                                                 {i['whatsapp receptor']}
-                                                <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span>
+                                                {/* <span className='absolute text-[14px] top-[10px] right-3 text-green-500'>*Entregado</span> */}
                                             </>
                                             : userDB.rol !== 'Cliente' && <>
                                                 <textarea id="message" rows="1" onChange={(e) => onChangeHandler(e, i)} cols="6" name='whatsapp receptor' className="block p-1.5  w-full h-full text-[16px] text-gray-900 bg-white rounded-lg  focus:ring-gray-100 focus:border-gray-100 focus:outline-none resize-x-none" placeholder="Escribe aqui..."></textarea>
-                                                <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span>
+                                                {/* <span className='absolute text-[14px] top-[10px] right-3 text-red-500'>*Obligatorio</span> */}
                                             </>}
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
@@ -322,9 +340,9 @@ function Home() {
                                         }
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 " >
-                                        {i['fecha entrega'] && i['fecha entrega'] !== undefined 
-                                        ?i['fecha entrega']
-                                        :`${i['fecha para recojo']} ${i['hora para recojo']}`                                        
+                                        {i['fecha entrega'] && i['fecha entrega'] !== undefined
+                                            ? i['fecha entrega']
+                                            : `${i['fecha para recojo']} ${i['hora para recojo']}`
                                         }
                                     </td>
                                     <td className="min-w-[200px] px-3 py-4  text-gray-900 ">
@@ -340,11 +358,16 @@ function Home() {
                                     </td>
                                     {userDB.rol !== 'Cliente' && <>
                                         <td className="min-w-[200px] px-3 py-4">
-                                            {state[i.uuid] && (state[i.uuid]['nombre receptor'] || state[i.uuid]['CI receptor'] || state[i.uuid]['whatsapp receptor'])
+                                            {/* {state[i.uuid] && (state[i.uuid]['nombre receptor'] || state[i.uuid]['CI receptor'] || state[i.uuid]['whatsapp receptor'])
                                                 ? (state[i.uuid]['nombre receptor'] && state[i.uuid]['CI receptor'] && state[i.uuid]['whatsapp receptor']
                                                     ? <Button theme={"Primary"} click={() => save(i)}>Entregar</Button>
                                                     : <Button theme={"Disable"}>Entregar</Button>)
                                                 : <Button theme={"Disable"}>Entregar</Button>
+                                            } */}
+                                            {
+                                                i['nombre receptor']
+                                                    ? <Button theme={"Disable"}>Entregar</Button>
+                                                    : <Button theme={"Primary"} click={() => entregar(i)}>Entregar</Button>
                                             }
                                         </td>
                                         <td className="min-w-[200px] px-3 py-4">

@@ -133,7 +133,6 @@ const PDF = ({ i }) => {
                             {/* <Text style={styles.text}>{i['sucursal']}</Text> */}
                             <Text style={styles.textBold}>COMPROBANTE DE ENTREGA {i['sucursal']}</Text>
                             {/* <Text style={styles.textBold}> </Text> */}
-
                             <Text style={{ ...styles.textBold, fontSize: '10px' }}>{i['code']}</Text>
                             {/* <Text style={styles.text}>{i['code']}</Text> */}
                             <Text style={styles.textItalic}>CONTACTOS 61278192 - 79588684</Text>
@@ -303,7 +302,7 @@ const PDF = ({ i }) => {
                             <Br />
                             <Br />
                             <Br />
-                            <Text style={{ ...styles.key, textAlign: 'center' }}>!GRACIAS POR SU PREFERENCÍA!</Text>
+                            <Br />
                         </View>
                     </Page>
                 </Document>

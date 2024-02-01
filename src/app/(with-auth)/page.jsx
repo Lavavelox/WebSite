@@ -134,6 +134,7 @@ function Home() {
             const data = {
                 ['fecha para recojo']: getDayMonthYearHourPluss3(),
                 ['hora para recojo']: '19:00',
+                ac: 0,
                 ...state,
                 fechaDeEntrega: (Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined) === undefined || Object.values(cart).filter(i => i.adicional && i.adicional !== null && i.adicional !== undefined).length !== Object.values(cart).length)
                     ? getDayMonthYearHourPluss3() : 'Velox',
@@ -190,6 +191,7 @@ function Home() {
         setUserCart({})
         setPdfDB(undefined)
         setPDF(false)
+        location.reload()
     }
     function autocompletar() {
         const res = Object.values(clientes).find((i) => i.CI === state.autocomplete || i.whatsapp === state.autocomplete)
@@ -208,7 +210,7 @@ function Home() {
     function handlerNext() {
         setModal('Complete Cliente')
     }
-    console.log(userDB)
+    console.log(state)
 
     return (
         sucursales && sucursales !== undefined && <main className="">
@@ -217,7 +219,7 @@ function Home() {
             {modal == 'Observacion' && <Modal funcion={() => setModal('')}>Tu perfil esta en espera de ser autorizado</Modal>}
             {modal == 'user non exit' && <Modal funcion={() => setModal('')} alert={true}>El usuario no existe</Modal>}
             {modal === 'Complete' && <Modal alert={true}>Complete los campos requeridos </Modal>}
-            {modal === 'Complete Cliente' && <Modal alert={true}>Complete los campos requeridos de Cliente </Modal>}
+            {modal === 'Complete Cliente' && <Modal alert={true}>Complete los campos requeridos de Cliente para continuar</Modal>}
 
             <div className={`h-[85vh] w-screen lg:w-full relative z-10 flex flex-col items-center lg:grid ${userDB.rol === 'Cliente' ? 'lg:h-auto' : 'overflow-hidden'} `} style={{ gridTemplateColumns: userDB.rol !== 'Cliente' && '500px auto', gridAutoFlow: 'dense' }}>
                 {<div className={`relative  lg:bg-transparent overflow-y-scroll  px-5 pb-[90px]  
@@ -281,10 +283,10 @@ function Home() {
                             <li className={`mr-1 ${location.href.includes('#Saldo') ? '-mb-px' : ''}`}>
                                 {state.nombre && state.whatsapp && state.nombre !== undefined && state.whatsapp !== undefined && state.nombre !== '' && state.whatsapp !== ''
                                     ? <a href='#Saldo'
-                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`} >
+                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Saldo') ? 'border-l border-t border-r  rounded-t' : ''}`} >
                                         Saldo</a>
                                     : <a href='#Client'
-                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#QR') ? 'border-l border-t border-r  rounded-t' : ''}`}
+                                        className={`bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold cursor-pointer ${location.href.includes('#Saldo') ? 'border-l border-t border-r  rounded-t' : ''}`}
                                         onClick={handlerNext}>Saldo</a>
                                 }
                             </li>
